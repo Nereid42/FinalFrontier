@@ -1,0 +1,412 @@
+# This file provides information for other plugins
+# 
+# Syntax:
+#
+#  Celestial-Body-Name
+#  {
+#     [gas giant = true] # optional, default: false
+#     Plugin-Name
+#     {
+#        key = value
+#     }
+#  }
+#
+# Example:
+#
+#  NewKerbin
+#  {
+#     gas giant = false
+#     FinalFrontier
+#     {
+#       ribbon group  = GenericE02
+#       base prestige = 8100
+#     }
+#  }
+#
+
+Arane
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Arane
+     base prestige = 10000
+   }
+}
+
+Ascension
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Ascension
+     base prestige = 10400
+   }
+}
+
+Oorma
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Arane
+     base prestige = 10600
+   }
+}
+
+Ablate
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Ablate
+     base prestige = 10800
+   }
+}
+
+
+Sentar
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Sentar
+     base prestige = 11000
+   }
+}
+
+Skelton
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Skelton
+     base prestige = 11100
+   }
+}
+
+Erin
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Erin
+     base prestige = 11200
+   }
+}
+
+Pock
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Pock
+     base prestige = 11300
+   }
+}
+
+Ringle
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Ringle
+     base prestige = 11400
+   }
+}
+
+Thud
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Thud
+     base prestige = 11500
+   }
+}
+
+Serious
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Serious
+     base prestige = 11600
+   }
+}
+
+Joker
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Joker
+     base prestige = 11700
+   }
+}
+
+Stella
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Stella
+     base prestige = 11800
+   }
+}
+
+Plantar
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Plantar
+     base prestige = 11900
+   }
+}
+
+Moonar
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Moonar
+     base prestige = 12000
+   }
+}
+
+Fred
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Fred
+     base prestige = 13000
+   }
+}
+
+Barry
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Barry
+     base prestige = 13100
+   }
+}
+
+
+Barney
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Barney
+     base prestige = 13200
+   }
+}
+
+Slade
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Slade
+     base prestige = 13300
+   }
+}
+
+Ginger
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Ginger
+     base prestige = 13400
+   }
+}
+
+Flo
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Flo
+     base prestige = 13500
+   }
+}
+
+Putto
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Putto
+     base prestige = 13600
+   }
+}
+
+Verion
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Verion
+     base prestige = 14000
+   }
+}
+
+Rocko
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Rocko
+     base prestige = 14100
+   }
+}
+
+Verviedi
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Verviedi
+     base prestige = 14200
+   }
+}
+
+Fantoma
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Fantoma
+     base prestige = 15000
+   }
+}
+
+Cyssor
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Cyssor
+     base prestige = 15100
+   }
+}
+
+Folion
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Folion
+     base prestige = 15200
+   }
+}
+
+Cleathea
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Cleathea
+     base prestige = 15300
+   }
+}
+
+Kydros
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Kydros
+     base prestige = 15400
+   }
+}
+
+Tyvor
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Tyvor
+     base prestige = 15400
+   }
+}
+  
+Corvus
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Corvus
+     base prestige = 15500
+   }
+}
+
+Phobius
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Phobius
+     base prestige = 15600
+   }
+}
+
+Diamas
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Diamas
+     base prestige = 15700
+   }
+}
+
+Fierbinte
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = Kopernicus/Ribbons
+     ribbon group  = Fierbinte
+     base prestige = 15800
+   }
+}

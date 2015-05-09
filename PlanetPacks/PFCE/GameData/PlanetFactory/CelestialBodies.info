@@ -1,0 +1,235 @@
+# This file provides information for other plugins
+# 
+# Syntax:
+#
+#  Celestial-Body-Name
+#  {
+#     [gas giant = true] # optional, default: false
+#     Plugin-Name
+#     {
+#        key = value
+#     }
+#  }
+#
+# Example:
+#
+#  NewKerbin
+#  {
+#     gas giant = false
+#     FinalFrontier
+#     {
+#       ribbon group  = GenericE02
+#       base prestige = 8100
+#     }
+#  }
+#
+
+Ablate
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Ablate
+     base prestige = 10800
+   }
+}
+
+Inaccessable
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Inaccessable
+     base prestige = 10000
+   }
+}
+
+Ascension
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Ascension
+     base prestige = 10400
+   }
+}
+
+Sentar
+{
+   gas giant = true
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Sentar
+     base prestige = 11000
+   }
+}
+
+Skelton
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Skelton
+     base prestige = 11100
+   }
+}
+
+Erin
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Erin
+     base prestige = 11200
+   }
+}
+
+Pock
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Pock
+     base prestige = 11300
+   }
+}
+
+Ringle
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Ringle
+     base prestige = 11400
+   }
+}
+
+Thud
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Thud
+     base prestige = 11500
+   }
+}
+
+Serious
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Serious
+     base prestige = 11600
+   }
+}
+
+Joker
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Joker
+     base prestige = 11700
+   }
+}
+
+Stella
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Stella
+     base prestige = 11800
+   }
+}
+
+Plantar
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Plantar
+     base prestige = 11900
+   }
+}
+
+Moonar
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Moonar
+     base prestige = 12000
+   }
+}
+
+Fred
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Fred
+     base prestige = 13000
+   }
+}
+
+Barry
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Barry
+     base prestige = 13100
+   }
+}
+
+
+Barney
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Barney
+     base prestige = 13200
+   }
+}
+
+Slade
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Slade
+     base prestige = 13300
+   }
+}
+
+Ginger
+{
+   gas giant = false
+   FinalFrontier
+   {
+     ribbon path  = PlanetFactory/Ribbons
+     ribbon group  = Ginger
+     base prestige = 13400
+   }
+}
