@@ -229,3 +229,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Workspace file
+Contribution/
+Resource/
+Screenshots/

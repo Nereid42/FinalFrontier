@@ -1,0 +1,39 @@
+# This file provides information for other plugins
+# 
+# Syntax:
+#
+#  Celestial-Body-Name # exactly as used in the game
+#  {
+#     [central body] # only present if this is the unique central body in the system
+#     type = star | planet | gas giant | moon
+#     Plugin-Name
+#     {
+#        key1 = value1
+#        key2 = value2
+#        key3 = value3
+#     }
+#  }
+#
+# Example:
+#
+#  Kerbol
+#  {
+#     central body
+#     type = star
+#     FinalFrontier
+#     {
+#       ribbongroup  = GenericH01
+#       baseprestige = 8800
+#     }
+#  }
+#
+#  New Kerbin
+#  {
+#     type = planet
+#     FinalFrontier
+#     {
+#       ribbongroup  = GenericE02
+#       baseprestige = 8100
+#     }
+#  }
+#
