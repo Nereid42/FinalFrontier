@@ -46,6 +46,11 @@ namespace Nereid
 
       static class Extensions
       {
+         public static String Limit(this String s, int n, String suffix = "")
+         {
+            if (s.Length > n) return s.Substring(0, n)+suffix;
+            return s;
+         }
 
          public static String Envelope(this String s)
          {

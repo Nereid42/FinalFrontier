@@ -79,7 +79,7 @@ namespace Nereid
             return JoolTourRibbon;
          }
 
-         private void AddRibbon(Ribbon ribbon)
+         private Ribbon AddRibbon(Ribbon ribbon)
          {
             if(ribbon.IsEnabled())
             {
@@ -89,6 +89,7 @@ namespace Nereid
             {
                Log.Warning("ribbon "+ribbon.GetName()+" ("+ribbon.GetCode()+") disabled");
             }
+            return ribbon;
          }
 
          private void AddCustomRibbon(int index, Ribbon ribbon)
@@ -229,9 +230,11 @@ namespace Nereid
             AddRibbon(ribbon200OrMoreMissions);
             //
             // Dangerous EVA
-            Achievement dangerouseEva = new DangerousEvaAchievement(100001);
-            Ribbon ribbonDangerouseEva = new Ribbon(_RP + "DangerousEva", dangerouseEva);
-            AddRibbon(ribbonDangerouseEva);
+            AddRibbon(new Ribbon(_RP + "DangerousEva", new DangerousEvaAchievement(100001)));
+            //
+            // Wet EVA
+            Ribbon wetEvaRibbon = AddRibbon(new Ribbon(_RP + "WetEva", new WetEvaAchievement(9350, false)));
+            AddRibbon(new Ribbon(_RP + "WetEvaFirst", new WetEvaAchievement(9351, true), wetEvaRibbon));
             //
             // Fast Orbit
             Achievement fastOrbit1 = new FastOrbitAchievement(250, 3101);
@@ -291,7 +294,7 @@ namespace Nereid
             AddRibbon(new Ribbon(_RP + "Splashdown", new SplashdownAchievement(81)));
             //
             // EVA over water
-            AddRibbon(new Ribbon(_RP + "EvaInWater", new EvaInWaterAchievement(80)));
+            AddRibbon(new Ribbon(_RP + "EvaInWater", new EvaInHomeWatersAchievement(80)));
             //
             // Collision
             AddRibbon(new Ribbon(_RP + "Collision", new CollisionAchievement(0)));
@@ -463,7 +466,10 @@ namespace Nereid
             AddRibbon(this.ServiceScientist  = new Ribbon(_RP+"ServiceScientist", new ScientistServiceAchievement(10)));
             //
             // easter eggs
-            AddRibbon(new Ribbon(_RP+"XM2014A", new XMas2014Achievement(1)));
+            AddRibbon(new Ribbon(_RP+"XM2014A", new XMas2014Achievement(2)));
+            AddRibbon(new Ribbon(_RP + "XM", new DateofYearAchievement(24,12,26,12,"X-mas","Awarded for any kind of duty on xmas",1)));
+            AddRibbon(new Ribbon(_RP + "July4", new DateofYearAchievement(4,7,4,7,"4th July","Awarded for any kind of duty on 4th of July",3)));
+            AddRibbon(new Ribbon(_RP + "Anniversary", new DateofYearAchievement(27, 4, 27, 4, "Anniversary", "Awarded for any kind of duty on any anniversary of the kerbal space program", 3)));
             //
             // dont know how to detect yet
             // Achievement missionAbort = new MissionAbortedAchievement(55);

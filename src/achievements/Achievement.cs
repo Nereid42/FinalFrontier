@@ -78,13 +78,14 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false;
             // only an EVA could be a dangerous EVA
             if (!current.IsEVA) return false;
-            // vessel changes dont count
+            // vessel changes wont count
             if (previous == null) return false;
             // EVA starts from a previous non EVA; no new EVA, no danger
             if (previous.IsEVA) return false;
-            // EVA from a vessel in orbit isnt dangerous
+            // EVA from a vessel in orbit isn't dangerous
             if (previous.InOrbit) return false;
             // EVA in orbit isnt dangerous
             if (current.InOrbit) return false;
@@ -114,6 +115,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false;
             // no eva (we dont accept a bathing)
             if (current.IsEVA) return false;
             // only flying vessels can do a splashdown (no rovers on shores can do a splashdown)
@@ -128,52 +130,6 @@ namespace Nereid
          }
       }
 
-      class EvaInWaterAchievement : Achievement
-      {
-         public EvaInWaterAchievement(int prestige)
-            : base("WE", "EVA in water", prestige, false)
-         {
-         }
-
-         public override bool Check(VesselState previous, VesselState current)
-         {
-            // eva required 
-            if (!current.IsEVA) return false;
-            // are we splashed?
-            return current.Situation == Vessel.Situations.SPLASHED;
-         }
-
-         public override String GetText()
-         {
-            return "Awarded for any EVA in water or extremly wet environment";
-         }
-      }
-
-      class CollisionAchievement : Achievement
-      {
-         public CollisionAchievement(int prestige)
-            : base("C", "Collision", prestige, false)
-         {
-         }
-
-         public override bool Check(EventReport report)
-         {
-            // is a collision event reported?
-            if (!report.eventType.Equals(FlightEvents.COLLISION)) return false;
-            // just checks if vessel is known
-            if (report.origin == null) return false;
-            if (report.origin.vessel == null) return false;
-            // collsion in EVA wont count
-            if (report.origin.vessel.isEVA) return false;
-            // ok, this is a collision in a vessel
-            return true;
-         }
-
-         public override String GetText()
-         {
-            return "Awarded for any collision while in a vessel";
-         }
-      }
 
       class FastOrbitAchievement : NumericAchievement
       {
@@ -184,6 +140,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false;
             // we need a previous vessel state  
             if (previous == null) return false;
             // only new orbits count
@@ -193,6 +150,7 @@ namespace Nereid
             // mission took too long...
             if (current.MissionTime >= value) return false;
             // check for real Kerbin launch time
+            if (current.Origin == null) return false;
             double now = Planetarium.GetUniversalTime();
             double launchTime = VesselObserver.Instance().GetHomeworldLaunchTime(current.Origin);
             if (launchTime < 0 || now - launchTime >= value) return false;
@@ -317,8 +275,11 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
+            // check mass
+            if (current.Origin == null) return false;
             if (current.Origin.GetTotalMass() <= value) return false;
             return true;
          }   
@@ -338,9 +299,12 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (previous == null) return false;
+            if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
             // check mass
+            if (current.Origin == null) return false;
             if (current.Origin.GetTotalMass() <= value) return false;
             // landed?
             if (current.Situation != Vessel.Situations.LANDED) return false;
@@ -365,6 +329,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (previous == null) return false;
             // no EVA
             if (current.IsEVA) return false;
@@ -373,6 +338,7 @@ namespace Nereid
             // if we are not flying this is not a launch
             if (current.Situation != Vessel.Situations.FLYING) return false;
             // check mass
+            if (current.Origin == null) return false;
             if (current.Origin.GetTotalMass() <= value) return false;
             return true;
          }
@@ -548,6 +514,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
             if (previous == null || previous.MainBody.Equals(body)) return false;
             return true;
@@ -568,6 +535,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (previous == null) return false;
             // Launching wont count
             if (previous.Situation == Vessel.Situations.PRELAUNCH) return false;
@@ -628,7 +596,7 @@ namespace Nereid
             if (current.Situation == Vessel.Situations.LANDED) return false;
             if (current.Situation == Vessel.Situations.PRELAUNCH ) return false;
             if (current.Situation == Vessel.Situations.SPLASHED) return false;
-            // no man celestial body? we have to be deep in space then
+            // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
             if (current.atmDensity > NO_ATM) return false;
             if (current.altitude < current.MainBody.MaxAtmosphereAltitude()) return false;
@@ -659,7 +627,7 @@ namespace Nereid
             if (current.Situation == Vessel.Situations.LANDED) return false;
             if (current.Situation == Vessel.Situations.PRELAUNCH ) return false;
             if (current.Situation == Vessel.Situations.SPLASHED) return false;
-            // no man celestial body? we have to be deep in space then
+            // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
             if (current.atmDensity > NO_ATM) return false;
             if (current.altitude < current.MainBody.MaxAtmosphereAltitude()) return false;
@@ -684,6 +652,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (previous != null && previous.IsEVA) return false; // just check first EVA event
             if (!current.IsEVA) return false;
             if (!current.MainBody.Equals(body)) return false;
@@ -708,6 +677,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (previous != null && previous.IsEVA && previous.IsLanded) return false; // just check first EVA event that was no LANDING
             // no EVA no ribbon...
             if (!current.IsEVA) return false;
@@ -734,6 +704,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             return current.MainBody.Equals(body) && current.InOrbit;
          }
       }
@@ -749,6 +720,7 @@ namespace Nereid
          public override bool Check(VesselState previous, VesselState current)
          {
 
+            if (current == null) return false; 
             return current.MainBody.Equals(body) && current.InOrbit;
          }
 
@@ -768,7 +740,9 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
+            if (current.Origin == null) return false;
             if (current.Origin.vesselType != VesselType.Rover) return false;
             return current.movedOnSurface;
          }
@@ -794,6 +768,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
             return current.PeA <= maxDistanceToSun && current.ApA <= maxDistanceToSun;
          }
@@ -814,6 +789,7 @@ namespace Nereid
 
          public override bool Check(VesselState previous, VesselState current)
          {
+            if (current == null) return false; 
             if (previous != null && previous.Situation == Vessel.Situations.DOCKED) return false;
             if (current.Situation != Vessel.Situations.DOCKED) return false;
             return base.Check(previous, current);
@@ -868,6 +844,7 @@ namespace Nereid
             if (current == null) return false;
             if (!current.IsLaunch) return false;
             Vessel vessel = current.Origin;
+            if (vessel == null) return false;
             double amountOfActiveSolidFuel = 0;
             float totalMass = 0;
             foreach (Part part in vessel.parts)
@@ -907,6 +884,7 @@ namespace Nereid
             if (current == null) return false;
             if (previous == null) return false;
             if (current.IsEVA) return false;
+            if (current.Origin == null) return false;
             if (double.IsNaN(current.Origin.geeForce)) return false;
             if (current.Origin.geeForce  < value)  return false;
             if (VesselObserver.Instance().GetGeeForceSustained(current.Origin) < value) return false;
@@ -915,7 +893,7 @@ namespace Nereid
 
          public override String GetText()
          {
-            return "Awarded for withstanding an acceleration of at least " + value + "g for " + GeeForceInspector.DURATION.ToString("0.0") + " or more seconds";
+            return "Awarded for withstanding an acceleration of at least " + value + "g for " + GeeForceObserver.DURATION.ToString("0.0") + " or more seconds";
          }
       }
 
@@ -931,6 +909,7 @@ namespace Nereid
          {
             if (previous == null) return false;
             if (current == null) return false;
+            if (current.Origin == null) return false;
             if (current.Origin.mainBody == null) return false;
             if (current.IsLanded) return false;
             if (current.IsEVA) return false;
@@ -1031,6 +1010,7 @@ namespace Nereid
             if(current==null) return false;
             if (current.MainBody == null) return true;
             if (!current.MainBody.IsSun()) return false;
+            if (current.Origin == null) return false;
             if (GameUtils.GetDistanceToSun(current.Origin) < minDistanceToSun) return false; 
             // yeah! deep space!
             return true;
@@ -1187,6 +1167,133 @@ namespace Nereid
          }
       }
 
+      class DateofYearAchievement : Achievement
+      {
+         private readonly String text;
+         private readonly int firstDay;
+         private readonly int firstMonth;
+         private readonly int lastDay;
+         private readonly int lastMonth;
 
+         public DateofYearAchievement(int firstDay, int firstMonth, int lastDay, int lastMonth, String name, String text, int prestige)
+            : base("Y" + ":" + firstDay + "." + firstMonth + "-" + lastDay + "." + lastMonth, name, prestige, false)
+         {
+            this.text = text;
+            this.firstDay = firstDay;
+            this.firstMonth = firstMonth;
+            this.lastDay = lastDay;
+            this.lastMonth = lastMonth;
+         }
+
+         private bool Check()
+         {
+            DateTime now = DateTime.Now;
+            if (now.Month < firstMonth) return false;
+            if (now.Month > lastMonth) return false;
+            if (now.Day < firstDay) return false;
+            if (now.Day > lastDay) return false;
+            return true;
+         }
+
+         public override bool Check(HallOfFameEntry entry)
+         {
+            ProtoCrewMember kerbal = entry.GetKerbal();
+            if (kerbal == null) return false;
+            return Check();
+         }
+
+         public override bool Check(VesselState previous, VesselState current)
+         {
+            return Check();
+         }
+
+         public override bool Check(EventReport report)
+         {
+            return Check();
+         }
+
+
+         public override String GetText()
+         {
+            return text;
+         }
+      }
+
+      class EvaInHomeWatersAchievement : Achievement
+      {
+         public EvaInHomeWatersAchievement(int prestige)
+            : base("WE", "EVA in Kerbin waters", prestige, false)
+         {
+         }
+
+         public override bool Check(VesselState previous, VesselState current)
+         {
+            // eva required 
+            if (!current.IsEVA) return false;
+            // Kerbin?
+            if (current.MainBody != null || !current.MainBody.IsKerbin()) return false;
+            // are we splashed?
+            return current.Situation == Vessel.Situations.SPLASHED;
+         }
+
+         public override String GetText()
+         {
+            return "Awarded for any EVA in Kerbin waters";
+         }
+      }
+
+      class CollisionAchievement : Achievement
+      {
+         public CollisionAchievement(int prestige)
+            : base("C", "Collision", prestige, false)
+         {
+         }
+
+         public override bool Check(EventReport report)
+         {
+            // is a collision event reported?
+            if (!report.eventType.Equals(FlightEvents.COLLISION)) return false;
+            // just checks if vessel is known
+            if (report.origin == null) return false;
+            if (report.origin.vessel == null) return false;
+            // collsion in EVA wont count
+            if (report.origin.vessel.isEVA) return false;
+            // ok, this is a collision in a vessel
+            return true;
+         }
+
+         public override String GetText()
+         {
+            return "Awarded for any collision while in a vessel";
+         }
+      }
+
+
+      class WetEvaAchievement : Achievement
+      {
+
+         public WetEvaAchievement(int prestige, bool first = false)
+            : base("EE"+(first?"1":""), "Wet EVA", prestige, first)
+         {
+         }
+
+         public override bool Check(VesselState previous, VesselState current)
+         {
+            if (current == null) return false;
+            // no EVA, no achievement
+            if (!current.IsEVA) return false;
+            if (current.Situation != Vessel.Situations.SPLASHED) return false;
+            // no main celestial body? we have to be deep in space then (strange: water in deep space ;), but who knows?)
+            if (current.MainBody == null) return true;
+            // EVA on Kerbin is to easy
+            if (current.MainBody.IsKerbin()) return false;
+            return true;
+         }
+
+         public override String GetText()
+         {
+            return "Awarded for" + FirstKerbalText().Envelope() + "on an EVA in a wet environment outside of Kerbin";
+         }
+      }
    }
 }

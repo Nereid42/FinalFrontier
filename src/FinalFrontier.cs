@@ -31,9 +31,6 @@ namespace Nereid
          private RibbonPool ribbons = RibbonPool.Instance();
          private ActionPool actions = ActionPool.Instance();
 
-         private volatile bool keyAltPressed = false;
-         private volatile bool keyCtrlPressed = false;
-
          private volatile bool destroyed = false;
 
 
@@ -140,39 +137,6 @@ namespace Nereid
 
          public void Update()
          {
-            //
-            if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftAlt)) keyAltPressed = false;
-            if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
-            if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(KeyCode.F))
-            {
-               Log.Info("hotkey ALT-F detected");
-               
-               switch (HighLogic.LoadedScene)
-               {
-                  case GameScenes.EDITOR:
-                  case GameScenes.FLIGHT:
-                  case GameScenes.SPACECENTER:
-                  case GameScenes.TRACKSTATION:
-                     if (!keyCtrlPressed)
-                     {
-                        Log.Info("hotkey hall of fame browser");
-                        createBrowserOnce();
-                        browser.SetVisible(!browser.IsVisible());
-                     }
-                     else
-                     {
-                        Log.Info("hotkey reset window positions");
-                        PositionableWindow.ResetAllWindowPositions();
-                     }
-                     break;
-                  default:
-                     Log.Info("cant open/close hall of fame in game scene " + HighLogic.LoadedScene);
-                     break;
-               }
-            }
-
             if (observer != null)
             {
                observer.Update();
@@ -230,19 +194,6 @@ namespace Nereid
 
          internal void OnDestroy()
          {
-            /*Log.Info("destroying Final Frontier");
-            if (stockToolbarButton != null)
-            {
-               Log.Detail("removing stock toolbar button");
-               ApplicationLauncher.Instance.RemoveModApplication(stockToolbarButton);
-            }
-            //configuration.Save(); 
-            if(toolbarButton!=null)
-            {
-               Log.Detail("removing toolbar button");
-               toolbarButton.Destroy();
-            }
-            stockToolbarButton = null;*/
          }
 
       }

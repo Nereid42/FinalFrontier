@@ -8,6 +8,7 @@ namespace Nereid
    {
       class RibbonBrowser : AbstractWindow
       {
+         private const int MAX_CHARACTERS_IN_DESCRIPTION = 80;
 
          private Vector2 scrollPosition = Vector2.zero;
 

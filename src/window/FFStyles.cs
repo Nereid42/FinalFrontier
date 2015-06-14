@@ -179,10 +179,13 @@ namespace Nereid
             STYLE_RIBBON_LABEL.margin = new RectOffset(10, 0, 0, 8);
             STYLE_RIBBON_LABEL.padding = new RectOffset(0, 0, 0, 0);
             STYLE_RIBBON_DESCRIPTION.stretchWidth = true;
+            STYLE_RIBBON_DESCRIPTION.stretchHeight = true;
             STYLE_RIBBON_DESCRIPTION.border = new RectOffset(0, 0, 0, 0);
             STYLE_RIBBON_DESCRIPTION.padding = new RectOffset(0, 0, 0, 0);
             STYLE_RIBBON_DESCRIPTION.margin = new RectOffset(3, 3, 3, 3);
             STYLE_RIBBON_DESCRIPTION.fontSize = 12;
+            STYLE_RIBBON_DESCRIPTION.clipping = TextClipping.Clip;
+            STYLE_RIBBON_DESCRIPTION.wordWrap = true;
             STYLE_RIBBON_AREA.fixedWidth = 430;
             STYLE_RIBBON_AREA.fixedHeight = 42;
             STYLE_RIBBON_AREA.padding = new RectOffset(0, 0, 0, 0);

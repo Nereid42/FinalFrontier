@@ -11,11 +11,13 @@ namespace Nereid
       {
          private static ActivityPool ACTIVITY_POOL = ActivityPool.Instance();
 
+         private readonly int hash;
          private readonly String code;
          private String name;
 
          public Activity(String code, String name)
          {
+            this.hash = code.GetHashCode();
             this.code = code;
             this.name = name;
             ACTIVITY_POOL.RegisterActivity(this);
@@ -43,7 +45,7 @@ namespace Nereid
 
          public override int GetHashCode()
          {
-            return code.GetHashCode();
+            return hash;
          }
 
          public abstract String CreateLogBookEntry(LogbookEntry entry);

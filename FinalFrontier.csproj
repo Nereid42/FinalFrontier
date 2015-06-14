@@ -58,6 +58,7 @@
     <Compile Include="src\achievements\Activity.cs" />
     <Compile Include="src\achievements\ActivityPool.cs" />
     <Compile Include="src\achievements\DataChange.cs" />
+    <Compile Include="src\achievements\Promoter.cs" />
     <Compile Include="src\achievements\Ribbon.cs" />
     <Compile Include="src\achievements\RibbonPool.cs" />
     <Compile Include="src\achievements\RibbonSupersedeChain.cs" />
@@ -66,7 +67,9 @@
     <Compile Include="src\halloffame\HallOfFame.cs" />
     <Compile Include="src\halloffame\HallOfFameEntry.cs" />
     <Compile Include="src\halloffame\LogBookEntry.cs" />
-    <Compile Include="src\inspecteurs\StateInspector.cs" />
+    <Compile Include="src\inspecteurs\Inspecteur.cs" />
+    <Compile Include="src\inspecteurs\StateObserver.cs" />
+    <Compile Include="src\inspecteurs\VesselInspecteur.cs" />
     <Compile Include="src\inspecteurs\VesselObserver.cs" />
     <Compile Include="src\util\Adapter.cs" />
     <Compile Include="src\util\CelestialBodyInfo.cs" />

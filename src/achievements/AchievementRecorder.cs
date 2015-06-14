@@ -73,20 +73,25 @@ namespace Nereid
 
             public void Record(Ribbon ribbon, Vessel vessel)
             {
-                List<ProtoCrewMember> crew = vessel.GetVesselCrew();
-                CelestialBody body = vessel.mainBody;
-                if (body != null)
-                {
-                    hallOfFame.BeginArwardOfRibbons();
-                    foreach (ProtoCrewMember member in crew)
-                    {
-                       if(!member.IsTourist())
-                       {
-                          Record(ribbon, member);
-                       }
-                    }
-                    hallOfFame.EndArwardOfRibbons();
-                }
+               if(vessel==null)
+               {
+                  Log.Warning("no vessel for recorded ribbon "+ribbon.GetName());
+                  return;
+               }
+               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("recording ribbon "+ribbon.GetName()+" for vessel "+vessel.GetName());
+               List<ProtoCrewMember> crew = vessel.GetVesselCrew();
+               if (crew != null)
+               {
+                  hallOfFame.BeginArwardOfRibbons();
+                  foreach (ProtoCrewMember member in crew)
+                  {
+                     if(!member.IsTourist())
+                     {
+                        Record(ribbon, member);
+                     }
+                  }
+                  hallOfFame.EndArwardOfRibbons();
+               }
             }
         }
 

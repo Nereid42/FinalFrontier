@@ -8,9 +8,9 @@ namespace Nereid
    namespace FinalFrontier
    {
       /**
-       * class for inspecting simple states, such as change in vessel altitute, mach number  or change in Gee-Force
+       * class for observing simple states, such as change in vessel altitute, mach number  or change in Gee-Force
        */
-      public abstract class StateInspector<T>
+      public abstract class StateObserver<T>
       {
          private volatile bool changed = false;
 
@@ -40,7 +40,7 @@ namespace Nereid
          }
       }
 
-      public class MachNumberInspector : StateInspector<Vessel>
+      public class MachNumberObserver : StateObserver<Vessel>
       {
          private int lastMachNumber = 0;
 
@@ -72,7 +72,7 @@ namespace Nereid
          }
       }
 
-      public class AltitudeInspector : StateInspector<Vessel>
+      public class AltitudeObserver : StateObserver<Vessel>
       {
          private long lastAltitudeAsMultipleOf1k = 0;
 
@@ -103,7 +103,7 @@ namespace Nereid
          }
       }
 
-      public class OrbitInspector : StateInspector<Vessel>
+      public class OrbitObserver : StateObserver<Vessel>
       {
          const double MIN_CHANGE_ABS = 1000.0;
          const double MIN_CHANGE_REL = 0.01;
@@ -140,7 +140,7 @@ namespace Nereid
       }
 
 
-      public class GeeForceInspector : StateInspector<Vessel>
+      public class GeeForceObserver : StateObserver<Vessel>
       {
          public const double DURATION = 3.0;
          private const int MAX_GEE = 15;
@@ -148,7 +148,7 @@ namespace Nereid
          private int gSustained = 1;
          private double[] gTimeOf = new double[MAX_GEE];
 
-         public GeeForceInspector()
+         public GeeForceObserver()
          {
             ResetState();
          }
@@ -214,7 +214,7 @@ namespace Nereid
          }
       }
 
-      public class AtmosphereInspector : StateInspector<Vessel>
+      public class AtmosphereObserver : StateObserver<Vessel>
       {
          private bool inAtmosphere = true;
 

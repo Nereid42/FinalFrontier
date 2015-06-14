@@ -157,6 +157,35 @@ namespace Nereid
             Log.Info("- End of Statistics -");
          }
 
+
+         private void AddEntry(HallOfFameEntry entry, bool sort = true)
+         {
+            entries.Add(entry);
+            mapOfEntries.Add(entry.GetName(), entry);
+            // sort entries again
+            if (sort) Sort();
+         }
+
+         private HallOfFameEntry CreateEntry(ProtoCrewMember kerbal, bool sort = true)
+         {
+            lock (dataLock)
+            {
+               if (mapOfEntries.ContainsKey(kerbal.name))
+               {
+                  Log.Warning("hall of fame entry for kerbal " + kerbal.name + " already existing");
+                  HallOfFameEntry entry = mapOfEntries[kerbal.name];
+                  return entry;
+               }
+               else
+               {
+                  Log.Detail("new kerbal hall of fame entry for " + kerbal.name);
+                  HallOfFameEntry entry = new HallOfFameEntry(kerbal);
+                  AddEntry(entry);
+                  return entry;
+               }
+            }
+         }
+
          private HallOfFameEntry CreateEntry(String name, bool sort = true)
          {
             lock(dataLock)
@@ -171,16 +200,13 @@ namespace Nereid
                {
                   Log.Detail("new kerbal hall of fame entry for " + name);
                   HallOfFameEntry entry = new HallOfFameEntry(name);
-                  entries.Add(entry);
-                  mapOfEntries.Add(name, entry);
-                  // sort entries again
-                  if(sort) Sort();
+                  AddEntry(entry);
                   return entry;
                }
             }
          }
 
-         public HallOfFameEntry GetEntry(ProtoCrewMember kerbal)
+         public HallOfFameEntry GetOrCreateEntry(ProtoCrewMember kerbal)
          {
             lock (dataLock)
             {
@@ -200,6 +226,11 @@ namespace Nereid
                }
                return entry;
             }
+         }
+
+         public HallOfFameEntry GetEntry(ProtoCrewMember kerbal)
+         {
+            return GetEntry(kerbal.name); 
          }
 
          public HallOfFameEntry GetEntry(String name)
@@ -230,6 +261,7 @@ namespace Nereid
          }
 
 
+
          private void TakeLog(double time, String code, HallOfFameEntry entry, String text = "")
          {
             LogbookEntry lbentry = TakeLog(time, code, entry.GetName(), text);
@@ -245,7 +277,7 @@ namespace Nereid
          public void RecordMissionFinished(ProtoCrewMember kerbal)
          {
             if (!CheckKerbalType(kerbal)) return;
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -260,7 +292,7 @@ namespace Nereid
 
          public void RecordLaunch(ProtoCrewMember kerbal)
          {
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -276,7 +308,7 @@ namespace Nereid
          public void RecordEva(ProtoCrewMember kerbal, Vessel fromVessel)
          {
             if (!CheckKerbalType(kerbal)) return;
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -292,7 +324,7 @@ namespace Nereid
 
          public void RecordBoarding(ProtoCrewMember kerbal)
          {
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -309,7 +341,7 @@ namespace Nereid
          public void RecordDocking(ProtoCrewMember kerbal)
          {
             if (!CheckKerbalType(kerbal)) return;
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -325,7 +357,7 @@ namespace Nereid
          public void RecordContract(ProtoCrewMember kerbal)
          {
             if (!CheckKerbalType(kerbal)) return;
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -340,7 +372,7 @@ namespace Nereid
 
          public void RecordScience(ProtoCrewMember kerbal, double science)
          {
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             double now = Planetarium.GetUniversalTime();
             if (Log.IsLogable(Log.LEVEL.DETAIL))
             {
@@ -360,7 +392,7 @@ namespace Nereid
          {
             if (!CheckKerbalType(kerbal)) return;
             Log.Detail("Record ribbon "+ribbon.GetName());
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             Achievement achievement = ribbon.GetAchievement();
             double time = currentTransactionTime > 0 ? currentTransactionTime : Planetarium.GetUniversalTime();
             if (!achievement.HasToBeFirst() || !accomplished.Contains(achievement))
@@ -443,7 +475,7 @@ namespace Nereid
          public void Revocation(ProtoCrewMember kerbal, Ribbon ribbon, bool removeSuperseded = false)
          {
             Log.Detail("revocation of ribbon " + ribbon.GetName() + " for kerbal " + kerbal.name);
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             if(entry!=null)
             {
                bool successs = entry.Revocation(ribbon);
@@ -545,6 +577,41 @@ namespace Nereid
             return entries.GetEnumerator();
          }
 
+
+         public void RemoveKerbal(ProtoCrewMember kerbal)
+         {
+            String name = kerbal.name;
+            if(mapOfEntries.ContainsKey(name))
+            {
+               HallOfFameEntry entry = mapOfEntries[name];
+               mapOfEntries.Remove(name);
+               entries.Remove(entry);
+            }
+         }
+
+         public void AddKerbal(ProtoCrewMember kerbal)
+         {
+            String name = kerbal.name;
+            if (!mapOfEntries.ContainsKey(name))
+            {
+               CreateEntry(kerbal);
+            }
+         }
+
+
+         public void UpdateKerbal(ProtoCrewMember kerbal)
+         {
+            String name = kerbal.name;
+            if (mapOfEntries.ContainsKey(name))
+            {
+               HallOfFameEntry entry = mapOfEntries[name];
+               entry.SetKerbal(kerbal);
+            }
+            else
+            {
+               Log.Warning("cant update kerbal "+name+": kerbal not found");
+            }
+         }
 
          private void addLogbookEntry(LogbookEntry log, HallOfFameEntry entry)
          {
@@ -704,7 +771,7 @@ namespace Nereid
          {
             List<Ribbon> result = new List<Ribbon>();
             HashSet<Ribbon> ignored = new HashSet<Ribbon>();
-            HallOfFameEntry entry = GetEntry(kerbal);
+            HallOfFameEntry entry = GetOrCreateEntry(kerbal);
             List<LogbookEntry> log = new List<LogbookEntry>(entry.GetLogRefs());
             log.Reverse();
             bool start = false;
