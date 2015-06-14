@@ -542,23 +542,30 @@ namespace Nereid
 
          private void CheckAchievementsForVessel(VesselState previous, VesselState current, EventReport report, bool hasToBeFirst)
          {
-            foreach (Ribbon ribbon in RibbonPool.Instance())
+            if (current != null)
             {
-               Achievement achievement = ribbon.GetAchievement();
-               if (achievement.HasToBeFirst() == hasToBeFirst)
+               foreach (Ribbon ribbon in RibbonPool.Instance())
                {
-                  Vessel vessel = current.Origin;
-                  // check situationchanges
-                  if (achievement.Check(previous,current))
+                  Achievement achievement = ribbon.GetAchievement();
+                  if (achievement.HasToBeFirst() == hasToBeFirst)
                   {
-                     recorder.Record(ribbon, vessel);
-                  }
-                  // check events
-                  if (report != null && achievement.Check(report))
-                  {
-                     recorder.Record(ribbon, vessel);
+                     Vessel vessel = current.Origin;
+                     // check situationchanges
+                     if (achievement.Check(previous,current))
+                     {
+                        recorder.Record(ribbon, vessel);
+                     }
+                     // check events
+                     if (report != null && achievement.Check(report))
+                     {
+                        recorder.Record(ribbon, vessel);
+                     }
                   }
                }
+            }
+            else
+            {
+               Log.Warning("no current vessel state; achievemnts not checked");
             }
          }
 

@@ -13,7 +13,7 @@ namespace Nereid
       {
          // name of kerbal
          private readonly String name;
-         private volatile ProtoCrewMember kerbal = null;
+         private volatile WeakReference kerbalRef = null;
          // currently awarded ribbons
          private List<Ribbon> ribbons = new List<Ribbon>();
          // previously awarded ribbons , superseded by other ribbons
@@ -54,7 +54,7 @@ namespace Nereid
          {
             Log.Info("creating new hall of fame entry for kerbal "+name);
             this.name = name;
-            this.kerbal = GameUtils.GetKerbalForName(name);
+            this.kerbalRef = null;
             this.IsOnEva = false;
             this.TimeOfLastLaunch = -1;
             this.TimeOfLastEva = -1;
@@ -66,6 +66,12 @@ namespace Nereid
             TotalTimeInEvaWithoutAtmosphere = 0;
             TotalTimeInEvaWithoutOxygen = 0;
             TotalTimeInEvaWithOxygen = 0;
+         }
+
+         public HallOfFameEntry(ProtoCrewMember kerbal)
+            : this(kerbal.name)
+         {
+            this.kerbalRef = new WeakReference(kerbal);
          }
 
          int System.IComparable<HallOfFameEntry>.CompareTo(HallOfFameEntry right)
@@ -123,8 +129,21 @@ namespace Nereid
           */
          public ProtoCrewMember GetKerbal()
          {
-            if (kerbal == null) kerbal = GameUtils.GetKerbalForName(name);
-            return kerbal;
+            if (this.kerbalRef == null || !this.kerbalRef.IsAlive) 
+            {
+               ProtoCrewMember kerbal = GameUtils.GetKerbalForName(name);
+               if(kerbal != null)
+               {
+                  this.kerbalRef = new WeakReference(kerbal);
+                  return kerbal;
+               }
+               else
+               {
+                  this.kerbalRef = null;
+                  return null;
+               }
+            }
+            return (ProtoCrewMember)this.kerbalRef.Target;
          }
 
          /**
@@ -138,11 +157,11 @@ namespace Nereid
             }
             if(name.Equals(kerbal.name))
             {
-               this.kerbal = kerbal;
+               this.kerbalRef = new WeakReference(kerbal);
             }
             else
             {
-               Log.Error("can't change hall of fame entry to different kerbal (from="+this.kerbal.name+",to="+kerbal.name+")");
+               Log.Error("can't change hall of fame entry to different kerbal (from="+name+",to="+kerbal.name+")");
             }
          }
 
@@ -183,11 +202,11 @@ namespace Nereid
           */
          public bool Award(Ribbon ribbon)
          {
-            Log.Detail("awarding ribbon " + ribbon.GetCode()+" to "+kerbal.name);
+            Log.Detail("awarding ribbon " + ribbon.GetCode()+" to "+name);
             // not currently awarded and not superseded by another ribbon
             if (!ribbons.Contains(ribbon) && !supersededRibbons.Contains(ribbon))
             {
-               Log.Detail("new ribbon for kerbal " + kerbal.name + ": " + ribbon.GetName());
+               Log.Detail("new ribbon for kerbal " + name + ": " + ribbon.GetName());
                ribbons.Add(ribbon);
                Achievement achievement = ribbon.GetAchievement();
                achievement.ChangeEntryOnAward(this);
