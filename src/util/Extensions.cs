@@ -46,11 +46,6 @@ namespace Nereid
 
       static class Extensions
       {
-         public static String Limit(this String s, int n, String suffix = "")
-         {
-            if (s.Length > n) return s.Substring(0, n)+suffix;
-            return s;
-         }
 
          public static String Envelope(this String s)
          {
@@ -131,6 +126,11 @@ namespace Nereid
          public static bool IsTourist(this ProtoCrewMember kerbal)
          {
             return kerbal.type == ProtoCrewMember.KerbalType.Tourist;
+         }
+
+         public static bool IsCrew(this ProtoCrewMember kerbal)
+         {
+            return kerbal.type == ProtoCrewMember.KerbalType.Crew;
          }
 
          public static double MachNumber(this Vessel vessel)

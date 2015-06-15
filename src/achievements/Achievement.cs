@@ -945,7 +945,7 @@ namespace Nereid
 
          public override String GetText()
          {
-            return "Awarded for withstanding an acceleration of at least " + value + "g for " + GeeForceInspector.DURATION.ToString("0.0") + " or more seconds";
+            return "Awarded for withstanding an acceleration of at least " + value + "g for " + GeeForceObserver.DURATION.ToString("0.0") + " or more seconds";
          }
       }
 
