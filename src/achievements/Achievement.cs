@@ -18,24 +18,56 @@ namespace Nereid
             this.prestige = prestige;
          }
 
-         public bool Check(VesselState previous, VesselState current) 
-         { 
-            return CheckUncaught(previous, current); 
+         public bool Check(VesselState previous, VesselState current)
+         {
+            try
+            {
+               return CheckUncaught(previous, current);
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
          }
 
          public bool Check(HallOfFameEntry entry)
          {
-            return CheckUncaught(entry); 
+            try
+            {
+               return CheckUncaught(entry);
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
          }
 
-         public bool Check(EventReport report) 
+         public bool Check(EventReport report)
          {
-            return CheckUncaught(report); 
+            try
+            {
+               return CheckUncaught(report);
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
          }
 
-         public bool Check(Contract contract) 
+         public bool Check(Contract contract)
          {
-            return CheckUncaught(contract); 
+            try
+            {
+               return CheckUncaught(contract);
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
          }
 
          protected virtual bool CheckUncaught(VesselState previous, VesselState current) { return false; }
