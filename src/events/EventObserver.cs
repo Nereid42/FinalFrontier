@@ -546,6 +546,29 @@ namespace Nereid
             }
          }
 
+         private void CheckRibbonForVessel(Ribbon ribbon, VesselState previous, VesselState current, EventReport report, bool hasToBeFirst)
+         {
+            if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking ribbon " + ribbon.GetName());
+            Achievement achievement = ribbon.GetAchievement();
+            if (achievement.HasToBeFirst() == hasToBeFirst)
+            {
+               Vessel vessel = current.Origin;
+               // check situation changes
+               if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking change in situation");
+               if (achievement.Check(previous, current))
+               {
+                  recorder.Record(ribbon, vessel);
+               }
+               // check events
+               if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking report");
+               if (report != null && achievement.Check(report))
+               {
+                  recorder.Record(ribbon, vessel);
+               }
+            }
+         }
+
+
          private void CheckAchievementsForVessel(VesselState previous, VesselState current, EventReport report, bool hasToBeFirst)
          {
             Log.Detail("CheckAchievementsForVessel, first=" + hasToBeFirst + ", with report=" + (report!=null));
@@ -553,23 +576,13 @@ namespace Nereid
             {
                foreach (Ribbon ribbon in RibbonPool.Instance())
                {
-                  if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking ribbon "+ribbon.GetName());
-                  Achievement achievement = ribbon.GetAchievement();
-                  if (achievement.HasToBeFirst() == hasToBeFirst)
+                  try
                   {
-                     Vessel vessel = current.Origin;
-                     // check situation changes
-                     if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking change in situation");
-                     if (achievement.Check(previous, current))
-                     {
-                        recorder.Record(ribbon, vessel);
-                     }
-                     // check events
-                     if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("checking report");
-                     if (report != null && achievement.Check(report))
-                     {
-                        recorder.Record(ribbon, vessel);
-                     }
+                     CheckRibbonForVessel(ribbon, previous, current, report, hasToBeFirst);
+                  }
+                  catch(Exception e)
+                  {
+                     Log.Error("exception caught in vessel check: "+e.Message + "("+e.GetType()+")");
                   }
                }
                if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("all ribbons checked");
@@ -608,6 +621,7 @@ namespace Nereid
             CheckAchievementsForVessel(new VesselState(vessel), report);
          }
 
+
          private void CheckAchievementsForCrew(ProtoCrewMember kerbal, bool hasToBeFirst)
          {
             if (kerbal == null) return;
@@ -619,13 +633,20 @@ namespace Nereid
             {
                foreach (Ribbon ribbon in RibbonPool.Instance())
                {
-                  Achievement achievement = ribbon.GetAchievement();
-                  if (achievement.HasToBeFirst() == hasToBeFirst)
+                  try
                   {
-                     if (achievement.Check(entry))
+                     Achievement achievement = ribbon.GetAchievement();
+                     if (achievement.HasToBeFirst() == hasToBeFirst)
                      {
-                        recorder.Record(ribbon, kerbal);
+                        if (achievement.Check(entry))
+                        {
+                           recorder.Record(ribbon, kerbal);
+                        }
                      }
+                  }
+                  catch (Exception e)
+                  {
+                     Log.Error("exception caught in crew check: " + e.Message + "(" + e.GetType() + ")");
                   }
                }
             }
