@@ -160,7 +160,6 @@ namespace Nereid
                entry.TimeOfLastLaunch = -1;
                entry.IsOnEva = false;
             }
-            return false;
          }
 
          public override string CreateLogBookEntry(LogbookEntry entry)

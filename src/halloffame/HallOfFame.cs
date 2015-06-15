@@ -88,9 +88,9 @@ namespace Nereid
          private bool CheckKerbalType(ProtoCrewMember kerbal)
          {
             if(kerbal==null) return false;
-            if (kerbal.IsTourist())
+            if (!kerbal.IsCrew())
             {
-               Log.Warning("record for tourist " + kerbal.name + " ignored");
+               Log.Warning("record for no crew member " + kerbal.name + " ignored");
                return false;
             }
             return true;
