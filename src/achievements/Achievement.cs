@@ -18,10 +18,30 @@ namespace Nereid
             this.prestige = prestige;
          }
 
-         public virtual bool Check(VesselState previous, VesselState current) { return false; }
-         public virtual bool Check(HallOfFameEntry entry) { return false; }
-         public virtual bool Check(EventReport report) { return false; }
-         public virtual bool Check(Contract contract) { return false; }
+         public bool Check(VesselState previous, VesselState current) 
+         { 
+            return CheckUncaught(previous, current); 
+         }
+
+         public bool Check(HallOfFameEntry entry)
+         {
+            return CheckUncaught(entry); 
+         }
+
+         public bool Check(EventReport report) 
+         {
+            return CheckUncaught(report); 
+         }
+
+         public bool Check(Contract contract) 
+         {
+            return CheckUncaught(contract); 
+         }
+
+         protected virtual bool CheckUncaught(VesselState previous, VesselState current) { return false; }
+         protected virtual bool CheckUncaught(HallOfFameEntry entry) { return false; }
+         protected virtual bool CheckUncaught(EventReport report) { return false; }
+         protected virtual bool CheckUncaught(Contract contract) { return false; }
 
          // description of the achievement
          public abstract String GetText();
@@ -76,7 +96,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // only an EVA could be a dangerous EVA
@@ -113,7 +133,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no eva (we dont accept a bathing)
@@ -138,7 +158,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // we need a previous vessel state  
@@ -171,7 +191,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             return entry.TotalMissionTime > value;
          }
@@ -189,7 +209,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             // get kerbal
             ProtoCrewMember kerbal = entry.GetKerbal();
@@ -216,7 +236,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             // no recorded start time of EVA, no EVA
             if (entry.TimeOfLastEva <= 0) return false;
@@ -237,7 +257,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             return entry.TotalEvaTime > value;
          }
@@ -255,7 +275,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             return entry.MissionsFlown >= value;
          }
@@ -273,7 +293,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no EVA
@@ -297,7 +317,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (previous == null) return false;
             if (current == null) return false;
@@ -327,7 +347,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous == null) return false;
@@ -371,7 +391,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no vessel change and no fresh EVA 
@@ -402,7 +422,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no vessel change and no fesh EVA 
@@ -512,7 +532,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -533,7 +553,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous == null) return false;
@@ -563,7 +583,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (!current.HasFlagPlanted) return false;
@@ -587,7 +607,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (previous != null) return false; // just check first EVA event
             if (current == null) return false;
@@ -619,7 +639,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (previous != null) return false; // just check first EVA event
             if (current == null) return false;
@@ -650,7 +670,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.IsEVA) return false; // just check first EVA event
@@ -675,7 +695,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.IsEVA && previous.IsLanded) return false; // just check first EVA event that was no LANDING
@@ -702,7 +722,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             return current.MainBody.Equals(body) && current.InOrbit;
@@ -717,7 +737,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
 
             if (current == null) return false; 
@@ -738,7 +758,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -766,7 +786,7 @@ namespace Nereid
             maxDistanceToSun = innermost.orbit.PeA / 2;
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -787,12 +807,12 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.Situation == Vessel.Situations.DOCKED) return false;
             if (current.Situation != Vessel.Situations.DOCKED) return false;
-            return base.Check(previous, current);
+            return base.CheckUncaught(previous, current);
          }
 
          public override String GetText()
@@ -839,7 +859,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current) 
+         protected override bool CheckUncaught(VesselState previous, VesselState current) 
          {
             if (current == null) return false;
             if (!current.IsLaunch) return false;
@@ -879,7 +899,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (previous == null) return false;
@@ -905,7 +925,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (previous == null) return false;
             if (current == null) return false;
@@ -937,7 +957,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (current.atmDensity < 10.0) return false;
@@ -1004,7 +1024,7 @@ namespace Nereid
             }
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (outermostBodyInSystem == null) return false;
             if(current==null) return false;
@@ -1031,7 +1051,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry) 
+         protected override bool CheckUncaught(HallOfFameEntry entry) 
          {
             if (entry.ContractsCompleted < value) return false;
             return true;
@@ -1051,7 +1071,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             if (entry.Research < value) return false;
             return true;
@@ -1075,7 +1095,7 @@ namespace Nereid
             this.trait = trait;
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             if (kerbal == null) return false;
@@ -1134,7 +1154,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1144,7 +1164,7 @@ namespace Nereid
             return true;
          }
 
-         public override bool Check(VesselState previous, VesselState current) 
+         protected override bool CheckUncaught(VesselState previous, VesselState current) 
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1152,7 +1172,7 @@ namespace Nereid
             return true; 
          }
 
-         public override bool Check(EventReport report) 
+         protected override bool CheckUncaught(EventReport report) 
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1195,19 +1215,19 @@ namespace Nereid
             return true;
          }
 
-         public override bool Check(HallOfFameEntry entry)
+         protected override bool CheckUncaught(HallOfFameEntry entry)
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             if (kerbal == null) return false;
             return Check();
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             return Check();
          }
 
-         public override bool Check(EventReport report)
+         protected override bool CheckUncaught(EventReport report)
          {
             return Check();
          }
@@ -1226,7 +1246,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             // eva required 
             if (!current.IsEVA) return false;
@@ -1249,7 +1269,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(EventReport report)
+         protected override bool CheckUncaught(EventReport report)
          {
             // is a collision event reported?
             if (!report.eventType.Equals(FlightEvents.COLLISION)) return false;
@@ -1277,7 +1297,7 @@ namespace Nereid
          {
          }
 
-         public override bool Check(VesselState previous, VesselState current)
+         protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no EVA, no achievement
