@@ -87,6 +87,7 @@ namespace Nereid
           */
          private bool CheckKerbalType(ProtoCrewMember kerbal)
          {
+            if(kerbal==null) return false;
             if (kerbal.IsTourist())
             {
                Log.Warning("record for tourist " + kerbal.name + " ignored");
@@ -141,20 +142,20 @@ namespace Nereid
           */
          public void DumpStatistics()
          {
-            if(Log.IsLogable(Log.LEVEL.INFO))
+            if(Log.IsLogable(Log.LEVEL.DETAIL))
             {
-               Log.Info("Hall of Fame Statistics: ");
+               Log.Detail("Hall of Fame Statistics: ");
                foreach (HallOfFameEntry entry in entries)
                {
                   String name = entry.GetName();
-                  Log.Info( name + " has " + entry.GetRibbons().Count + " ribbons, "+entry.MissionsFlown+" missions flown in "+entry.TotalMissionTime+" seconds time");
+                  Log.Detail(name + " has " + entry.GetRibbons().Count + " ribbons, " + entry.MissionsFlown + " missions flown in " + entry.TotalMissionTime + " seconds time");
                   if(!mapOfEntries.ContainsKey(name))
                   {
-                     Log.Warning("kerbal " + name + " is not mapped in hall of fame!");
+                     Log.Detail("kerbal " + name + " is not mapped in hall of fame!");
                   }
                }
             }
-            Log.Info("- End of Statistics -");
+            Log.Detail("- End of Statistics -");
          }
 
          private HallOfFameEntry CreateEntry(String name, bool sort = true)
@@ -359,8 +360,15 @@ namespace Nereid
          public void Record(ProtoCrewMember kerbal, Ribbon ribbon)
          {
             if (!CheckKerbalType(kerbal)) return;
-            Log.Detail("Record ribbon "+ribbon.GetName());
+            if(Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("Record ribbon "+ribbon.GetName());
             HallOfFameEntry entry = GetEntry(kerbal);
+            // entry==null should never happen, but to analyze a bug in conjunction with other mods, we do a check
+            if(entry==null)
+            {
+               Log.Error("failed to record ribbon " + ribbon.GetName() + " for kerbal " + kerbal.name + "(type=" + kerbal.type + "), because there is no entry in the hall of fame");
+               Log.Error("please report the previous error in the forum");
+               return;
+            }
             Achievement achievement = ribbon.GetAchievement();
             double time = currentTransactionTime > 0 ? currentTransactionTime : Planetarium.GetUniversalTime();
             if (!achievement.HasToBeFirst() || !accomplished.Contains(achievement))
@@ -375,9 +383,6 @@ namespace Nereid
                }
             }
             currentTransaction.Add(achievement);
-            //
-            // for debugging the lost ribbons issue
-            DumpStatistics();
          }
 
          public void RecordCustomRibbon(Ribbon ribbon)
