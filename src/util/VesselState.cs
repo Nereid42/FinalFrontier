@@ -14,9 +14,12 @@ namespace Nereid
          public Vessel Origin { get; private set; }
          public CelestialBody MainBody { get; private set; }
          public bool IsLanded { get; private set; }
+         public bool IsSplashed { get; private set; }
+         public bool IsLandedOrSplashed { get; private set; }
          public bool IsEVA { get; private set; }
          public bool IsLaunch { get; private set; }
          public bool IsPrelaunch { get; private set; }
+         public bool OnSurface { get; private set; }
          public bool IsInAtmosphere { get; private set; }
          public bool HasFlagPlanted { get; private set; }
          public bool InOrbit { get; private set; }
@@ -43,6 +46,9 @@ namespace Nereid
             this.IsLaunch = false;
             this.IsLanded = vessel.Landed;
             this.IsPrelaunch = (vessel.situation == Vessel.Situations.PRELAUNCH);
+            this.IsSplashed = (vessel.situation == Vessel.Situations.SPLASHED);
+            this.IsLandedOrSplashed = (IsSplashed || IsLanded);
+            this.OnSurface = (IsSplashed || IsLanded || IsPrelaunch);
             this.IsEVA = vessel.isEVA;
             this.HasFlagPlanted = false;
             this.Situation = vessel.situation;
@@ -116,6 +122,7 @@ namespace Nereid
             state.HasFlagPlanted = true;
             return state;
          }
+
 
          public static VesselState CreateLaunchFromVessel(Vessel vessel)
          {

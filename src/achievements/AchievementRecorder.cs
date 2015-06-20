@@ -21,7 +21,7 @@ namespace Nereid
                 List<ProtoCrewMember> crew = vessel.GetVesselCrew();
                 foreach (ProtoCrewMember member in crew)
                 {
-                   if (!member.IsTourist())
+                   if (member.IsCrew())
                    {
                       Log.Info("kerbal " + member.name + " ended a mission ");
                       hallOfFame.RecordMissionFinished(member);
@@ -34,7 +34,7 @@ namespace Nereid
                List<ProtoCrewMember> crew = vessel.GetVesselCrew();
                foreach (ProtoCrewMember member in crew)
                {
-                  if (!member.IsTourist())
+                  if (member.IsCrew())
                   {
                      Log.Info("kerbal " + member.name + " launched");
                      hallOfFame.RecordLaunch(member);
@@ -80,7 +80,8 @@ namespace Nereid
                     hallOfFame.BeginArwardOfRibbons();
                     foreach (ProtoCrewMember member in crew)
                     {
-                       if(!member.IsTourist())
+                       // record crew member only
+                       if(member.IsCrew())
                        {
                           Record(ribbon, member);
                        }

@@ -360,8 +360,8 @@ namespace Nereid
             if (current.Origin.GetTotalMass() <= value) return false;
             // landed?
             if (current.Situation != Vessel.Situations.LANDED) return false;
-            // situation has to change from non-landed to landed (
-            if (!current.IsLanded || previous.IsLanded || previous.IsPrelaunch) return false;
+            // situation has to change from non-landed to landed (prelaunch wont count)
+            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             return true;
          }
 
@@ -386,7 +386,7 @@ namespace Nereid
             // no EVA
             if (current.IsEVA) return false;
             // this has to be a launch
-            if (previous.Situation != Vessel.Situations.LANDED && previous.Situation != Vessel.Situations.PRELAUNCH) return false;
+            if (!previous.IsLanded && !previous.IsSplashed && previous.Situation != Vessel.Situations.PRELAUNCH) return false;
             // if we are not flying this is not a launch
             if (current.Situation != Vessel.Situations.FLYING) return false;
             // check mass
@@ -428,8 +428,7 @@ namespace Nereid
             if (current == null) return false;
             // no vessel change and no fresh EVA 
             if (previous == null) return false;
-            if (current.Situation == Vessel.Situations.PRELAUNCH) return false;
-            if (current.Situation == Vessel.Situations.LANDED) return false;
+            if (current.OnSurface) return false;
             // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
             if (previous.altitude > current.MainBody.MaxAtmosphereAltitude()) return false;
@@ -590,14 +589,14 @@ namespace Nereid
             if (current == null) return false; 
             if (previous == null) return false;
             // Launching wont count
-            if (previous.Situation == Vessel.Situations.PRELAUNCH) return false;
+            if (previous.IsPrelaunch) return false;
             //
             // EVA won't count
             if (current.IsEVA) return false;
             // are we on the correct planet/moon?
             if (!current.MainBody.Equals(body)) return false;
-            // situation has to change from non-landed to landed
-            if (!current.IsLanded || previous.IsLanded || previous.IsPrelaunch) return false;
+            // situation has to change from non-landed to landed ( a splashed will count as a landed )
+            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed  || previous.IsPrelaunch) return false;
             return true;
          }
 
@@ -676,9 +675,9 @@ namespace Nereid
             if (previous != null) return false; // just check first EVA event
             if (current == null) return false;
             if (!current.IsEVA) return false;
-            if (current.Situation == Vessel.Situations.LANDED) return false;
-            if (current.Situation == Vessel.Situations.PRELAUNCH ) return false;
-            if (current.Situation == Vessel.Situations.SPLASHED) return false;
+            if (current.IsLanded) return false;
+            if (current.IsPrelaunch) return false;
+            if (current.IsSplashed) return false;
             // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
             if (current.atmDensity > NO_ATM) return false;

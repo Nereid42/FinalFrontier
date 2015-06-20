@@ -90,7 +90,10 @@ namespace Nereid
             if(kerbal==null) return false;
             if (!kerbal.IsCrew())
             {
-               Log.Warning("record for no crew member " + kerbal.name + " ignored");
+               if (Log.IsLogable(Log.LEVEL.DETAIL))
+               {
+                  Log.Detail("record for kerbal " + kerbal.name + " of type " + kerbal.type + " ignored");
+               }
                return false;
             }
             return true;
@@ -373,9 +376,9 @@ namespace Nereid
             double time = currentTransactionTime > 0 ? currentTransactionTime : Planetarium.GetUniversalTime();
             if (!achievement.HasToBeFirst() || !accomplished.Contains(achievement))
             {
-               if (Log.IsLogable(Log.LEVEL.DETAIL))
+               if (Log.IsLogable(Log.LEVEL.INFO))
                {
-                  Log.Detail("ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
+                  Log.Info("ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
                }
                if(entry.Award(ribbon))
                {

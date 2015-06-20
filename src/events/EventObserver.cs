@@ -132,7 +132,8 @@ namespace Nereid
             {
                foreach (ProtoCrewMember kerbal in vessel.GetVesselCrew())
                {
-                  if (!kerbal.IsTourist())
+                  // we want to check crew member only
+                  if (kerbal.IsCrew())
                   {
                      halloffame.RecordScience(kerbal, science);
                      CheckAchievementsForCrew(kerbal, false);
@@ -600,8 +601,8 @@ namespace Nereid
          private void CheckAchievementsForCrew(ProtoCrewMember kerbal, bool hasToBeFirst)
          {
             if (kerbal == null) return;
-            // we do not want to check tourists
-            if (kerbal.IsTourist()) return;
+            // we want to check crew member only
+            if (!kerbal.IsCrew()) return;
             // ok, lets check this kerbal
             HallOfFameEntry entry = HallOfFame.Instance().GetEntry(kerbal);
             if (entry != null)
@@ -640,8 +641,8 @@ namespace Nereid
          {
 
             if (kerbal == null) return;
-            // we do not want to check tourists
-            if (kerbal.IsTourist()) return;
+            // we want to check crew member only
+            if (!kerbal.IsCrew()) return;
             // ok, lets check the kerbal
             foreach (Ribbon ribbon in RibbonPool.Instance())
             {
@@ -660,8 +661,8 @@ namespace Nereid
          {
             // just for safety
             if (kerbal == null) return;
-            // we do not want to check tourists
-            if (kerbal.IsTourist()) return;
+            // we want to check crew member only
+            if (!kerbal.IsCrew()) return;
             // ok, lets check the kerbal
             Log.Detail("EventObserver:: checkArchivements for kerbal " + kerbal.name);
             Stopwatch sw = new Stopwatch();

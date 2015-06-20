@@ -448,7 +448,7 @@ namespace Nereid
                ProtoCrewMember kerbal = entry.GetKerbal();
                String info = GetInfo(entry);
                String missionTimeInDays = Utils.GameTimeInDaysAsString(entry.TotalMissionTime) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
-               if (kerbal != null && filter.Accept(entry) && !entry.GetKerbal().IsTourist())
+               if (kerbal != null && filter.Accept(entry) && kerbal.IsCrew())
                {
                   String buttonTooltip = kerbal.name + ": " + entry.MissionsFlown + " missions, " + missionTimeInDays + " days mission time";
                   GUILayout.BeginHorizontal(STYLE_KERBAL_AREA_EXPANDED); //expandedEntry ? STYLE_KERBAL_AREA_EXPANDED : STYLE_KERBAL_AREA);          
