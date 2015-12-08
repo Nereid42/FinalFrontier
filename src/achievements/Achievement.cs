@@ -1282,14 +1282,14 @@ namespace Nereid
             // eva required 
             if (!current.IsEVA) return false;
             // Kerbin?
-            if (current.MainBody != null || !current.MainBody.IsKerbin()) return false;
+            if (current.MainBody == null || !current.MainBody.IsKerbin()) return false;
             // are we splashed?
             return current.Situation == Vessel.Situations.SPLASHED;
          }
 
          public override String GetText()
          {
-            return "Awarded for any EVA in Kerbin waters";
+            return "Awarded for any EVA in kerbin waters";
          }
       }
 
