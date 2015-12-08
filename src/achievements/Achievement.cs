@@ -1034,23 +1034,23 @@ namespace Nereid
       }
 
       // BROKEN
-      class DeepSpaceAchievement : Achievement
+      class DeepSpaceOrbitAchievement : Achievement
       {
          CelestialBody outermostBodyInSystem;
-         private readonly double minDistanceToSun;
+         private readonly double minApA;
 
-         public DeepSpaceAchievement(int prestige, bool first)
-            : base("DS" + (first ? "1" : ""), "Deep Space", prestige, first)
+         public DeepSpaceOrbitAchievement(int prestige, bool first)
+            : base("DS" + (first ? "1" : ""), "Deep Space Orbit", prestige, first)
          {
             outermostBodyInSystem = GameUtils.GetOutermostPlanet();
             if (outermostBodyInSystem != null)
             {
-               minDistanceToSun = outermostBodyInSystem.orbit.ApA + outermostBodyInSystem.sphereOfInfluence;
-               Log.Detail("outermost planet for deep space ribbon is " + outermostBodyInSystem.name);
+               minApA = outermostBodyInSystem.orbit.ApA + outermostBodyInSystem.sphereOfInfluence;
+               Log.Detail("outermost planet for deep space ribbon is " + outermostBodyInSystem.name + ", min ApA is " + minApA);
             }
             else
             {
-               minDistanceToSun = 0;
+               minApA = 0;
                Log.Warning("no outermost planet foundfor deep space ribbon");
             }
          }
@@ -1058,11 +1058,11 @@ namespace Nereid
          protected override bool CheckUncaught(VesselState previous, VesselState current)
          {
             if (outermostBodyInSystem == null) return false;
-            if(current==null) return false;
+            if (current == null) return false;
             if (current.MainBody == null) return true;
             if (!current.MainBody.IsSun()) return false;
             if (current.Origin == null) return false;
-            if (GameUtils.GetDistanceToSun(current.Origin) < minDistanceToSun) return false; 
+            if (current.ApA < minApA) return false;
             // yeah! deep space!
             return true;
          }
@@ -1071,7 +1071,7 @@ namespace Nereid
          public override String GetText()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
-            return "Awarded for" + FirstKerbalText().Envelope() + "entering space beyond the orbit of " + outermostBodyInSystem.name;
+            return "Awarded for" + FirstKerbalText().Envelope() + "establishing an orbit with an apoapsis beyond " + outermostBodyInSystem.name;
          }
       }
 
@@ -1343,7 +1343,7 @@ namespace Nereid
 
          public override String GetText()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "on an EVA in a wet environment outside of Kerbin";
+            return "Awarded for" + FirstKerbalText().Envelope() + (HasToBeFirst() ? "on " : "") + "EVA in a wet environment outside of Kerbin";
          }
       }
    }
