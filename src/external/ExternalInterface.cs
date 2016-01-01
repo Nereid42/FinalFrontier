@@ -27,17 +27,34 @@ namespace Nereid.FinalFrontier
          return RibbonPool.Instance().RegisterExternalRibbon(code, pathToRibbonTexture, name, description, first, prestige);
       }
 
-      public void AwardRibbonToKerbal(Ribbon ribbon, ProtoCrewMember kerbal)
+      public void AwardRibbonToKerbal(object ribbon, ProtoCrewMember kerbal)
       {
-
+         if(ribbon==null)
+         {
+            Log.Warning("can't award null ribbon");
+            return;
+         }
+         //
+         Ribbon asRibbon = ribbon as Ribbon;
+         //
+         if(asRibbon==null)
+         {
+            Log.Error("type mismatch for ribbon: "+ribbon.GetType());
+            return;
+         }
+         // record ribbon
+         HallOfFame.Instance().Record(kerbal, asRibbon);
       }
 
       public void AwardRibbonToKerbals(Ribbon ribbon, ProtoCrewMember[] kerbals)
       {
+         HallOfFame halloffame = HallOfFame.Instance();
+         halloffame.BeginArwardOfRibbons();
          foreach(ProtoCrewMember kerbal in kerbals)
          {
-            AwardRibbonToKerbal(ribbon, kerbal);
+            halloffame.Record(kerbal, ribbon);
          }
+         halloffame.EndArwardOfRibbons();
       }
 
 
@@ -49,12 +66,8 @@ namespace Nereid.FinalFrontier
             Log.Error("no ribbon for code '"+code+"' found!");
             return;
          }
+         AwardRibbonToKerbal(ribbon,kerbal);
 
-         HallOfFameEntry entry = HallOfFame.Instance().GetEntry(kerbal);
-         if (entry != null)
-         {
-            entry.Award(ribbon);
-         }
       }
    }
 }
