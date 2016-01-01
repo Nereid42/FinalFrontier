@@ -10,7 +10,7 @@ namespace Nereid
       {
 
          private static readonly GUIStyle STYLE_SUMMARY = new GUIStyle(HighLogic.Skin.scrollView);
-         private static readonly GUIStyle STYLE_NAME = new GUIStyle(FFStyles.STYLE_LABEL);
+         private static readonly GUIStyle STYLE_NAME = new GUIStyle(FFStyles.STYLE_STRETCHEDLABEL);
          private static readonly GUIStyle STYLE_TEXT = new GUIStyle(HighLogic.Skin.label);
          private static readonly GUIStyle STYLE_LINE = new GUIStyle(HighLogic.Skin.label);
 
@@ -56,7 +56,7 @@ namespace Nereid
          {
             Configuration config = FinalFrontier.configuration;
             GUILayout.BeginVertical();
-            GUILayout.Label(vessel!=null?vessel.vesselName:"no vessel",FFStyles.STYLE_LABEL);
+            GUILayout.Label(vessel!=null?vessel.vesselName:"no vessel",FFStyles.STYLE_STRETCHEDLABEL);
             DrawSummary();
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
@@ -100,7 +100,7 @@ namespace Nereid
                         {
                            GUILayout.BeginHorizontal(STYLE_LINE);
                         }
-                        String tooltip = ribbon.GetName() + "\n" + ribbon.GetText();
+                        String tooltip = ribbon.GetName() + "\n" + ribbon.GetDescription();
                         GUILayout.Button(new GUIContent(ribbon.GetTexture(), tooltip), FFStyles.STYLE_RIBBON);
                         n++;
                         if (n % RIBBONS_PER_LINE == 0) GUILayout.EndHorizontal();

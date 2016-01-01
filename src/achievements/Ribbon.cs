@@ -89,9 +89,10 @@ namespace Nereid
             return achievement.GetHashCode();
          }
 
-         public String GetText()
+         public String GetDescription()
          {
-            return achievement.GetText();
+            if (achievement.GetDescription() == null) return ""; // this should never happen, but its better to be safe than sorry
+            return achievement.GetDescription();
          }
 
          public String GetName()

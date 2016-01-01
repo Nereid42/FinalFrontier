@@ -40,7 +40,7 @@ namespace Nereid
                config.Save();
             }
             GUILayout.EndHorizontal();
-            GUILayout.Label("Log Level:",FFStyles.STYLE_LABEL);
+            GUILayout.Label("Log Level:",FFStyles.STYLE_STRETCHEDLABEL);
             GUILayout.BeginHorizontal();
             LogLevelButton(Log.LEVEL.OFF, "OFF");
             LogLevelButton(Log.LEVEL.ERROR, "ERROR");
@@ -56,19 +56,19 @@ namespace Nereid
             }
             // Window Titles
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Hall Of Fame window title:",FFStyles.STYLE_LABEL);
+            GUILayout.Label("Hall Of Fame window title:",FFStyles.STYLE_STRETCHEDLABEL);
             String hallOfFameWindowTitle = FinalFrontier.configuration.GetHallOfFameWindowTitle();
             hallOfFameWindowTitle = GUILayout.TextField(hallOfFameWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
             FinalFrontier.configuration.SetHallOfFameWindowTitle(hallOfFameWindowTitle);
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Decoration Board window title:", FFStyles.STYLE_LABEL);
+            GUILayout.Label("Decoration Board window title:", FFStyles.STYLE_STRETCHEDLABEL);
             String decorationBoardWindowTitle = FinalFrontier.configuration.GetDecorationBoardWindowTitle();
             decorationBoardWindowTitle = GUILayout.TextField(decorationBoardWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
             FinalFrontier.configuration.SetDecorationBoardWindowTitle(decorationBoardWindowTitle);
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Mission Summary window title:", FFStyles.STYLE_LABEL);
+            GUILayout.Label("Mission Summary window title:", FFStyles.STYLE_STRETCHEDLABEL);
             String missionSummaryWindowTitle = FinalFrontier.configuration.GetMissionSummaryWindowTitle();
             missionSummaryWindowTitle = GUILayout.TextField(missionSummaryWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
             FinalFrontier.configuration.SetMissionSummaryWindowTitle(missionSummaryWindowTitle);
@@ -76,7 +76,7 @@ namespace Nereid
             GUILayout.Label("(window titles needs a restart to take effect)", FFStyles.STYLE_RLABEL);
             //
             //
-            GUILayout.Label("Settings:", FFStyles.STYLE_LABEL);
+            GUILayout.Label("Settings:", FFStyles.STYLE_STRETCHEDLABEL);
             // CUSTOM RIBBONS AT SPACE CENTER
             config.SetCustomRibbonAtSpaceCenterEnabled( GUILayout.Toggle(config.IsCustomRibbonAtSpaceCenterEnabled(), "Custom ribbons at space center", FFStyles.STYLE_TOGGLE) );
             // REVOCATION OF RIBBONS

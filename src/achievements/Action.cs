@@ -56,7 +56,17 @@ namespace Nereid
 
          public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
          {
+            if (entry == null)
+            {
+               Log.Error("boarding: no hall of fame entry");
+               return false;
+            }
             ProtoCrewMember kerbal = entry.GetKerbal();
+            if(kerbal==null)
+            {
+               Log.Error("boarding: no kerbal in hall of fame entry");
+               return false;
+            }
             try
             {
                if (entry.TimeOfLastEva >= 0)

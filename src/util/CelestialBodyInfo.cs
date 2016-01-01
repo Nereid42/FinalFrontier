@@ -8,6 +8,9 @@ namespace Nereid
 {
    namespace FinalFrontier
    {
+      /**
+       * This class scans all subfolders of GameData for files with the name "CelestialBodies.info" and reads them to provide external ribbon information.
+       */
       public class CelestialBodyInfo
       {
          private static readonly String ROOT_PATH = Utils.GetRootPath();
@@ -257,8 +260,6 @@ namespace Nereid
             }
             return defaultValue;
          }
-
-
       }
    }
 }

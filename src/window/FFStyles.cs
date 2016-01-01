@@ -82,10 +82,16 @@ namespace Nereid
             get { return _STYLE_TEXTFIELD; }
          }
 
-         private static readonly GUIStyle _STYLE_LABEL = new GUIStyle(HighLogic.Skin.label);
-         public static GUIStyle STYLE_LABEL
+         private static readonly GUIStyle _STYLE_STRETCHEDTEXTFIELD = new GUIStyle(HighLogic.Skin.textField);
+         public static GUIStyle STYLE_STRETCHEDTEXTFIELD
          {
-            get { return _STYLE_LABEL; }
+            get { return _STYLE_STRETCHEDTEXTFIELD; }
+         }
+
+         private static readonly GUIStyle _STYLE_STRETCHEDLABEL = new GUIStyle(HighLogic.Skin.label);
+         public static GUIStyle STYLE_STRETCHEDLABEL
+         {
+            get { return _STYLE_STRETCHEDLABEL; }
          }
 
          private static readonly GUIStyle _STYLE_RLABEL = new GUIStyle(HighLogic.Skin.label);
@@ -153,8 +159,8 @@ namespace Nereid
             STYLE_SINGLE_RIBBON.border = new RectOffset(0, 0, 0, 0);
             STYLE_SINGLE_RIBBON.padding = new RectOffset(0, 0, 0, 0);
             STYLE_SINGLE_RIBBON.margin = new RectOffset(2, 2, 2, 2);
-            STYLE_LABEL.stretchWidth = true;
-            STYLE_LABEL.clipping = TextClipping.Clip;
+            STYLE_STRETCHEDLABEL.stretchWidth = true;
+            STYLE_STRETCHEDLABEL.clipping = TextClipping.Clip;
             STYLE_RLABEL.stretchWidth = true;
             STYLE_RLABEL.clipping = TextClipping.Clip;
             STYLE_RLABEL.alignment = TextAnchor.MiddleRight;
@@ -222,6 +228,7 @@ namespace Nereid
             STYLE_LABEL_OFF5.margin = new RectOffset(5, 5, 5, 5);
             STYLE_LABEL_OFF5.padding = new RectOffset(0, 0, 0, 0);
             STYLE_SCROLLVIEW.alignment = TextAnchor.UpperLeft;
+            STYLE_STRETCHEDTEXTFIELD.stretchWidth = true;
          }
       }
    }

@@ -9,7 +9,7 @@ namespace Nereid
       {
          public enum LEVEL { OFF=0, ERROR=1, WARNING=2, INFO=3, DETAIL=4, TRACE=5 };
 
-         public  static LEVEL level = LEVEL.INFO ;
+         public static LEVEL level = LEVEL.INFO ;
 
          private static readonly String PREFIX = "FF: ";
 
@@ -24,10 +24,6 @@ namespace Nereid
             Log.level = level;
          }
 
-         public static LEVEL GetLogLevel()
-         {
-            return level;
-         }
 
          private static bool IsLevel(LEVEL level)
          {

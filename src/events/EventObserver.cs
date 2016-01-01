@@ -35,9 +35,6 @@ namespace Nereid
          private readonly AtmosphereInspector atmosphereInspector = new AtmosphereInspector();
          private readonly OrbitInspector orbitInspector = new OrbitInspector();
 
-         //
-         //private MissionSummaryWindow missionSummaryWindow; 
-
 
          public EventObserver()
          {
@@ -81,19 +78,17 @@ namespace Nereid
             GameEvents.onKerbalStatusChange.Add(this.OnKerbalStatusChange);
          }
 
-         public void OnFlyBy(Vessel vessel,CelestialBody body)
+         private void OnFlyBy(Vessel vessel,CelestialBody body)
          {
             // for later usage
          }
 
-         public void OnFlightReady()
+         private void OnFlightReady()
          {
             // for later usage
          }
 
-         
-
-         public void OnOrbit(Vessel vessel, CelestialBody body)
+         private void OnOrbit(Vessel vessel, CelestialBody body)
          {
             if (vessel == null) return;
             Log.Info("vessel " + vessel.name + " has reached orbit around "+body.name);
@@ -104,7 +99,7 @@ namespace Nereid
          }
 
          // wont detect zero atmosphere, because state SUB_ORBITAL begins above atmosphere height
-         public void OnReachSpace(Vessel vessel)
+         private void OnReachSpace(Vessel vessel)
          {
             if (vessel == null) return;
             Log.Info("vessel "+vessel.name+" has reached space");
@@ -115,13 +110,13 @@ namespace Nereid
          }
 
          // KSP 1.0 (wont work anymore)
-         public void OnScienceReceived(float science, ScienceSubject subject, ProtoVessel vessel)
+         private void OnScienceReceived(float science, ScienceSubject subject, ProtoVessel vessel)
          {
             OnScienceReceived(science, subject, vessel, true);
          }
 
 
-         public void OnScienceReceived(float science, ScienceSubject subject, ProtoVessel vessel, bool flag)
+         private void OnScienceReceived(float science, ScienceSubject subject, ProtoVessel vessel, bool flag)
          {
             Log.Detail("EventObserver::OnScienceReceived: " + science + ", flag=" + flag);
             if (vessel == null) return;
@@ -147,7 +142,7 @@ namespace Nereid
             }
          }
 
-         public void OnContractCompleted(Contract contract)
+         private void OnContractCompleted(Contract contract)
          {
             Vessel vessel = FlightGlobals.ActiveVessel;
             if(vessel==null) return;
@@ -169,7 +164,7 @@ namespace Nereid
             }
          }
 
-         public void OnKerbalAdded(ProtoCrewMember kerbal)
+         private void OnKerbalAdded(ProtoCrewMember kerbal)
          {
             Log.Info("kerbal added: " + kerbal.name);
             // just make sure this kerbal is in the hall of fame
@@ -178,19 +173,19 @@ namespace Nereid
             HallOfFame.Instance().Refresh();
          }
 
-         public void OnKerbalRemoved(ProtoCrewMember kerbal)
+         private void OnKerbalRemoved(ProtoCrewMember kerbal)
          {
             Log.Info("kerbal removed: "+kerbal.name);
             HallOfFame.Instance().Refresh();
          }
 
-         public void OnKerbalStatusChange(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
+         private void OnKerbalStatusChange(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
          {
             Log.Info("kerbal status change: " + kerbal.name + " from "+oldState+" to "+ newState);
             HallOfFame.Instance().Refresh();
          }
 
-         public void OnProgressAchieved(ProgressNode node)
+         private void OnProgressAchieved(ProgressNode node)
          {
             //Log.Test("EventObserver::OnProgressAchieved");
          }
@@ -246,7 +241,7 @@ namespace Nereid
             }
          }
 
-         public void OnVesselOrbitClosed(Vessel vessel)
+         private void OnVesselOrbitClosed(Vessel vessel)
          {
             orbitClosed = true;
             Log.Detail("EventObserver:: OnVesselOrbitClosed " + vessel.GetName());
@@ -256,7 +251,7 @@ namespace Nereid
             }
          }
 
-         public void OnEnteringDeepAthmosphere(Vessel vessel)
+         private void OnEnteringDeepAthmosphere(Vessel vessel)
          {
             Log.Detail("EventObserver:: OnEnteringDeepAthmosphere " + vessel.GetName() );
             if (vessel.isActiveVessel)
@@ -265,7 +260,7 @@ namespace Nereid
             }
          }
 
-         public void OnLandedVesselMove(Vessel vessel)
+         private void OnLandedVesselMove(Vessel vessel)
          {
             Log.Detail("EventObserver:: OnLandedVesselMove " + vessel.GetName());
             if (vessel.isActiveVessel)
@@ -273,9 +268,7 @@ namespace Nereid
                VesselState vesselState = new VesselState(vessel);
                CheckAchievementsForVessel(vesselState.MovedOnSurface());
             }
-         }
-
-         
+         }     
          
          private void OnCollision(EventReport report)
          {

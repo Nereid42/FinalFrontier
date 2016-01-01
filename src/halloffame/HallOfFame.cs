@@ -163,7 +163,8 @@ namespace Nereid
 
          private HallOfFameEntry CreateEntry(String name, bool sort = true)
          {
-            lock(dataLock)
+            Log.Detail("creating entry "+name);
+            lock (dataLock)
             {
                if (mapOfEntries.ContainsKey(name))
                {
@@ -400,7 +401,7 @@ namespace Nereid
                   Log.Detail("new or changed custom ribbon " + ribbon.GetName() + " recorded  at " + Utils.ConvertToKerbinTime(now));
                }
                String code = DataChange.DATACHANGE_CUSTOMRIBBON.GetCode() + nr;
-               TakeLog(now, code, achievement.GetName(), achievement.GetText());
+               TakeLog(now, code, achievement.GetName(), achievement.GetDescription());
             }
             else
             {
@@ -508,6 +509,7 @@ namespace Nereid
                Log.Detail("no ongoing game: no refresh");
                return;
             }
+            Log.Test("scanning crew roster");
             foreach (ProtoCrewMember kerbal in game.CrewRoster.Crew)
             {
                if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("refreshing kerbal "+kerbal.name+" in hall of fame");

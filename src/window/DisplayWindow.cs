@@ -229,7 +229,7 @@ namespace Nereid
                   {
                      selected = ribbon;
                      customRibbonName = achievement.GetName();
-                     customRibbonText = achievement.GetText();
+                     customRibbonText = achievement.GetDescription();
                   }
                   GUILayout.Label(achievement.GetName(), FFStyles.STYLE_RIBBON_LABEL);
                   GUILayout.EndHorizontal();
@@ -306,7 +306,7 @@ namespace Nereid
             }
 
             // changed name or text?
-            if (!achievement.GetText().Equals(customRibbonText) || !achievement.GetName().Equals(customRibbonName))
+            if (!achievement.GetDescription().Equals(customRibbonText) || !achievement.GetName().Equals(customRibbonName))
             {
                Log.Detail("name or text change of ribbon " + selected.GetCode());
                // change name and text
@@ -363,7 +363,7 @@ namespace Nereid
 
             GUILayout.BeginVertical();
             if (entry == null) return;
-            GUILayout.Label("Select ribbons for revocation", FFStyles.STYLE_LABEL);
+            GUILayout.Label("Select ribbons for revocation", FFStyles.STYLE_STRETCHEDLABEL);
             scrollPosRevoRib = GUILayout.BeginScrollView(scrollPosRevoRib, FFStyles.STYLE_SCROLLVIEW);
             foreach (Ribbon ribbon in entry.GetRibbons())
             {

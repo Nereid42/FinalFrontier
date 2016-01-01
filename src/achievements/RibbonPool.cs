@@ -37,9 +37,8 @@ namespace Nereid
          private readonly List<Ribbon> customRibbons = new List<Ribbon>();
          private readonly Dictionary<int, Ribbon> customMap = new Dictionary<int,Ribbon>();
 
-         // contract ribbons
-         private readonly List<Ribbon> contractRibbons = new List<Ribbon>();
-         //private readonly Dictionary<int, Ribbon> contractMap = new Dictionary<int, Ribbon>();
+         // external ribbons
+         private readonly List<Ribbon> externalRibbons = new List<Ribbon>();
 
 
          // -- special ribbons --
@@ -109,7 +108,6 @@ namespace Nereid
          private void CreateRibbons()
          {
             Log.Info("creating ribbons in pool");
-            Clear();
             //
 
             // mapping for celestial bodies
@@ -655,19 +653,15 @@ namespace Nereid
             return ribbonsCreated;
          }
 
-         public void AddContractRibbon(Ribbon ribbon)
+         public Ribbon RegisterExternalRibbon(String code, String pathToRibbonTexture, String name, String description, bool first = false, int prestige = 0)
          {
-            Log.Detail("adding contract ribbon "+ribbon);
-            contractRibbons.Add(ribbon);
+            Log.Info("adding external ribbon " + name + " (code "+code+") ");
+            Achievement achievement = new ExternalAchievement(code, name, prestige, first, description);
+            Ribbon ribbon = new Ribbon(pathToRibbonTexture, achievement);
+            externalRibbons.Add(ribbon);
             Add(ribbon);
+            return ribbon;
          }
-
-         public void AddContractRibbon(Achievement achievement, String textureName, Ribbon supersedeRibbon = null)
-         {
-            Ribbon ribbon = new Ribbon(textureName, achievement, supersedeRibbon);
-            AddContractRibbon(ribbon);
-         }
-
       }
    }
 }

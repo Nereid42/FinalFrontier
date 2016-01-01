@@ -58,10 +58,12 @@
     <Compile Include="src\achievements\Activity.cs" />
     <Compile Include="src\achievements\ActivityPool.cs" />
     <Compile Include="src\achievements\DataChange.cs" />
+    <Compile Include="src\achievements\ExternalAchievement.cs" />
     <Compile Include="src\achievements\Ribbon.cs" />
     <Compile Include="src\achievements\RibbonPool.cs" />
     <Compile Include="src\achievements\RibbonSupersedeChain.cs" />
     <Compile Include="src\events\EventObserver.cs" />
+    <Compile Include="src\external\ExternalInterface.cs" />
     <Compile Include="src\FinalFrontier.cs" />
     <Compile Include="src\halloffame\HallOfFame.cs" />
     <Compile Include="src\halloffame\HallOfFameEntry.cs" />

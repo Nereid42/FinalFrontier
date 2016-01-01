@@ -488,7 +488,7 @@ namespace Nereid
                ribbonBrowser.SetVisible(false);
                display.SetVisible(false);
             }
-            GUILayout.Label("", FFStyles.STYLE_LABEL);
+            GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL);
             if (GUILayout.Button("Ribbons", FFStyles.STYLE_BUTTON))
             {
                if(!ribbonBrowser.IsVisible())
@@ -500,8 +500,8 @@ namespace Nereid
                   ribbonBrowser.SetVisible(false);
                }
             }
-            GUILayout.Label("", FFStyles.STYLE_LABEL);
-            GUILayout.Label("Filter:", FFStyles.STYLE_LABEL);
+            GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL);
+            GUILayout.Label("Filter:", FFStyles.STYLE_STRETCHEDLABEL);
             if (GUILayout.Toggle(filter.showDead, "dead", FFStyles.STYLE_TOGGLE)) filter.showDead = true; else filter.showDead = false;
             if (GUILayout.Toggle(filter.showAssigned, "active", FFStyles.STYLE_TOGGLE)) filter.showAssigned = true; else filter.showAssigned = false;
             if (GUILayout.Toggle(filter.showAvailable, "available", FFStyles.STYLE_TOGGLE)) filter.showAvailable = true; else filter.showAvailable = false;
@@ -510,13 +510,13 @@ namespace Nereid
             {
                if (GUILayout.Toggle(filter.showFlightOnly, "flight only", FFStyles.STYLE_TOGGLE)) filter.showFlightOnly = true; else filter.showFlightOnly = false;
             }
-            GUILayout.Label("", FFStyles.STYLE_LABEL); // fixed space
+            GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL); // fixed space
 
             // sorter
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Sort by:", FFStyles.STYLE_LABEL);
+            GUILayout.Label("Sort by:", FFStyles.STYLE_STRETCHEDLABEL);
             DrawSorterButtons();
-            GUILayout.Label("", FFStyles.STYLE_LABEL); // fixed space
+            GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL); // fixed space
 
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Config", FFStyles.STYLE_BUTTON))
@@ -646,7 +646,7 @@ namespace Nereid
             foreach (Ribbon ribbon in ribbons)
             {
                if (n % RIBBONS_PER_LINE == 0) GUILayout.BeginHorizontal();
-               String tooltip = ribbon.GetName() + "\n" + ribbon.GetText();
+               String tooltip = ribbon.GetName() + "\n" + ribbon.GetDescription();
                GUILayout.Button(new GUIContent(ribbon.GetTexture(), tooltip), FFStyles.STYLE_RIBBON);
                n++;
                if (n % RIBBONS_PER_LINE == 0) GUILayout.EndHorizontal();
