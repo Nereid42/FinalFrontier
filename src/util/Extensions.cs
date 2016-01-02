@@ -53,6 +53,11 @@ namespace Nereid
             return " " + s.Trim() + " ";
          }
 
+         public static bool ContainsIgnoringCase(this string s, string infix)
+         {
+            return s.IndexOf(infix, StringComparison.OrdinalIgnoreCase) >= 0;
+         }
+
          public static bool isInStableOrbit(this Vessel vessel)
          {
             Orbit orbit = vessel.orbit;

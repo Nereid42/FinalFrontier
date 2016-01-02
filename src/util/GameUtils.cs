@@ -84,30 +84,52 @@ namespace Nereid
             return GetCelestialBody("Sun");
          }
 
+         public static CelestialBody GetKerbol()
+         {
+            CelestialBody homeworld = GetHomeworld();
+            if (homeworld != null)
+            {
+               if(homeworld.orbit !=null)
+               {
+                  return homeworld.orbit.referenceBody;;
+               }
+            }
+            return null;
+         }
+
          // BROKEN: needs to b fixed
          public static CelestialBody GetOutermostPlanet()
          {
             CelestialBody result = null;
-            //double distanceFromSun = 0;
-            //Log.Test("OUTMOST START " + PSystemManager.Instance);
-            //Log.Test("OUTMOST BODIES " + PSystemManager.Instance.localBodies);
+            double distanceFromSun = 0;
+
+            CelestialBody center = GetKerbol();
+            if (center == null)
+            {
+               Log.Error("no central star found; cant get outermost planet");
+               return null;
+            }
+
             if (PSystemManager.Instance == null || PSystemManager.Instance.localBodies == null) return null;
             foreach (CelestialBody body in PSystemManager.Instance.localBodies)
             {
-               //Log.Test("IN LOOP");
-               //Log.Test("name: "+body.name);
-               /*if(body.orbit!=null)
+               //Log.Test("testing "+body.name);
+               if(body.orbit!=null)
                {
-                  Log.Test("OUTMOST " + body.name + " " + body.orbit);
-                  Log.Test("ORBIT");
-                  double d = body.orbit.ApA;
-                  Log.Test("outmost APA=" + d);
-                  if (d > distanceFromSun)
+                  Orbit orbit = body.orbit;
+                  if(center.Equals(orbit.referenceBody))
                   {
-                     result = body;
-                     distanceFromSun = d;
+                     //Log.Test("OUTMOST " + body.name + " " + body.orbit);
+                     //Log.Test("ORBIT");
+                     double d = body.orbit.ApA;
+                     //Log.Test("outmost APA=" + d);
+                     if (d > distanceFromSun)
+                     {
+                        result = body;
+                        distanceFromSun = d;
+                     }
                   }
-               }*/
+               }
             }
             if (result==null) Log.Error("no outmost celestial body found");
             return result;

@@ -40,7 +40,7 @@ namespace Nereid.FinalFrontier
             Log.Error("no ribbon for code '"+code+"' found!");
             return;
          }
-         AwardRibbonToKerbal(ribbon,kerbal);
+         AwardRibbonToKerbal((object)ribbon, kerbal);
       }
 
       public void AwardRibbonToKerbals(object ribbon, ProtoCrewMember[] kerbals)
@@ -63,6 +63,21 @@ namespace Nereid.FinalFrontier
             return;
          }
          AwardRibbonToKerbals(ribbon, kerbals);
+      }
+
+      public bool IsRibbonAwardedToKerbal(object ribbon, ProtoCrewMember kerbal)
+      {
+         HallOfFame halloffame = HallOfFame.Instance();
+         HallOfFameEntry entry = halloffame.GetEntry(kerbal);
+         if (entry == null) return false;
+         return entry.HasRibbon((Ribbon)ribbon);
+      }
+
+      public bool IsRibbonAwardedToKerbal(String code, ProtoCrewMember kerbal)
+      {
+         Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
+         if (ribbon == null) return false;
+         return IsRibbonAwardedToKerbal((object)ribbon, kerbal);
       }
    }
 }

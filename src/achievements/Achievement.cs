@@ -22,7 +22,7 @@ namespace Nereid
          {
             try
             {
-               return CheckUncaught(previous, current);
+               return CheckVesselState(previous, current);
             }
             catch (Exception e)
             {
@@ -35,7 +35,7 @@ namespace Nereid
          {
             try
             {
-               return CheckUncaught(entry);
+               return CheckEntry(entry);
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@ namespace Nereid
          {
             try
             {
-               return CheckUncaught(report);
+               return CheckEventReport(report);
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace Nereid
          {
             try
             {
-               return CheckUncaught(contract);
+               return CheckContract(contract);
             }
             catch (Exception e)
             {
@@ -70,10 +70,25 @@ namespace Nereid
             }
          }
 
-         protected virtual bool CheckUncaught(VesselState previous, VesselState current) { return false; }
-         protected virtual bool CheckUncaught(HallOfFameEntry entry) { return false; }
-         protected virtual bool CheckUncaught(EventReport report) { return false; }
-         protected virtual bool CheckUncaught(Contract contract) { return false; }
+
+         public bool Check(ProgressNode node)
+         {
+            try
+            {
+               return CheckProgress(node);
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
+         }
+
+         protected virtual bool CheckVesselState(VesselState previous, VesselState current) { return false; }
+         protected virtual bool CheckEntry(HallOfFameEntry entry) { return false; }
+         protected virtual bool CheckEventReport(EventReport report) { return false; }
+         protected virtual bool CheckContract(Contract contract) { return false; }
+         protected virtual bool CheckProgress(ProgressNode node) { return false; }
 
          // description of the achievement
          public abstract String GetDescription();
@@ -128,7 +143,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // only an EVA could be a dangerous EVA
@@ -165,7 +180,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no eva (we dont accept a bathing)
@@ -190,7 +205,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // we need a previous vessel state  
@@ -223,7 +238,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             return entry.TotalMissionTime > value;
          }
@@ -241,7 +256,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             // get kerbal
             ProtoCrewMember kerbal = entry.GetKerbal();
@@ -268,7 +283,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             // no recorded start time of EVA, no EVA
             if (entry.TimeOfLastEva <= 0) return false;
@@ -289,7 +304,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             return entry.TotalEvaTime > value;
          }
@@ -307,7 +322,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             return entry.MissionsFlown >= value;
          }
@@ -325,7 +340,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no EVA
@@ -349,7 +364,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (previous == null) return false;
             if (current == null) return false;
@@ -379,7 +394,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous == null) return false;
@@ -423,7 +438,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no vessel change and no fresh EVA 
@@ -453,7 +468,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no vessel change and no fesh EVA 
@@ -563,7 +578,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -584,7 +599,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous == null) return false;
@@ -614,7 +629,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (!current.HasFlagPlanted) return false;
@@ -638,7 +653,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (previous != null) return false; // just check first EVA event
             if (current == null) return false;
@@ -670,7 +685,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (previous != null) return false; // just check first EVA event
             if (current == null) return false;
@@ -701,7 +716,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.IsEVA) return false; // just check first EVA event
@@ -726,7 +741,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.IsEVA && previous.IsLanded) return false; // just check first EVA event that was no LANDING
@@ -753,7 +768,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             return current.MainBody.Equals(body) && current.InOrbit;
@@ -768,7 +783,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
 
             if (current == null) return false; 
@@ -789,7 +804,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -817,7 +832,7 @@ namespace Nereid
             maxDistanceToSun = innermost.orbit.PeA / 2;
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (!current.MainBody.Equals(body)) return false;
@@ -838,12 +853,12 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false; 
             if (previous != null && previous.Situation == Vessel.Situations.DOCKED) return false;
             if (current.Situation != Vessel.Situations.DOCKED) return false;
-            return base.CheckUncaught(previous, current);
+            return base.CheckVesselState(previous, current);
          }
 
          public override String GetDescription()
@@ -890,7 +905,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current) 
+         protected override bool CheckVesselState(VesselState previous, VesselState current) 
          {
             if (current == null) return false;
             if (!current.IsLaunch) return false;
@@ -930,7 +945,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (previous == null) return false;
@@ -956,7 +971,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (previous == null) return false;
             if (current == null) return false;
@@ -988,7 +1003,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             if (current.atmDensity < 10.0) return false;
@@ -1033,36 +1048,39 @@ namespace Nereid
          }
       }
 
-      // BROKEN
-      class DeepSpaceOrbitAchievement : Achievement
+      class DeepSpaceAchievement : Achievement
       {
+         CelestialBody kerbol;
          CelestialBody outermostBodyInSystem;
-         private readonly double minApA;
+         private readonly double minDistance;
 
-         public DeepSpaceOrbitAchievement(int prestige, bool first)
-            : base("DS" + (first ? "1" : ""), "Deep Space Orbit", prestige, first)
+         public DeepSpaceAchievement(int prestige, bool first)
+            : base("DS" + (first ? "1" : ""), "Deep Space", prestige, first)
          {
+            kerbol = GameUtils.GetKerbol();
             outermostBodyInSystem = GameUtils.GetOutermostPlanet();
+
             if (outermostBodyInSystem != null)
             {
-               minApA = outermostBodyInSystem.orbit.ApA + outermostBodyInSystem.sphereOfInfluence;
-               Log.Detail("outermost planet for deep space ribbon is " + outermostBodyInSystem.name + ", min ApA is " + minApA);
+               minDistance = outermostBodyInSystem.orbit.ApA + outermostBodyInSystem.sphereOfInfluence;
+               Log.Detail("outermost planet for deep space ribbon is " + outermostBodyInSystem.name + ", min ApA is " + minDistance);
             }
             else
             {
-               minApA = 0;
+               minDistance = 0;
                Log.Warning("no outermost planet foundfor deep space ribbon");
             }
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
+            if (kerbol == null) return false;
             if (outermostBodyInSystem == null) return false;
             if (current == null) return false;
             if (current.MainBody == null) return true;
-            if (!current.MainBody.IsSun()) return false;
+            if (!current.MainBody.Equals(kerbol)) return false;
             if (current.Origin == null) return false;
-            if (current.ApA < minApA) return false;
+            if (current.altitude < minDistance) return false;
             // yeah! deep space!
             return true;
          }
@@ -1071,7 +1089,7 @@ namespace Nereid
          public override String GetDescription()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
-            return "Awarded for" + FirstKerbalText().Envelope() + "establishing an orbit with an apoapsis beyond " + outermostBodyInSystem.name;
+            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyound the sphere of influence of " + outermostBodyInSystem.name;
          }
       }
 
@@ -1082,7 +1100,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry) 
+         protected override bool CheckEntry(HallOfFameEntry entry) 
          {
             if (entry.ContractsCompleted < value) return false;
             return true;
@@ -1102,7 +1120,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             if (entry.Research < value) return false;
             return true;
@@ -1126,7 +1144,7 @@ namespace Nereid
             this.trait = trait;
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             if (kerbal == null) return false;
@@ -1185,7 +1203,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1195,7 +1213,7 @@ namespace Nereid
             return true;
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current) 
+         protected override bool CheckVesselState(VesselState previous, VesselState current) 
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1203,7 +1221,7 @@ namespace Nereid
             return true; 
          }
 
-         protected override bool CheckUncaught(EventReport report) 
+         protected override bool CheckEventReport(EventReport report) 
          {
             DateTime now = DateTime.Now;
             if (now < FirstTimeOfDuty) return false;
@@ -1246,19 +1264,19 @@ namespace Nereid
             return true;
          }
 
-         protected override bool CheckUncaught(HallOfFameEntry entry)
+         protected override bool CheckEntry(HallOfFameEntry entry)
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             if (kerbal == null) return false;
             return Check();
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             return Check();
          }
 
-         protected override bool CheckUncaught(EventReport report)
+         protected override bool CheckEventReport(EventReport report)
          {
             return Check();
          }
@@ -1277,7 +1295,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             // eva required 
             if (!current.IsEVA) return false;
@@ -1300,7 +1318,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(EventReport report)
+         protected override bool CheckEventReport(EventReport report)
          {
             // is a collision event reported?
             if (!report.eventType.Equals(FlightEvents.COLLISION)) return false;
@@ -1319,7 +1337,6 @@ namespace Nereid
          }
       }
 
-
       class WetEvaAchievement : Achievement
       {
 
@@ -1328,7 +1345,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckUncaught(VesselState previous, VesselState current)
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
             if (current == null) return false;
             // no EVA, no achievement
@@ -1344,6 +1361,100 @@ namespace Nereid
          public override String GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + (HasToBeFirst() ? "on " : "") + "EVA in a wet environment outside of Kerbin";
+         }
+      }
+
+
+      class AltitudeRecordAchievement : Achievement
+      {
+         public AltitudeRecordAchievement(int prestige)
+            : base("RA", "Altitude Record", prestige, false)
+         {
+         }
+
+         protected override bool CheckProgress(ProgressNode node)
+         {
+            KSPAchievements.RecordsAltitude record = node as KSPAchievements.RecordsAltitude;
+            if (record == null) return false;
+            if (!record.IsReached) return false;
+            if (record.record <= 0) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for any altitude record";
+         }
+      }
+
+      class DepthRecordAchievement : Achievement
+      {
+         public DepthRecordAchievement(int prestige)
+            : base("RU", "Depth Record", prestige, false)
+         {
+         }
+
+         protected override bool CheckProgress(ProgressNode node)
+         {
+            KSPAchievements.RecordsDepth record = node as KSPAchievements.RecordsDepth;
+            if (record == null) return false;
+            if (!record.IsReached) return false;
+            if (record.record >= 0) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for any depth record";
+         }
+      }
+
+      class DistanceRecordAchievement : Achievement
+      {
+         private const double MIN_DISTANCE = 10000;
+
+         public DistanceRecordAchievement(int prestige)
+            : base("RD", "Distance Record", prestige, false)
+         {
+         }
+
+         protected override bool CheckProgress(ProgressNode node)
+         {
+            KSPAchievements.RecordsDistance record = node as KSPAchievements.RecordsDistance;
+            if (record == null) return false;
+            if (!record.IsReached) return false;
+            if (record.record <= MIN_DISTANCE) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for any distance record greater than " + MIN_DISTANCE/1000 + " km";
+         }
+      }
+
+      class SpeedRecordAchievement : Achievement
+      {
+         private const double MIN_SPEED = 100;
+
+         public SpeedRecordAchievement(int prestige)
+            : base("RS", "Speed Record", prestige, false)
+         {
+         }
+
+         protected override bool CheckProgress(ProgressNode node)
+         {
+            KSPAchievements.RecordsSpeed record = node as KSPAchievements.RecordsSpeed;
+            if (record == null) return false;
+            if (!record.IsReached) return false;
+            if (record.record <= 0) return false;
+            if (record.record <= MIN_SPEED) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for any speed record greater than " + MIN_SPEED +" m/s";
          }
       }
    }

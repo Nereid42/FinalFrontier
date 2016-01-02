@@ -49,6 +49,13 @@ namespace Nereid
                }
             }
             Log.Info(gamesWithLegacyData.Count+" games with legacy data found");
+            // no more scans needed?
+            if (gamesWithLegacyData.Count==0)
+            {
+               Log.Info("scan of save games for legacy data disabled");
+               FinalFrontier.configuration.convertGames = false;
+               FinalFrontier.configuration.Save();
+            }
             return true;
          }
 

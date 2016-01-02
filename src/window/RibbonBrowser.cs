@@ -24,7 +24,6 @@ namespace Nereid
 
          }
 
-
          protected override void OnWindow(int id)
          {
             GUILayout.BeginVertical();
@@ -43,7 +42,7 @@ namespace Nereid
             {
                String name = ribbon.GetName();
                String description = ribbon.GetDescription();
-               if(search == null || search.Trim().Length==0 || name.Contains(search) || description.Contains(search))
+               if (search == null || search.Trim().Length == 0 || name.ContainsIgnoringCase(search) || description.ContainsIgnoringCase(search))
                {
                   GUILayout.BeginHorizontal(FFStyles.STYLE_RIBBON_AREA);
                   GUILayout.Label(ribbon.GetTexture(), FFStyles.STYLE_SINGLE_RIBBON);

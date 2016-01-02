@@ -59,8 +59,12 @@ namespace Nereid
                List<ProtoCrewMember> crew = vessel.GetVesselCrew();
                foreach (ProtoCrewMember member in crew)
                {
-                  Log.Info("kerbal " + member.name + " docked");
-                  hallOfFame.RecordDocking(member);
+                  // record crew member only
+                  if (member.IsCrew())
+                  {
+                     Log.Info("kerbal " + member.name + " docked");
+                     hallOfFame.RecordDocking(member);
+                  }
                }
             }
 

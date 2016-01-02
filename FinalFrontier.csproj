@@ -7,7 +7,7 @@
     <ProjectGuid>{9C4541A0-20AB-431F-8C4A-E729F0E90B59}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FinalFrontier</RootNamespace>
+    <RootNamespace>Nereid.FinalFrontier</RootNamespace>
     <AssemblyName>FinalFrontier</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

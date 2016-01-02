@@ -76,11 +76,17 @@ namespace Nereid
             GameEvents.onKerbalAdded.Add(this.OnKerbalAdded);
             GameEvents.onKerbalRemoved.Add(this.OnKerbalRemoved);
             GameEvents.onKerbalStatusChange.Add(this.OnKerbalStatusChange);
+            //
+            // Other
+            GameEvents.OnProgressAchieved.Add(this.OnProgressAchieved);
+            //
          }
+
 
          private void OnFlyBy(Vessel vessel,CelestialBody body)
          {
             // for later usage
+            Log.Test("OnFlyBy "+vessel.name+" on "+body.name);
          }
 
          private void OnFlightReady()
@@ -153,9 +159,13 @@ namespace Nereid
             {
                foreach(ProtoCrewMember kerbal in vessel.GetVesselCrew() )
                {
-                  halloffame.RecordContract(kerbal);
-                  CheckAchievementsForCrew(kerbal,false);
-                  CheckAchievementsForContracts(kerbal, contract);
+                  // we want to check crew member only
+                  if(kerbal.IsCrew())
+                  {
+                     halloffame.RecordContract(kerbal);
+                     CheckAchievementsForCrew(kerbal, false);
+                     CheckAchievementsForContracts(kerbal, contract);
+                  }
                }
             }
             finally
@@ -187,7 +197,12 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
-            //Log.Test("EventObserver::OnProgressAchieved");
+            Log.Test("EventObserver::OnProgressAchieved "+node);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            CheckAchievementsForProgress(node);
+            sw.Stop();
+            Log.Test("EventObserver::OnProgressAchieved  time for ribbon checks " + sw.ElapsedMilliseconds+"ms");
          }
 
          private void OnVesselWasModified(Vessel vessel)
@@ -327,7 +342,7 @@ namespace Nereid
             String nameOfKerbalOnEva = eva.vesselName;
             // find kerbal that return from eva in new crew
             ProtoCrewMember member = vessel.GetCrewMember(nameOfKerbalOnEva);
-            if (member!=null)
+            if (member!=null && member.IsCrew())
             {
                Log.Detail(member.name + " returns from EVA to " + vessel.name);
                recorder.RecordBoarding(member);
@@ -349,7 +364,12 @@ namespace Nereid
             // record EVA
             foreach(ProtoCrewMember member in crew.GetVesselCrew())
             {
-               recorder.RecordEva(member, vessel);
+               // record crew member only
+               if (member.IsCrew())
+               {
+
+                  recorder.RecordEva(member, vessel);
+               }
             }
             // the previous vessel shoud be previous
             this.previousVesselState = new VesselState(vessel);
@@ -648,6 +668,39 @@ namespace Nereid
                   }
                }
             }
+         }
+
+         private void CheckAchievementsForProgress(ProgressNode node)
+         {
+            Vessel vessel = FlightGlobals.ActiveVessel;
+            HallOfFame halloffame = HallOfFame.Instance();
+            if(vessel != null)
+            {
+               foreach (Ribbon ribbon in RibbonPool.Instance())
+               {
+                  Achievement achievement = ribbon.GetAchievement();
+                  if(achievement.Check(node))
+                  {
+                     halloffame.BeginArwardOfRibbons();
+                     try
+                     {
+                        foreach(ProtoCrewMember member in vessel.GetVesselCrew())
+                        {
+                           // record crew member only
+                           if (member.IsCrew())
+                           {
+                              recorder.Record(ribbon, member);
+                           }
+                        }
+                     }
+                     finally
+                     {
+                        halloffame.EndArwardOfRibbons();
+                     }
+                  }
+               }
+            }
+
          }
 
          private void CheckAchievementsForCrew(ProtoCrewMember kerbal)

@@ -509,7 +509,6 @@ namespace Nereid
                Log.Detail("no ongoing game: no refresh");
                return;
             }
-            Log.Test("scanning crew roster");
             foreach (ProtoCrewMember kerbal in game.CrewRoster.Crew)
             {
                if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("refreshing kerbal "+kerbal.name+" in hall of fame");

@@ -202,11 +202,10 @@ namespace Nereid
             }
             // 
             // Deep Space
-            // BROKEN
-            //Ribbon deepSpace = new Ribbon(_RP+"DeepSpace", new DeepSpaceAchievement(48000, false));
-            //Ribbon firstDeepSpace = new Ribbon(_RP+"FirstDeepSpace", new DeepSpaceAchievement(48001, true), deepSpace);
-            //Add(deepSpace);
-            //Add(firstDeepSpace);
+            Ribbon deepSpace = new Ribbon(_RP+"DeepSpace", new DeepSpaceAchievement(48000, false));
+            Ribbon firstDeepSpace = new Ribbon(_RP+"FirstDeepSpace", new DeepSpaceAchievement(48001, true), deepSpace);
+            Add(deepSpace);
+            Add(firstDeepSpace);
 
             // Ribbons without a celestial body
             //
@@ -463,6 +462,12 @@ namespace Nereid
             AddRibbon(this.ServiceEngineer   = new Ribbon(_RP+"ServiceEngineer", new EngineerServiceAchievement(11)));
             AddRibbon(this.ServiceScientist  = new Ribbon(_RP+"ServiceScientist", new ScientistServiceAchievement(10)));
             //
+            // Records
+            AddRibbon(new Ribbon(_RP + "DistanceRecord", new DistanceRecordAchievement(551)));
+            AddRibbon(new Ribbon(_RP + "SpeedRecord", new SpeedRecordAchievement(552)));
+            AddRibbon(new Ribbon(_RP + "DepthRecord", new DepthRecordAchievement(553)));
+            AddRibbon(new Ribbon(_RP + "AltitudeRecord", new AltitudeRecordAchievement(554)));
+            //
             // easter eggs
             AddRibbon(new Ribbon(_RP+"XM2014A", new XMas2014Achievement(2)));
             AddRibbon(new Ribbon(_RP + "XM", new DateofYearAchievement(24,12,26,12,"X-mas","Awarded for any kind of duty on xmas",1)));
@@ -488,8 +493,12 @@ namespace Nereid
                AddRibbon(this.JoolTourRibbon);
             }
 
+
+
+
             Sort();
 
+            // just for debugging
             //Persistence.WriteSupersedeChain(this);
 
             Log.Info("ribbon pool created");
