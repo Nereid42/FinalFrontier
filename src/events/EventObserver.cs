@@ -86,7 +86,7 @@ namespace Nereid
          private void OnFlyBy(Vessel vessel,CelestialBody body)
          {
             // for later usage
-            Log.Test("OnFlyBy "+vessel.name+" on "+body.name);
+            //Log.Test("OnFlyBy "+vessel.name+" on "+body.name);
          }
 
          private void OnFlightReady()
@@ -197,12 +197,7 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
-            Log.Test("EventObserver::OnProgressAchieved "+node);
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
             CheckAchievementsForProgress(node);
-            sw.Stop();
-            Log.Test("EventObserver::OnProgressAchieved  time for ribbon checks " + sw.ElapsedMilliseconds+"ms");
          }
 
          private void OnVesselWasModified(Vessel vessel)
