@@ -42,6 +42,8 @@ namespace Nereid
 
          public const String OLD_NODE_ROOT_NAME = "FinalFrontierHallOfFameRoot";
 
+         public static readonly String ROOT_PATH = Utils.GetRootPath();
+         public static readonly String GAMEDATA_PATH = ROOT_PATH + "/GameData";
 
       }
    }

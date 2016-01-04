@@ -97,8 +97,9 @@ namespace Nereid
 
          public static bool IsInAtmosphere(this Vessel vessel)
          {
-            if(vessel.mainBody==null) return false;
-            if(vessel.altitude<=vessel.mainBody.MaxAtmosphereAltitude()) return true;
+            if (vessel.mainBody == null) return false;
+            if (!vessel.mainBody.atmosphere) return false;
+            if (vessel.altitude <= vessel.mainBody.MaxAtmosphereAltitude()) return true;
             return false;
          }
 

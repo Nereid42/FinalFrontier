@@ -311,7 +311,7 @@ namespace Nereid
                Log.Detail("name or text change of ribbon " + selected.GetCode());
                // change name and text
                achievement.SetName(customRibbonName);
-               achievement.SetText(customRibbonText);
+               achievement.SetDescription(customRibbonText);
                // record changed ribbon
                HallOfFame.Instance().RecordCustomRibbon(selected);
             }

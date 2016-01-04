@@ -64,6 +64,7 @@
     <Compile Include="src\achievements\RibbonSupersedeChain.cs" />
     <Compile Include="src\events\EventObserver.cs" />
     <Compile Include="src\external\ExternalInterface.cs" />
+    <Compile Include="src\external\RibbonPack.cs" />
     <Compile Include="src\FinalFrontier.cs" />
     <Compile Include="src\halloffame\HallOfFame.cs" />
     <Compile Include="src\halloffame\HallOfFameEntry.cs" />

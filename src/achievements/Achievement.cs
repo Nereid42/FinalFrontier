@@ -834,7 +834,8 @@ namespace Nereid
 
          protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
-            if (current == null) return false; 
+            if (current == null) return false;
+            if (!current.InOrbit) return false;
             if (!current.MainBody.Equals(body)) return false;
             return current.PeA <= maxDistanceToSun && current.ApA <= maxDistanceToSun;
          }
@@ -869,7 +870,7 @@ namespace Nereid
 
       class CustomAchievement : NumericAchievement
       {
-         private String text;
+         private String description;
 
          public CustomAchievement(int value, int prestige)
             : base("X","no name",value, prestige, false)
@@ -878,13 +879,13 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            if(text==null) return "no description";
-            return text;
+            if(description==null) return "no description";
+            return description;
          }
 
-         public void SetText(String text)
+         public void SetDescription(String text)
          {
-            this.text = text;
+            this.description = text;
          }
 
          public void SetName(String name)
@@ -892,7 +893,7 @@ namespace Nereid
             base.Rename(name);
          }
 
-         public int GetNr()
+         public int GetIndex()
          {
             return value;
          }

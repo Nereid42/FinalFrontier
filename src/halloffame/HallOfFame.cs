@@ -394,7 +394,7 @@ namespace Nereid
             CustomAchievement achievement = ribbon.GetAchievement() as CustomAchievement;
             if(achievement!=null)
             {
-               int nr = achievement.GetNr();
+               int nr = achievement.GetIndex();
                double now = HighLogic.CurrentGame.UniversalTime;
                if (Log.IsLogable(Log.LEVEL.DETAIL))
                {
@@ -583,7 +583,7 @@ namespace Nereid
                return;
             }
             achievement.SetName(log.Name);
-            achievement.SetText(log.Data);
+            achievement.SetDescription(log.Data);
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("custom ribbonchanged");
          }
 

@@ -75,7 +75,7 @@ namespace Nereid
                return;
             }
             achievement.SetName(name);
-            achievement.SetText(text);
+            achievement.SetDescription(text);
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("custom ribbon changed");
          }
 

@@ -68,6 +68,11 @@ namespace Nereid.FinalFrontier
          return RibbonPool.Instance().RegisterExternalRibbon(code, pathToRibbonTexture, name, description, first, prestige);
       }
 
+      public Ribbon RegisterCustomRibbon(int id, String pathToRibbonTexture, String name, String description, int prestige)
+      {
+         return RibbonPool.Instance().RegisterCustomRibbon(id, pathToRibbonTexture, name, description, prestige);
+      }
+
       public void AwardRibbonToKerbal(object ribbon, ProtoCrewMember kerbal)
       {
          HallOfFame.Instance().Record(kerbal, (Ribbon)ribbon);

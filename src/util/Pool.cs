@@ -26,7 +26,7 @@ namespace Nereid
             }
             catch
             {
-               Log.Error("not unique code '" + code+"' in " + GetType() );
+               Log.Error("code '" + code + " not unique ' in " + GetType());
                throw;
             }
 

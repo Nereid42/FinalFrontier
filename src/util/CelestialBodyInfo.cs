@@ -13,8 +13,7 @@ namespace Nereid
        */
       public class CelestialBodyInfo
       {
-         private static readonly String ROOT_PATH = Utils.GetRootPath();
-         private static readonly String GAMEDATA_PATH = ROOT_PATH + "/GameData";
+
          private static readonly String INFO_FILE = "CelestialBodies.info";
 
          private readonly String plugin;
@@ -199,8 +198,8 @@ namespace Nereid
 
          public void ScanGameData()
          {
-            Log.Info("scanning "+GAMEDATA_PATH+" for celestial body info in "+plugin);
-            ScanGameData(GAMEDATA_PATH);
+            Log.Info("scanning "+Constants.GAMEDATA_PATH+" for celestial body info in "+plugin);
+            ScanGameData(Constants.GAMEDATA_PATH);
             Log.Detail("scan for celestial body info completed");
          }
 

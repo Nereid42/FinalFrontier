@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using KSP.IO;
+using System.IO;
 using System.Collections.Generic;
 
 
@@ -11,6 +11,9 @@ namespace Nereid
 
       class RibbonPool : Pool<Ribbon>
       {
+         private const int CUSTOM_RIBBON_BASE = 1000;
+         private const String FILENAME_RIBBONPACK = "FinalFrontierCustomRibbons.cfg";
+
          public delegate void Callback();
 
          public List<Callback> OnRibbonPoolReady {  get; private set; }
@@ -195,8 +198,12 @@ namespace Nereid
                   {
                      Log.Detail(bodyName+" is sun");
                      CelestialBody innermost = body.Innermost();
-                     closerSolarOrbitRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "CloserSolarOrbit", new CloserSolarOrbitAchievement(body, 50500+i, innermost, first), first ? closerSolarOrbitRibbon : soiRibbon);
-                     AddRibbon(closerSolarOrbitRibbon);
+                     if(innermost != null)
+                     {
+                        Log.Detail("innermost planet of "+bodyName+" is "+innermost.name);
+                        closerSolarOrbitRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "CloserSolarOrbit", new CloserSolarOrbitAchievement(body, 50500 + i, innermost, first), first ? closerSolarOrbitRibbon : soiRibbon);
+                        AddRibbon(closerSolarOrbitRibbon);
+                     }
                   }
                }
             }
@@ -596,10 +603,15 @@ namespace Nereid
                int nr = i + 1;
                String ss = nr.ToString("00");
                achievement.SetName(ss + " Custom");
-               achievement.SetText(ss + " Custom");
+               achievement.SetDescription(ss + " Custom");
                Ribbon ribbon = new Ribbon(_RP + "Custom" + ss, achievement);
                AddCustomRibbon(CUSTOM_BASE_INDEX + i,ribbon);
             }
+
+            // custom ribbon packs
+            Log.Info("scanning for ribbon packs...");
+            ScanForRibbonPacks(Constants.GAMEDATA_PATH);
+
             Log.Info("custom ribbons created (" + customRibbons.Count + " custom ribbons)");
          }
 
@@ -609,7 +621,7 @@ namespace Nereid
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
             achievement.SetName(name);
-            achievement.SetText(text);
+            achievement.SetDescription(text);
             AddCustomRibbon(index, ribbon);
             return ribbon;
          }
@@ -630,7 +642,7 @@ namespace Nereid
             }
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
             achievement.SetName(name);
-            achievement.SetText(text);
+            achievement.SetDescription(text);
             AddCustomRibbon(index, ribbon);
             return ribbon;
          }
@@ -638,6 +650,36 @@ namespace Nereid
          public List<Ribbon> GetCustomRibbons()
          {
             return customRibbons;
+         }
+
+         public void ScanForRibbonPacks(String basefolder)
+         {
+            if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("scanning folder " + basefolder + " for ribbon packs");
+            try
+            {
+               foreach (String folder in Directory.GetDirectories(basefolder))
+               {
+                  String filename = folder + "/"+FILENAME_RIBBONPACK;
+                  if (File.Exists(filename))
+                  {
+                     Log.Info("custom ribbon pack found in " + folder);
+                     RibbonPack pack = new RibbonPack(filename);
+                     // adding ribbons of Ribbon Pack
+                     foreach (Ribbon ribbon in pack)
+                     {
+                        // cast is safe
+                        CustomAchievement achievement = (CustomAchievement)ribbon.GetAchievement();
+                        int index = achievement.GetIndex();
+                        AddCustomRibbon(index, ribbon);
+                     }
+                  }
+                  ScanForRibbonPacks(folder);
+               }
+            }
+            catch (System.Exception e)
+            {
+               Log.Error("failed to scan for custom ribbon packs ("+e.GetType()+":"+e.Message+")");
+            }
          }
 
          private void OnGameStateCreated(Game game)
@@ -710,6 +752,22 @@ namespace Nereid
             Ribbon ribbon = new Ribbon(pathToRibbonTexture, achievement);
             externalRibbons.Add(ribbon);
             Add(ribbon);
+            return ribbon;
+         }
+
+         public Ribbon RegisterCustomRibbon(int id, String pathToRibbonTexture, String name, String description, int prestige = 0)
+         {
+            Log.Info("adding external custom ribbon " + name + " (id " + id + ") ");
+            if(id<=CUSTOM_RIBBON_BASE)
+            {
+               Log.Error("illegal custom ribbon id (has to be greater than "+CUSTOM_RIBBON_BASE+")");
+               return null;
+            }
+            CustomAchievement achievement = new CustomAchievement(id, prestige);
+            Ribbon ribbon = new Ribbon(pathToRibbonTexture, achievement);
+            achievement.SetName(name);
+            achievement.SetDescription(description);
+            AddCustomRibbon(id, ribbon); 
             return ribbon;
          }
       }
