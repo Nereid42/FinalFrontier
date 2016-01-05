@@ -472,6 +472,19 @@ namespace Nereid
             AddRibbon(this.ServiceEngineer   = new Ribbon(_RP+"ServiceEngineer", new EngineerServiceAchievement(11)));
             AddRibbon(this.ServiceScientist  = new Ribbon(_RP+"ServiceScientist", new ScientistServiceAchievement(10)));
             //
+            // Passenger Transport
+            Ribbon transport1 = new Ribbon(_RP + "PassengerTransport1", new PassengerTransportAchievement(1, 110));
+            Ribbon transport2 = new Ribbon(_RP + "PassengerTransport2", new PassengerTransportAchievement(2, 111), transport1);
+            Ribbon transport3 = new Ribbon(_RP + "PassengerTransport3", new PassengerTransportAchievement(3, 112), transport2);
+            Ribbon transport4 = new Ribbon(_RP + "PassengerTransport4", new PassengerTransportAchievement(4, 113), transport3);
+            Ribbon transport5 = new Ribbon(_RP + "PassengerTransport5", new PassengerTransportAchievement(5, 114), transport4);
+            AddRibbon(transport1);
+            AddRibbon(transport2);
+            AddRibbon(transport3);
+            AddRibbon(transport4);
+            AddRibbon(transport5);
+            //
+            //
             // Records
             AddRibbon(new Ribbon(_RP + "DistanceRecord", new DistanceRecordAchievement(551)));
             AddRibbon(new Ribbon(_RP + "SpeedRecord", new SpeedRecordAchievement(552)));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Contracts;
 
@@ -1456,6 +1457,42 @@ namespace Nereid
          public override String GetDescription()
          {
             return "Awarded for any speed record greater than " + MIN_SPEED +" m/s";
+         }
+      }
+
+      class PassengerTransportAchievement : NumericAchievement
+      {
+         public PassengerTransportAchievement(int value, int prestige)
+            : base("PT", "Passentransport " + Utils.Roman(value), value, prestige, false)
+         {
+         }
+
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
+         {
+            if (current == null && current.Situation == Vessel.Situations.PRELAUNCH) return false;
+            if (previous == null && previous.Situation != Vessel.Situations.PRELAUNCH) return false;
+            if (current.Origin == null) return false;
+            if (current.IsLanded) return false;
+            if (current.IsEVA) return false;
+            if (current.Situation != Vessel.Situations.FLYING) return false;
+            List<ProtoCrewMember> crew = current.Origin.GetVesselCrew();
+            if (crew == null) return false;
+            if (crew.Count < value) return false;
+            int toursists = 0;
+            foreach(ProtoCrewMember member in crew)
+            {
+               if(member.IsTourist())
+               {
+                  toursists++;
+               }
+            }
+            if (toursists < value) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for for kerbals launching a vessel containing at least " + value + " tourists";
          }
       }
    }
