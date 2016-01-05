@@ -445,6 +445,12 @@ namespace Nereid
             AddRibbon(contracts4);
             AddRibbon(contracts5);
             //
+            // Contract Prestige
+            Ribbon significantContract = new Ribbon(_RP+"SignificantContract", new ContractPrestigeAchievement(Contracts.Contract.ContractPrestige.Significant, 350));
+            Ribbon exceptionalContract = new Ribbon(_RP + "ExceptionalContract", new ContractPrestigeAchievement(Contracts.Contract.ContractPrestige.Exceptional, 351), significantContract);
+            AddRibbon(significantContract);
+            AddRibbon(exceptionalContract);
+            //
             // Research/Science
             Ribbon research1 = new Ribbon(_RP + "Research1", new ResearchAchievement(1, 10, 201));
             Ribbon research2 = new Ribbon(_RP + "Research2", new ResearchAchievement(2, 50, 202), research1);

@@ -69,6 +69,7 @@ namespace Nereid
             GameEvents.VesselSituation.onFlyBy.Add(this.OnFlyBy);
             GameEvents.VesselSituation.onReachSpace.Add(this.OnReachSpace);
             GameEvents.Contract.onCompleted.Add(this.OnContractCompleted);
+            GameEvents.Contract.onFailed.Add(this.OnContractFailed);
             GameEvents.VesselSituation.onOrbit.Add(this.OnOrbit);
             GameEvents.OnScienceRecieved.Add(this.OnScienceReceived);
             GameEvents.onFlightReady.Add(this.OnFlightReady);
@@ -146,6 +147,11 @@ namespace Nereid
                // commit ribbons
                halloffame.EndArwardOfRibbons();
             }
+         }
+
+         private void OnContractFailed(Contract contract)
+         {
+            //Log.Test("contract failed " + contract.Title);
          }
 
          private void OnContractCompleted(Contract contract)

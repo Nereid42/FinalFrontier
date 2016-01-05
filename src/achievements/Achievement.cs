@@ -1463,7 +1463,7 @@ namespace Nereid
       class PassengerTransportAchievement : NumericAchievement
       {
          public PassengerTransportAchievement(int value, int prestige)
-            : base("PT", "Passentransport " + Utils.Roman(value), value, prestige, false)
+            : base("P", "Passengertransport " + Utils.Roman(value), value, prestige, false)
          {
          }
 
@@ -1492,8 +1492,33 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for for kerbals launching a vessel containing at least " + value + " tourists";
+            return "Awarded for kerbals launching a vessel containing at least " + value + " tourists";
          }
       }
+
+      class ContractPrestigeAchievement : Achievement
+      {
+         private readonly Contract.ContractPrestige cPrestige;
+
+         public ContractPrestigeAchievement(Contract.ContractPrestige cPrestige, int prestige)
+            : base("CP" + (int)cPrestige, cPrestige + " Contract", prestige, false)
+         {
+            this.cPrestige = cPrestige;
+         }
+
+         protected override bool CheckContract(Contract contract) 
+         {
+            if (contract.ContractState != Contract.State.Completed) return false;
+            if (contract.Prestige != cPrestige) return false;
+            return true;
+         }
+
+
+         public override String GetDescription()
+         {
+            return "Awarded for completing any " + cPrestige.ToString().ToLower()+" contract";
+         }
+      }
+
    }
 }
