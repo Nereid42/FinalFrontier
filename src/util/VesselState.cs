@@ -10,7 +10,7 @@ namespace Nereid
    {
       public class VesselState
       {
-         public double timestamp { get; private set; }
+         public double Timestamp { get; private set; }
          public Vessel Origin { get; private set; }
          public CelestialBody MainBody { get; private set; }
          public bool IsLanded { get; private set; }
@@ -24,7 +24,7 @@ namespace Nereid
          public bool HasFlagPlanted { get; private set; }
          public bool InOrbit { get; private set; }
          public Vessel.Situations Situation { get; private set; }
-         public bool movedOnSurface { get; private set; }
+         public bool HasMovedOnSurface { get; private set; }
 
          public double ApA { get; private set; }
          public double ApR { get; private set; }
@@ -40,7 +40,7 @@ namespace Nereid
 
          public VesselState(Vessel vessel)
          {
-            this.timestamp = Planetarium.GetUniversalTime();
+            this.Timestamp = Planetarium.GetUniversalTime();
             this.Origin = vessel;
             this.MainBody = vessel.mainBody;
             this.IsLaunch = false;
@@ -60,7 +60,7 @@ namespace Nereid
             this.atmDensity = vessel.atmDensity;
             this.MissionTime = vessel.missionTime;
             this.LaunchTime = vessel.launchTime;
-            this.movedOnSurface = false;
+            this.HasMovedOnSurface = false;
             this.altitude = vessel.altitude;
             this.IsInAtmosphere = vessel.IsInAtmosphere();
          }
@@ -82,7 +82,7 @@ namespace Nereid
             this.atmDensity = state.atmDensity;
             this.MissionTime = state.MissionTime;
             this.MissionTime = state.LaunchTime;
-            this.movedOnSurface = state.movedOnSurface;
+            this.HasMovedOnSurface = state.HasMovedOnSurface;
             this.altitude = state.altitude;
             this.IsInAtmosphere = state.IsInAtmosphere;
          }
@@ -111,7 +111,7 @@ namespace Nereid
          public VesselState MovedOnSurface()
          {
             VesselState state = new VesselState(this);
-            state.movedOnSurface = true;
+            state.HasMovedOnSurface = true;
             return state;
          }
 

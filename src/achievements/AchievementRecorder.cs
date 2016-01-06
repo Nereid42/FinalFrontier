@@ -70,8 +70,8 @@ namespace Nereid
 
             public void Record(Ribbon ribbon, ProtoCrewMember kerbal)
             {
-                Achievement achievement = ribbon.GetAchievement();
-                hallOfFame.Record(kerbal, ribbon);
+               Achievement achievement = ribbon.GetAchievement();
+               hallOfFame.Record(kerbal, ribbon);
             }
 
 

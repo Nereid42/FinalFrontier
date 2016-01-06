@@ -26,6 +26,7 @@ namespace Nereid
          public bool missonSummaryPopup { get; set; }
          public bool useStockToolbar { get; set; }
          public bool convertGames { get; set; }
+         public bool logRibbonAwards { get; set; }
 
          private readonly Pair<int, int> ORIGIN = new Pair<int, int>(0, 0);
          private Dictionary<int, Pair<int, int>> windowPositions = new Dictionary<int, Pair<int, int>>();
@@ -56,6 +57,7 @@ namespace Nereid
             missonSummaryPopup = true;
             useStockToolbar = !ToolbarManager.ToolbarAvailable;
             convertGames = true;
+            logRibbonAwards = false;
 
             // 
             // Default filter/sorts
@@ -440,6 +442,9 @@ namespace Nereid
                   //
                   // convert games
                   writer.Write(convertGames);
+                  //
+                  // log ribbon awards
+                  writer.Write(logRibbonAwards);
                }
             }
             catch
@@ -510,6 +515,9 @@ namespace Nereid
                      //
                      // convert games
                      convertGames = reader.ReadBoolean();
+                     //
+                     // log ribbon awards
+                     logRibbonAwards = reader.ReadBoolean();
                   }
                }
                else

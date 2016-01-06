@@ -23,7 +23,12 @@ namespace Nereid
          {
             try
             {
-               return CheckVesselState(previous, current);
+               bool result = CheckVesselState(previous, current);
+               if(result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this,previous,current);
+               }
+               return result;
             }
             catch (Exception e)
             {
@@ -36,7 +41,12 @@ namespace Nereid
          {
             try
             {
-               return CheckEntry(entry);
+               bool result = CheckEntry(entry);
+               if (result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this, entry);
+               }
+               return result;
             }
             catch (Exception e)
             {
@@ -49,7 +59,12 @@ namespace Nereid
          {
             try
             {
-               return CheckEventReport(report);
+               bool result = CheckEventReport(report);
+               if (result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this, report);
+               }
+               return result;
             }
             catch (Exception e)
             {
@@ -62,7 +77,12 @@ namespace Nereid
          {
             try
             {
-               return CheckContract(contract);
+               bool result = CheckContract(contract);
+               if (result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this, contract);
+               }
+               return result;
             }
             catch (Exception e)
             {
@@ -76,7 +96,30 @@ namespace Nereid
          {
             try
             {
-               return CheckProgress(node);
+               bool result = CheckProgress(node);
+               if (result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this, node);
+               }
+               return result;
+            }
+            catch (Exception e)
+            {
+               Log.Error("Exception in check " + GetType() + ":" + e.Message);
+               return false;
+            }
+         }
+
+         public bool Check(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
+         {
+            try
+            {
+               bool result = CheckKerbal(kerbal, oldState, newState);
+               if (result && FinalFrontier.configuration.logRibbonAwards)
+               {
+                  Log.LogAchievement(this, kerbal, oldState, newState);
+               }
+               return result;
             }
             catch (Exception e)
             {
@@ -90,6 +133,7 @@ namespace Nereid
          protected virtual bool CheckEventReport(EventReport report) { return false; }
          protected virtual bool CheckContract(Contract contract) { return false; }
          protected virtual bool CheckProgress(ProgressNode node) { return false; }
+         protected virtual bool CheckKerbal(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState) { return false; }
 
          // description of the achievement
          public abstract String GetDescription();
@@ -811,7 +855,7 @@ namespace Nereid
             if (!current.MainBody.Equals(body)) return false;
             if (current.Origin == null) return false;
             if (current.Origin.vesselType != VesselType.Rover) return false;
-            return current.movedOnSurface;
+            return current.HasMovedOnSurface;
          }
 
          public override String GetDescription()
@@ -1165,7 +1209,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for completing at least a single mission as a scientist";
+            return "Awarded to any kerbal completing at least a single mission as a scientist";
          }
       }
 
@@ -1178,7 +1222,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for completing at least a single mission as an engineer";
+            return "Awarded to any kerbal completing at least a single mission as an engineer";
          }
       }
 
@@ -1191,7 +1235,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for completing at least a single mission as a pilot";
+            return "Awarded to any kerbal completing at least a single mission as a pilot";
          }
       }
 
@@ -1463,7 +1507,7 @@ namespace Nereid
       class PassengerTransportAchievement : NumericAchievement
       {
          public PassengerTransportAchievement(int value, int prestige)
-            : base("P", "Passengertransport " + Utils.Roman(value), value, prestige, false)
+            : base("P", "Passenger Transport " + Utils.Roman(value), value, prestige, false)
          {
          }
 
@@ -1492,7 +1536,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for kerbals launching a vessel containing at least " + value + " tourists";
+            return "Awarded to kerbals launching a vessel containing at least " + value + " tourists";
          }
       }
 
@@ -1517,6 +1561,29 @@ namespace Nereid
          public override String GetDescription()
          {
             return "Awarded for completing any " + cPrestige.ToString().ToLower()+" contract";
+         }
+      }
+
+      class LostAndFoundAchievement : Achievement
+      {
+         private readonly Contract.ContractPrestige cPrestige;
+
+         public LostAndFoundAchievement(int prestige)
+            : base("LF", "Lost And Found", prestige, false)
+         {
+         }
+
+         protected override bool CheckKerbal(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
+         {
+            if (oldState != ProtoCrewMember.RosterStatus.Dead && oldState != ProtoCrewMember.RosterStatus.Missing) return false;
+            if (newState != ProtoCrewMember.RosterStatus.Available && newState != ProtoCrewMember.RosterStatus.Assigned) return false;
+            return true;
+         }
+
+
+         public override String GetDescription()
+         {
+            return "Awarded to any lost kerbal for returning to active duty";
          }
       }
 

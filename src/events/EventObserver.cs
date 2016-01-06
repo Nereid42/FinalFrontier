@@ -192,7 +192,7 @@ namespace Nereid
          private void OnKerbalRemoved(ProtoCrewMember kerbal)
          {
             Log.Info("kerbal removed: "+kerbal.name);
-            HallOfFame.Instance().Refresh();
+            HallOfFame.Instance().Remove(kerbal);
          }
 
          private void OnKerbalStatusChange(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
@@ -368,7 +368,6 @@ namespace Nereid
                // record crew member only
                if (member.IsCrew())
                {
-
                   recorder.RecordEva(member, vessel);
                }
             }
@@ -382,11 +381,11 @@ namespace Nereid
          {
             Log.Detail("OnGameStateCreated ");
             // do not load a game while in MAIN-MENU or SETTINGS
+            // TODO: check if STILL NECESSARY????
             if (HighLogic.LoadedScene == GameScenes.MAINMENU || HighLogic.LoadedScene==GameScenes.SETTINGS)
             {
                // clear the hall of fame to avoid new games with ribbons from previos loads...
                HallOfFame.Instance().Clear();
-               Log.Detail("ignoring load because of game scene " + HighLogic.LoadedScene);
                return;
             }
 
@@ -397,12 +396,12 @@ namespace Nereid
                return;
             }
 
+            Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime + ", game status: " + game.Status + ", scene " + HighLogic.LoadedScene);
+
             // we have to detect a closed orbit again...
             this.orbitClosed = false;
 
             ResetInspectors();
-
-            Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime+", game status: "+game.Status+", scene "+HighLogic.LoadedScene);
 
             vesselObserver.Revert(game.UniversalTime);
          }
@@ -491,7 +490,6 @@ namespace Nereid
                Log.Warning("vessel situation change without a valid vessel detected");
                return;
             }
-            Log.Info("vessel situation change for " + vessel.name+", situation changed from "+e.from+" to "+e.to);
             //
             // check for a (first) launch
             CheckForLaunch(vessel,e.from,e.to);
@@ -500,7 +498,7 @@ namespace Nereid
             {
                if (vessel.situation != Vessel.Situations.LANDED) ResetLandedVesselHasMovedFlag();
                //
-               Log.Info("situation change for active vessel");
+               Log.Info("situation change for active vessel from " + e.from + " to " + e.to);
                CheckAchievementsForVessel(vessel);
             }
             else

@@ -62,10 +62,6 @@ namespace Nereid
          // marker if HallOfFame was stored in KSP persistence file
          public bool loaded { get; private set; }
 
-         // just to be sure (even if thread-safety shouldn't be necessary)
-         private static readonly object dataLock = new object();
-
-
          private HallOfFame()
          {
             Log.Info("creating hall of fame");
@@ -104,7 +100,6 @@ namespace Nereid
           */
          public void Load(ConfigNode node)
          {
-
             List<LogbookEntry> loaded = Persistence.LoadHallOfFame(node);
 
             if ( loaded != null )
@@ -134,7 +129,7 @@ namespace Nereid
             // for debugging the lost ribbons issue
             DumpStatistics();
 
-            lock(dataLock)
+            lock(this)
             {
                Persistence.SaveHallOfFame(logbook, node);
             }
@@ -163,18 +158,18 @@ namespace Nereid
 
          private HallOfFameEntry CreateEntry(String name, bool sort = true)
          {
-            Log.Detail("creating entry "+name);
-            lock (dataLock)
+            if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("creating entry " + name);
+            lock (this)
             {
                if (mapOfEntries.ContainsKey(name))
                {
-                  Log.Warning("hall of fame entry for kerbal " + name + " already existing");
+                  if(Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("hall of fame entry for kerbal " + name + " already existing");
                   HallOfFameEntry entry = mapOfEntries[name];
                   return entry;
                }
                else
                {
-                  Log.Detail("new kerbal hall of fame entry for " + name);
+                  if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("new kerbal hall of fame entry for " + name);
                   HallOfFameEntry entry = new HallOfFameEntry(name);
                   entries.Add(entry);
                   mapOfEntries.Add(name, entry);
@@ -187,7 +182,7 @@ namespace Nereid
 
          public HallOfFameEntry GetEntry(ProtoCrewMember kerbal)
          {
-            lock (dataLock)
+            lock (this)
             {
                HallOfFameEntry entry = GetEntry(kerbal.name);
                if (entry == null)
@@ -209,7 +204,7 @@ namespace Nereid
 
          public HallOfFameEntry GetEntry(String name)
          {
-            lock(dataLock)
+            lock (this)
             {
                try
                {
@@ -225,7 +220,7 @@ namespace Nereid
 
          private LogbookEntry TakeLog(double time, String code, String name, String text = "")
          {
-            lock(dataLock)
+            lock (this)
             {
                if (time == 0.0) time = Planetarium.GetUniversalTime();
                LogbookEntry lbentry = new LogbookEntry(time, code, name, text);
@@ -377,12 +372,13 @@ namespace Nereid
             double time = currentTransactionTime > 0 ? currentTransactionTime : Planetarium.GetUniversalTime();
             if (!achievement.HasToBeFirst() || !accomplished.Contains(achievement))
             {
-               if (Log.IsLogable(Log.LEVEL.INFO))
-               {
-                  Log.Info("ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
-               }
                if(entry.Award(ribbon))
                {
+                  if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.configuration.logRibbonAwards)
+                  {
+                     // log directly to make log outputs independent from log level if FinalFrontier.configuration.logRibbonAwards is set to true
+                     Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
+                  }
                   TakeLog(time, ribbon.GetCode(), entry);
                }
             }
@@ -520,7 +516,7 @@ namespace Nereid
 
          public void Clear()
          {
-            lock(dataLock)
+            lock (this)
             {
                Log.Info("clearing Final Frontier hall of fame");
                entries.Clear();
@@ -533,7 +529,7 @@ namespace Nereid
 
          public bool Contains(ProtoCrewMember kerbal)
          {
-            lock (dataLock)
+            lock (this)
             {
                foreach (HallOfFameEntry entry in entries)
                {
@@ -541,6 +537,16 @@ namespace Nereid
                }
                return false;
             }
+         }
+
+         public void Remove(ProtoCrewMember kerbal)
+         {
+            lock(this)
+            {
+               HallOfFameEntry entry = GetEntry(kerbal);
+               entries.Remove(entry);
+            }
+            Log.Detail("hall of fame entry for kerbal "+kerbal.name+" removed");
          }
 
 
@@ -557,7 +563,7 @@ namespace Nereid
 
          private void addLogbookEntry(LogbookEntry log, HallOfFameEntry entry)
          {
-            lock (dataLock)
+            lock (this)
             {
                logbook.Add(log);
                entry.AddLogRef(log);
@@ -592,7 +598,7 @@ namespace Nereid
             Log.Detail("creating hall of fame from logbook");
             Clear();
 
-            lock (dataLock)
+            lock (this)
             {
                if (book.Count == 0)
                {

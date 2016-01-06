@@ -103,7 +103,8 @@ namespace Nereid
             }
             // Convert Games
             config.convertGames = GUILayout.Toggle(config.convertGames, "Convert save games", FFStyles.STYLE_TOGGLE);
-
+            // Log Ribbon Aawrds
+            config.logRibbonAwards = GUILayout.Toggle(config.logRibbonAwards, "Log ribbon awards", FFStyles.STYLE_TOGGLE);
 
             GUILayout.EndVertical();
             DragWindow();

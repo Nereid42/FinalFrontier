@@ -440,45 +440,48 @@ namespace Nereid
             int index = 0;
             bool expandDetected = false;
             bool autoexpandEnabled = FinalFrontier.configuration.IsAutoExpandEnabled();
-            foreach (HallOfFameEntry entry in HallOfFame.Instance())
+            lock(HallOfFame.Instance())
             {
-               // autoexpand this entry on mouse hover?
-               bool expandedEntry = autoexpandEnabled && (expandedRibbonAreaIndex == index) && (entry.GetRibbons().Count > Constants.MAX_RIBBONS_PER_AREA);
-               //
-               ProtoCrewMember kerbal = entry.GetKerbal();
-               String info = GetInfo(entry);
-               String missionTimeInDays = Utils.GameTimeInDaysAsString(entry.TotalMissionTime) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
-               if (kerbal != null && filter.Accept(entry) && kerbal.IsCrew())
+               foreach (HallOfFameEntry entry in HallOfFame.Instance())
                {
-                  String buttonTooltip = kerbal.name + ": " + entry.MissionsFlown + " missions, " + missionTimeInDays + " days mission time";
-                  GUILayout.BeginHorizontal(STYLE_KERBAL_AREA_EXPANDED); //expandedEntry ? STYLE_KERBAL_AREA_EXPANDED : STYLE_KERBAL_AREA);          
-                  GUILayout.BeginVertical();
-                  GUILayout.BeginHorizontal();
-                  // butto to open decoration board
-                  if(GUILayout.Button(new GUIContent(entry.GetName(), buttonTooltip), STYLE_KERBAL_BUTTON))
-                  {
-                     Log.Detail("opening decoration board for kerbal " + entry.GetName());
-                     display.SetEntry(entry);
-                     display.SetVisible(true);
-                  }
-                  DrawStatus(kerbal);
-                  GUILayout.EndHorizontal();
-                  GUILayout.Label(info, STYLE_KERBAL_INFO);
-                  GUILayout.EndVertical();
-                  DrawRibbons(entry, expandedEntry ? Constants.MAX_RIBBONS_PER_EXPANDED_AREA : Constants.MAX_RIBBONS_PER_AREA);
-                  GUILayout.EndHorizontal();
+                  // autoexpand this entry on mouse hover?
+                  bool expandedEntry = autoexpandEnabled && (expandedRibbonAreaIndex == index) && (entry.GetRibbons().Count > Constants.MAX_RIBBONS_PER_AREA);
                   //
-                  if(Event.current.type == EventType.Repaint)
+                  ProtoCrewMember kerbal = entry.GetKerbal();
+                  String info = GetInfo(entry);
+                  String missionTimeInDays = Utils.GameTimeInDaysAsString(entry.TotalMissionTime) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
+                  if (kerbal != null && filter.Accept(entry) && kerbal.IsCrew())
                   {
-                     if (MouseOver(0.0f,scrollPosition.y))
+                     String buttonTooltip = kerbal.name + ": " + entry.MissionsFlown + " missions, " + missionTimeInDays + " days mission time";
+                     GUILayout.BeginHorizontal(STYLE_KERBAL_AREA_EXPANDED); //expandedEntry ? STYLE_KERBAL_AREA_EXPANDED : STYLE_KERBAL_AREA);          
+                     GUILayout.BeginVertical();
+                     GUILayout.BeginHorizontal();
+                     // butto to open decoration board
+                     if (GUILayout.Button(new GUIContent(entry.GetName(), buttonTooltip), STYLE_KERBAL_BUTTON))
                      {
-                        expandedRibbonAreaIndex = index;
-                        expandDetected = true;
+                        Log.Detail("opening decoration board for kerbal " + entry.GetName());
+                        display.SetEntry(entry);
+                        display.SetVisible(true);
+                     }
+                     DrawStatus(kerbal);
+                     GUILayout.EndHorizontal();
+                     GUILayout.Label(info, STYLE_KERBAL_INFO);
+                     GUILayout.EndVertical();
+                     DrawRibbons(entry, expandedEntry ? Constants.MAX_RIBBONS_PER_EXPANDED_AREA : Constants.MAX_RIBBONS_PER_AREA);
+                     GUILayout.EndHorizontal();
+                     //
+                     if (Event.current.type == EventType.Repaint)
+                     {
+                        if (MouseOver(0.0f, scrollPosition.y))
+                        {
+                           expandedRibbonAreaIndex = index;
+                           expandDetected = true;
+                        }
                      }
                   }
-               }
-               index++;
-            }
+                  index++;
+               } // foreach entry
+            } // lock (HAllOfFame)
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
             GUILayout.BeginVertical();
