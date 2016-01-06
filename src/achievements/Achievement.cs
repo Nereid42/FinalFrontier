@@ -114,7 +114,7 @@ namespace Nereid
          {
             try
             {
-               bool result = CheckKerbal(kerbal, oldState, newState);
+               bool result = CheckKerbalRosterStatus(kerbal, oldState, newState);
                if (result && FinalFrontier.configuration.logRibbonAwards)
                {
                   Log.LogAchievement(this, kerbal, oldState, newState);
@@ -133,7 +133,7 @@ namespace Nereid
          protected virtual bool CheckEventReport(EventReport report) { return false; }
          protected virtual bool CheckContract(Contract contract) { return false; }
          protected virtual bool CheckProgress(ProgressNode node) { return false; }
-         protected virtual bool CheckKerbal(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState) { return false; }
+         protected virtual bool CheckKerbalRosterStatus(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState) { return false; }
 
          // description of the achievement
          public abstract String GetDescription();
@@ -1513,8 +1513,8 @@ namespace Nereid
 
          protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
-            if (current == null && current.Situation == Vessel.Situations.PRELAUNCH) return false;
-            if (previous == null && previous.Situation != Vessel.Situations.PRELAUNCH) return false;
+            if (current == null || current.Situation == Vessel.Situations.PRELAUNCH) return false;
+            if (previous == null || ( previous.Situation != Vessel.Situations.PRELAUNCH && previous.Situation != Vessel.Situations.LANDED)) return false;
             if (current.Origin == null) return false;
             if (current.IsLanded) return false;
             if (current.IsEVA) return false;
@@ -1522,15 +1522,15 @@ namespace Nereid
             List<ProtoCrewMember> crew = current.Origin.GetVesselCrew();
             if (crew == null) return false;
             if (crew.Count < value) return false;
-            int toursists = 0;
-            foreach(ProtoCrewMember member in crew)
+            int tourists = 0;
+            foreach (ProtoCrewMember member in crew)
             {
                if(member.IsTourist())
                {
-                  toursists++;
+                  tourists++;
                }
             }
-            if (toursists < value) return false;
+            if (tourists < value) return false;
             return true;
          }
 
@@ -1573,7 +1573,7 @@ namespace Nereid
          {
          }
 
-         protected override bool CheckKerbal(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
+         protected override bool CheckKerbalRosterStatus(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
          {
             if (oldState != ProtoCrewMember.RosterStatus.Dead && oldState != ProtoCrewMember.RosterStatus.Missing) return false;
             if (newState != ProtoCrewMember.RosterStatus.Available && newState != ProtoCrewMember.RosterStatus.Assigned) return false;

@@ -199,6 +199,9 @@ namespace Nereid
          {
             Log.Info("kerbal status change: " + kerbal.name + " from "+oldState+" to "+ newState);
             HallOfFame.Instance().Refresh();
+            //
+            // check for achievements caused by status changes
+            CheckAchievementsForRosterStatus(kerbal, oldState, newState);
          }
 
          private void OnProgressAchieved(ProgressNode node)
@@ -668,6 +671,24 @@ namespace Nereid
                }
             }
          }
+
+         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newstate)
+         {
+            Log.Detail("EventObserver:: checkArchivements for roster status");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            CheckAchievementsForRosterStatus(kerbal, oldState, newstate, true);
+            CheckAchievementsForRosterStatus(kerbal, oldState, newstate, false);
+
+            Log.Detail("EventObserver:: checkArchivements done in " + sw.ElapsedMilliseconds + " ms");
+         }
+
+         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newstate, bool hasToBeFirst)
+         {
+
+         }
+
 
          private void CheckAchievementsForProgress(ProgressNode node)
          {
