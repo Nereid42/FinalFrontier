@@ -197,11 +197,18 @@ namespace Nereid
 
          private void OnKerbalStatusChange(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
          {
-            Log.Info("kerbal status change: " + kerbal.name + " from "+oldState+" to "+ newState);
+            if (kerbal == null) return;
+            Log.Info("kerbal status change: " + kerbal.name + " from " + oldState + " to " + newState+" at time "+Planetarium.GetUniversalTime());
             HallOfFame.Instance().Refresh();
             //
             // check for achievements caused by status changes
-            CheckAchievementsForRosterStatus(kerbal, oldState, newState);
+            // (crew member only)
+            /* not working because of the way KSP handles cre respawning
+            if (kerbal.IsCrew())
+            {
+               Log.Detail("kerbal with status change is crew member");
+               CheckAchievementsForRosterStatus(kerbal, oldState, newState);
+            }*/
          }
 
          private void OnProgressAchieved(ProgressNode node)
@@ -672,21 +679,32 @@ namespace Nereid
             }
          }
 
-         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newstate)
+         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState)
          {
             Log.Detail("EventObserver:: checkArchivements for roster status");
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            CheckAchievementsForRosterStatus(kerbal, oldState, newstate, true);
-            CheckAchievementsForRosterStatus(kerbal, oldState, newstate, false);
+            CheckAchievementsForRosterStatus(kerbal, oldState, newState, true);
+            CheckAchievementsForRosterStatus(kerbal, oldState, newState, false);
 
             Log.Detail("EventObserver:: checkArchivements done in " + sw.ElapsedMilliseconds + " ms");
          }
 
-         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newstate, bool hasToBeFirst)
+         private void CheckAchievementsForRosterStatus(ProtoCrewMember kerbal , ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState, bool hasToBeFirst)
          {
-
+            foreach (Ribbon ribbon in RibbonPool.Instance())
+            {
+               Achievement achievement = ribbon.GetAchievement();
+               if (achievement.Check(kerbal,oldState,newState))
+               {
+                  // record crew member only
+                  if (kerbal.IsCrew())
+                  {
+                     recorder.Record(ribbon, kerbal);
+                  }
+               }
+            }
          }
 
 

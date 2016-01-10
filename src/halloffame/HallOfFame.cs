@@ -377,9 +377,14 @@ namespace Nereid
                   if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.configuration.logRibbonAwards)
                   {
                      // log directly to make log outputs independent from log level if FinalFrontier.configuration.logRibbonAwards is set to true
-                     Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
+                     Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + time+" ("+Utils.ConvertToKerbinTime(time)+")");
                   }
                   TakeLog(time, ribbon.GetCode(), entry);
+                  // no transaktion?
+                  if(currentTransactionTime==0)
+                  {
+                     accomplished.Add(achievement);
+                  }
                }
             }
             currentTransaction.Add(achievement);
@@ -431,7 +436,10 @@ namespace Nereid
          {
             foreach (Achievement achievement in currentTransaction)
             {
-               accomplished.Add(achievement);
+               if (!accomplished.Contains(achievement))
+               {
+                  accomplished.Add(achievement);
+               }
             }
             currentTransaction.Clear();
             currentTransactionTime = 0.0;
