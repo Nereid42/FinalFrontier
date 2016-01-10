@@ -132,9 +132,13 @@ namespace Nereid
             {
                Summary summary = new Summary(kerbal);
                Summaries.Add(summary);
-               foreach (Ribbon ribbon in HallOfFame.Instance().GetRibbonsOfLatestMission(kerbal, missionEndTime))
+               // only real missions will count
+               if(vessel.missionTime>0)
                {
-                  summary.newRibbons.Add(ribbon);
+                  foreach (Ribbon ribbon in HallOfFame.Instance().GetRibbonsOfLatestMission(kerbal, missionEndTime))
+                  {
+                     summary.newRibbons.Add(ribbon);
+                  }
                }
             }
          }

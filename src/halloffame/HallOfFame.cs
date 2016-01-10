@@ -726,8 +726,9 @@ namespace Nereid
          public List<Ribbon> GetRibbonsOfLatestMission(ProtoCrewMember kerbal, double missionEndTime=0)
          {
             List<Ribbon> result = new List<Ribbon>();
-            HashSet<Ribbon> ignored = new HashSet<Ribbon>();
             HallOfFameEntry entry = GetEntry(kerbal);
+            //
+            HashSet<Ribbon> ignored = new HashSet<Ribbon>();
             List<LogbookEntry> log = new List<LogbookEntry>(entry.GetLogRefs());
             log.Reverse();
             bool start = false;
@@ -736,11 +737,14 @@ namespace Nereid
             foreach(LogbookEntry logentry in log)
             {
                String code = logentry.Code;
-               if (code.Equals(codeRecover) )
+               if (code.Equals(codeRecover) && !start)
                {
                   start = true;
                }
-               else if (code.Equals(codeLaunch))
+               // last launch or previous recover ends search
+               // last launch: mission start detected
+               // previous recover: there was no real launch
+               else if (code.Equals(codeLaunch) || code.Equals(codeRecover))
                {
                   break;
                }
