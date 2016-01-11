@@ -191,6 +191,31 @@ namespace Nereid
             }
          }
 
+         public static double GetResourcePercentageLeft(Vessel vessel,String resourceName)
+         {
+            double amount = 0.0;
+            double capacity = 0.0;
+
+            foreach (Part part in vessel.Parts)
+            {
+               if (part.packed) part.Unpack();
+               foreach (PartResource r in part.Resources)
+               {
+                  if (r.info.name.Equals(resourceName))
+                  {
+                    amount += r.amount;
+                    capacity += r.maxAmount;
+                  }
+               }
+            }
+
+            if(capacity>0)
+            {
+               return amount / capacity;
+            }
+            return double.NaN;
+         }
+
       }
    }
 }

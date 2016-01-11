@@ -375,6 +375,36 @@ namespace Nereid
             AddRibbon(heavyVehicleLaunch6);
             AddRibbon(heavyVehicleLaunch7);
             //
+            // Mountain Ribbons
+            Ribbon mountain1 = new Ribbon(_RP + "Mountain01", new MountainLandingAchievement(1500, 431));
+            Ribbon mountain2 = new Ribbon(_RP + "Mountain02", new MountainLandingAchievement(2000, 432), mountain1);
+            Ribbon mountain3 = new Ribbon(_RP + "Mountain03", new MountainLandingAchievement(2500, 433), mountain2);
+            Ribbon mountain4 = new Ribbon(_RP + "Mountain04", new MountainLandingAchievement(3000, 434), mountain3);
+            Ribbon mountain5 = new Ribbon(_RP + "Mountain05", new MountainLandingAchievement(3500, 435), mountain4);
+            Ribbon mountain6 = new Ribbon(_RP + "Mountain06", new MountainLandingAchievement(4000, 436), mountain4);
+            AddRibbon(mountain1);
+            AddRibbon(mountain2);
+            AddRibbon(mountain3);
+            AddRibbon(mountain4);
+            AddRibbon(mountain5);
+            AddRibbon(mountain6);
+            //
+            // Fuel Left on Landing ribbons
+            Ribbon nofuel1 = new Ribbon(_RP + "NoFuel01", new NoFuelLandingAchievement(5, 441));
+            Ribbon nofuel2 = new Ribbon(_RP + "NoFuel02", new NoFuelLandingAchievement(1, 442), nofuel1);
+            AddRibbon(nofuel1);
+            AddRibbon(nofuel2);
+            //
+            // Polar ribbons
+            Ribbon northPolar = new Ribbon(_RP + "NorthPolar", new PolarLandingAchievement("North", 491, false));
+            Ribbon northPolar1st = new Ribbon(_RP + "FirstNorthPolar", new PolarLandingAchievement("North", 492, true), northPolar);
+            Ribbon southPolar = new Ribbon(_RP + "SouthPolar", new PolarLandingAchievement("South", 493, false));
+            Ribbon southPolar1st = new Ribbon(_RP + "FirstSouthPolar", new PolarLandingAchievement("South", 494, true), southPolar);
+            AddRibbon(northPolar);
+            AddRibbon(northPolar1st);
+            AddRibbon(southPolar);
+            AddRibbon(southPolar1st);
+            //
             // Eva Time
             Ribbon evaTime1 = new Ribbon(_RP+"TotalEva1", new EvaTotalTimeAchievement(Utils.ConvertHoursToSeconds(1),   471));
             Ribbon evaTime2 = new Ribbon(_RP+"TotalEva2", new EvaTotalTimeAchievement(Utils.ConvertHoursToSeconds(2),   472), evaTime1);

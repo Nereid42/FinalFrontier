@@ -45,6 +45,8 @@ namespace Nereid
          public static readonly String ROOT_PATH = Utils.GetRootPath();
          public static readonly String GAMEDATA_PATH = ROOT_PATH + "/GameData";
 
+         public const String RESOURCE_NAME_LIQUID_FUEL = "LiquidFuel";
+
       }
    }
 }

@@ -1564,10 +1564,9 @@ namespace Nereid
          }
       }
 
+      // NOT WORKING
       class LostAndFoundAchievement : Achievement
       {
-         private readonly Contract.ContractPrestige cPrestige;
-
          public LostAndFoundAchievement(int prestige)
             : base("LF", "Lost And Found", prestige, false)
          {
@@ -1584,6 +1583,112 @@ namespace Nereid
          public override String GetDescription()
          {
             return "Awarded to any lost kerbal for returning to active duty";
+         }
+      }
+
+      class MountainLandingAchievement : NumericAchievement
+      {
+         public MountainLandingAchievement(int value, int prestige)
+            : base("ML:", value+"m Mountain Lander", value, prestige, false)
+         {
+         }
+
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
+         {
+            if (previous == null) return false;
+            if (current == null) return false;
+            // no EVA
+            if (current.IsEVA) return false;
+            // check mass
+            if (current.Origin == null) return false;
+            // landed?
+            if (current.Situation != Vessel.Situations.LANDED) return false;
+            // situation has to change from non-landed to landed (prelaunch wont count)
+            if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // check altitude
+            if (current.altitude < value) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for landing a vessel on Kerbin at an elevation of at least " + value + "m";
+         }
+      }
+
+      class NoFuelLandingAchievement : NumericAchievement
+      {
+         public NoFuelLandingAchievement(int value, int prestige)
+            : base("FL:", value + "% Fuel Landing", value, prestige, false)
+         {
+         }
+
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
+         {
+            if (previous == null) return false;
+            if (current == null) return false;
+            // no EVA
+            if (current.IsEVA) return false;
+            // check mass
+            if (current.Origin == null) return false;
+            // landed?
+            if (current.Situation != Vessel.Situations.LANDED) return false;
+            // situation has to change from non-landed to landed (prelaunch wont count)
+            if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // check fuel
+            double pct = GameUtils.GetResourcePercentageLeft(current.Origin, Constants.RESOURCE_NAME_LIQUID_FUEL);
+            // no tanks or enough fuel left?
+            if (double.IsNaN(pct) || pct*100 > value) return false;
+            return true;
+         }
+
+
+         public override String GetDescription()
+         {
+            return "Awarded for landing a vessel with " + value + "% or less liquid fuel left";
+         }
+      }
+
+
+      class PolarLandingAchievement : Achievement
+      {
+         private const double POLAR_LATITUDE = 66;
+
+         String hemisphere;
+
+         public PolarLandingAchievement(String hemisphere, int prestige, bool first)
+            : base("P" + hemisphere.Substring(0, 1).ToUpper() + (first ? "1" : ""), (first ? "First " : "")+hemisphere + "Polar Lander", prestige, first)
+         {
+            this.hemisphere = hemisphere.ToLower();
+         }
+
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
+         {
+            if (previous == null) return false;
+            if (current == null) return false;
+            // no EVA
+            if (current.IsEVA) return false;
+            // check mass
+            if (current.Origin == null) return false;
+            // landed?
+            if (current.Situation != Vessel.Situations.LANDED) return false;
+            // situation has to change from non-landed to landed (prelaunch wont count)
+            if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // check latitude
+            if (this.hemisphere.StartsWith("n"))
+            {
+               if (current.Origin.latitude < POLAR_LATITUDE) return false;
+            }
+            else
+            {
+               if (current.Origin.latitude > -POLAR_LATITUDE) return false;
+            }
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for "+ FirstKerbalText().Envelope() + "landing a vessel in the "+hemisphere+" polar region off Kerbin";
          }
       }
 
