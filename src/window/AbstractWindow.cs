@@ -28,6 +28,7 @@ namespace Nereid
          public AbstractWindow(int id, string title) 
          {
             Log.Detail("creating window "+id+" with title '"+title+"'");
+            WindowManager.instance.AddWindow(this);
             this.id = id;
             this.title = title;
             GameEvents.onGameStateCreated.Add(this.OnGameStateCreated);
@@ -57,8 +58,10 @@ namespace Nereid
             GUI.DragWindow();
          }
 
-         private void OnDraw()
+         public void OnGUI()
          {
+            Log.Test("OnGUI *ENTER*");
+
             if (visible)
             {
                if (GetInitialHeight() == AUTO_HEIGHT)
@@ -70,6 +73,7 @@ namespace Nereid
                   bounds = GUILayout.Window(id, bounds, OnWindowInternal, title, FFStyles.STYLE_WINDOW, GUILayout.Width(GetInitialWidth()), GUILayout.Height(GetInitialHeight()));
                }
             }
+            Log.Test("OnGUI *EXIT*");
          }
 
          protected void UseLeftMouseButtonEvent()
@@ -94,15 +98,23 @@ namespace Nereid
 
          private void OnWindowInternal(int id)
          {
+            Log.Test("OnWindowInternal *ENTER*");
+
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("OnWindowInternal for ID "+id+" called; x="+bounds.x+", y="+bounds.y);
             mousePosition.x = Input.mousePosition.x - bounds.x;
             mousePosition.y = (Screen.height - Input.mousePosition.y) - bounds.y - FFStyles.STYLE_WINDOW.border.top;
+            Log.Test("OnWindowInternal *1*");
             OnWindow(id);
+            Log.Test("OnWindowInternal *2*");
             DrawTooltip();
+            Log.Test("OnWindowInternal *3*");
             OnDrawFinished(id);
+            Log.Test("OnWindowInternal *4*");
             CheckBounds();
+            Log.Test("OnWindowInternal *5*");
 
             UseLeftMouseButtonEvent();
+            Log.Test("OnWindowInternal *EXIT*");
          }
 
          private void CheckBounds()
@@ -172,23 +184,6 @@ namespace Nereid
             if (this.visible && !visible) OnClose();
             if (this.visible && !visible && onWindowClose != null)  onWindowClose();
             this.visible = visible;
-            if (Log.IsLogable(Log.LEVEL.TRACE) && visible) Log.Trace("set window ID "+id+" to visible");
-            try
-            {
-               if(visible)
-               {
-                 RenderingManager.AddToPostDrawQueue(0, OnDraw);
-               }
-               else
-               {
-                  RenderingManager.RemoveFromPostDrawQueue(0, OnDraw);
-               }
-            }
-            catch
-            {
-               Log.Error("failed to change window visibility for id " + id + ": " + title);
-            }
-
          }
 
          public bool IsVisible()

@@ -2,6 +2,7 @@
 using UnityEngine;
 using KSP.IO;
 using FinalFrontierAdapter;
+using KSP.UI.Screens;
 
 namespace Nereid
 {
@@ -226,6 +227,11 @@ namespace Nereid
             {
                stockToolbarButton.toggleButton.Value = false;
             }            
+         }
+
+         private void OnGUI()
+         {
+            WindowManager.instance.OnGUI();
          }
 
          internal void OnDestroy()

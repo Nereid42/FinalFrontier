@@ -417,8 +417,9 @@ namespace Nereid
          }
 
 
-         private void OnVesselRecovered(ProtoVessel vessel)
+         private void OnVesselRecovered(ProtoVessel vessel, bool flag)
          {
+            // TODO: check what synopsis of "flag"
             if (vessel == null)
             {
                Log.Warning("vessel recover without a valid vessel detected");
