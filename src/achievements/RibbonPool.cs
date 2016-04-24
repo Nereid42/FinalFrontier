@@ -603,24 +603,7 @@ namespace Nereid
             CreateCustomRibbon(45, "STM25", "Apprentice Chef", "no description");
             CreateCustomRibbon(46, "STM26", "Chef de Partie ", "no description", 45);
             CreateCustomRibbon(47, "STM27", "Sous Chef", "no description", 46);
-            CreateCustomRibbon(48, "STM28", "Chef de Cuisine", "no description", 47);
-            CreateCustomRibbon(50, "STM30", "Planetary Science", "no description");
-            CreateCustomRibbon(51, "STM31", "Geology", "no description");
-            CreateCustomRibbon(52, "STM32", "Astronautical Engineering", "no description");
-            CreateCustomRibbon(53, "STM33", "Botany", "no description");
-            CreateCustomRibbon(54, "STM34", "Physics", "no description");
-            CreateCustomRibbon(55, "STM35", "Chemistry", "no description");
-            CreateCustomRibbon(56, "STM36", "Atmospheric Sciences", "no description");
-            CreateCustomRibbon(57, "STM37", "Medicine", "no description");
-            CreateCustomRibbon(58, "STM38", "Astronomy", "no description");
-            CreateCustomRibbon(59, "STM39", "Cartography", "no description");
-            CreateCustomRibbon(60, "STM40", "Computer Sciences", "no description");
-            CreateCustomRibbon(61, "STM41", "Biology", "no description");
-            CreateCustomRibbon(62, "STM42", "Psychology", "no description");
-            CreateCustomRibbon(63, "STM43", "Education/Outreach/Science Communication", "no description");
-            CreateCustomRibbon(64, "STM44", "Astro-Economics", "no description");
-            CreateCustomRibbon(65, "STM45", "Xenology", "no description");
-    
+            CreateCustomRibbon(48, "STM28", "Chef de Cuisine", "no description", 47);    
 
             // custom ribbons provided by helldiver
             CreateCustomRibbon(70, "Helldiver01", "Bronze Heli Pilot", "no description");

@@ -60,8 +60,6 @@ namespace Nereid
 
          public void OnGUI()
          {
-            Log.Test("OnGUI *ENTER*");
-
             if (visible)
             {
                if (GetInitialHeight() == AUTO_HEIGHT)
@@ -73,7 +71,6 @@ namespace Nereid
                   bounds = GUILayout.Window(id, bounds, OnWindowInternal, title, FFStyles.STYLE_WINDOW, GUILayout.Width(GetInitialWidth()), GUILayout.Height(GetInitialHeight()));
                }
             }
-            Log.Test("OnGUI *EXIT*");
          }
 
          protected void UseLeftMouseButtonEvent()
@@ -98,23 +95,15 @@ namespace Nereid
 
          private void OnWindowInternal(int id)
          {
-            Log.Test("OnWindowInternal *ENTER*");
-
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("OnWindowInternal for ID "+id+" called; x="+bounds.x+", y="+bounds.y);
             mousePosition.x = Input.mousePosition.x - bounds.x;
             mousePosition.y = (Screen.height - Input.mousePosition.y) - bounds.y - FFStyles.STYLE_WINDOW.border.top;
-            Log.Test("OnWindowInternal *1*");
             OnWindow(id);
-            Log.Test("OnWindowInternal *2*");
             DrawTooltip();
-            Log.Test("OnWindowInternal *3*");
             OnDrawFinished(id);
-            Log.Test("OnWindowInternal *4*");
             CheckBounds();
-            Log.Test("OnWindowInternal *5*");
 
             UseLeftMouseButtonEvent();
-            Log.Test("OnWindowInternal *EXIT*");
          }
 
          private void CheckBounds()

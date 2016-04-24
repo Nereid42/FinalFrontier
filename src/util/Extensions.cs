@@ -103,6 +103,16 @@ namespace Nereid
             return false;
          }
 
+         public static bool IsTouchingGround(this Vessel vessel)
+         {
+            if (vessel.mainBody == null) return false;
+            foreach(Part part in vessel.Parts)
+            {
+               if (part.GroundContact) return true;
+            }
+            return false;
+         }
+
          public static bool IsInAtmosphereWithOxygen(this Vessel vessel)
          {
             if (vessel.mainBody == null) return false;

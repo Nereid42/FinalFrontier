@@ -132,7 +132,6 @@
     <Compile Include="src\util\Log.cs" />
     <Compile Include="src\util\Persistence.cs" />
     <Compile Include="src\util\Pool.cs" />
-    <Compile Include="src\util\SaveGameConverter.cs" />
     <Compile Include="src\util\Sorter.cs" />
     <Compile Include="src\util\ToolbarWrapper.cs" />
     <Compile Include="src\util\Utils.cs" />

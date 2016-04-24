@@ -20,8 +20,6 @@ namespace Nereid
 
          public static readonly FARAdapter farAdapter = new FARAdapter();
 
-         private SaveGameConverter converter;
-
          private volatile IButton toolbarButton;
          private volatile HallOfFameBrowser browser;
 
@@ -62,8 +60,6 @@ namespace Nereid
          public void Start()
          {
             Log.Info("starting FinalFrontier");
-
-            this.converter = this.gameObject.AddComponent<SaveGameConverter>();
 
             GameEvents.onGameSceneSwitchRequested.Add(this.OnGameSceneSwitchRequested);
 
@@ -141,7 +137,6 @@ namespace Nereid
 
          public void Update()
          {
-            //
             if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
             if (Input.GetKeyUp(KeyCode.LeftAlt)) keyAltPressed = false;
             if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;

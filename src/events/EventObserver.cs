@@ -213,6 +213,12 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
+            Vessel vessel = FlightGlobals.ActiveVessel;
+            // records achieved while not in a vessel won't count
+            if (vessel == null) return;
+            // records achieved while on a launch pad won't count
+            if (vessel.situation == Vessel.Situations.PRELAUNCH) return;
+            // ok, now check the record
             CheckAchievementsForProgress(node);
          }
 

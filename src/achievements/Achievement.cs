@@ -646,7 +646,7 @@ namespace Nereid
 
          protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
-            if (current == null) return false; 
+            if (current == null) return false;
             if (previous == null) return false;
             // Launching wont count
             if (previous.IsPrelaunch) return false;
@@ -656,7 +656,7 @@ namespace Nereid
             // are we on the correct planet/moon?
             if (!current.MainBody.Equals(body)) return false;
             // situation has to change from non-landed to landed ( a splashed will count as a landed )
-            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed  || previous.IsPrelaunch) return false;
+            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             return true;
          }
 
@@ -1135,7 +1135,7 @@ namespace Nereid
          public override String GetDescription()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
-            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyound the sphere of influence of " + outermostBodyInSystem.name;
+            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyond the sphere of influence of " + outermostBodyInSystem.name;
          }
       }
 
@@ -1579,7 +1579,6 @@ namespace Nereid
             return true;
          }
 
-
          public override String GetDescription()
          {
             return "Awarded to any lost kerbal for returning to active duty";
@@ -1607,6 +1606,8 @@ namespace Nereid
             if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             // check altitude
             if (current.altitude < value) return false;
+            // and we have to be at Kerbin
+            if (!current.MainBody.IsKerbin()) return false;
             return true;
          }
 
@@ -1683,6 +1684,8 @@ namespace Nereid
             {
                if (current.Origin.latitude > -POLAR_LATITUDE) return false;
             }
+            // and we have to be at Kerbin
+            if (!current.MainBody.IsKerbin()) return false;
             return true;
          }
 
