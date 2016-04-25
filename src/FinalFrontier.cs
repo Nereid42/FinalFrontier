@@ -71,6 +71,7 @@ namespace Nereid
             if(e.from!=GameScenes.MAINMENU && e.to==GameScenes.MAINMENU)
             {
                configuration.Save();
+               WindowManager.instance.CloseAll();
             }
          }
 

@@ -35,6 +35,17 @@ namespace Nereid
                }
             }
          }
+
+         public void CloseAll()
+         {
+            foreach (AbstractWindow window in windows)
+            {
+               if (window.IsVisible())
+               {
+                  window.SetVisible(false);
+               }
+            }
+         }
       }
    }
 }
