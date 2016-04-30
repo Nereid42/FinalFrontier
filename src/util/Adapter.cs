@@ -26,8 +26,8 @@ namespace Nereid
 			protected Type GetType(string name)
 			{
 				return AssemblyLoader.loadedAssemblies
-				   .SelectMany(x => x.assembly.GetExportedTypes())
-				   .SingleOrDefault(t => t.FullName == name);
+					.SelectMany(x => x.assembly.GetExportedTypes())
+					.SingleOrDefault(t => t.FullName == name);
 			}
 
 			protected bool IsTypeLoaded(string name)
@@ -49,7 +49,8 @@ namespace Nereid
 					Type type = GetType("ferram4.FARAeroUtil");
 					if (type != null)
 					{
-						methodGetMachNumber = type.GetMethod("GetMachNumber", BindingFlags.Public | BindingFlags.Static, null, new Type[] { typeof(CelestialBody), typeof(double), typeof(Vector3d) }, null);
+						methodGetMachNumber = type.GetMethod("GetMachNumber", BindingFlags.Public | BindingFlags.Static, null,
+							new Type[] { typeof(CelestialBody), typeof(double), typeof(Vector3d) }, null);
 						if (methodGetMachNumber != null)
 						{
 							SetInstalled(true);
@@ -72,6 +73,5 @@ namespace Nereid
 				return 0.0;
 			}
 		}
-
 	}
 }

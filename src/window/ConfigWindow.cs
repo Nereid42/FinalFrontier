@@ -15,7 +15,7 @@ namespace Nereid
 			private GUIStyle STYLE_TEXTFIELD_WIDOWTITLE = new GUIStyle(HighLogic.Skin.textField);
 
 			public ConfigWindow()
-			   : base(Constants.WINDOW_ID_CONFIG, "Final Frontier Configuration")
+				: base(Constants.WINDOW_ID_CONFIG, "Final Frontier Configuration")
 			{
 				STYLE_TEXTFIELD_WIDOWTITLE.stretchWidth = false;
 				STYLE_TEXTFIELD_WIDOWTITLE.fixedWidth = 190;
@@ -78,28 +78,36 @@ namespace Nereid
 				//
 				GUILayout.Label("Settings:", FFStyles.STYLE_STRETCHEDLABEL);
 				// CUSTOM RIBBONS AT SPACE CENTER
-				config.SetCustomRibbonAtSpaceCenterEnabled(GUILayout.Toggle(config.IsCustomRibbonAtSpaceCenterEnabled(), "Custom ribbons at space center", FFStyles.STYLE_TOGGLE));
+				config.SetCustomRibbonAtSpaceCenterEnabled(GUILayout.Toggle(config.IsCustomRibbonAtSpaceCenterEnabled(),
+					"Custom ribbons at space center", FFStyles.STYLE_TOGGLE));
 				// REVOCATION OF RIBBONS
-				config.SetRevocationOfRibbonsEnabled(GUILayout.Toggle(config.IsRevocationOfRibbonsEnabled(), "Revocation of ribbons enabled", FFStyles.STYLE_TOGGLE));
+				config.SetRevocationOfRibbonsEnabled(GUILayout.Toggle(config.IsRevocationOfRibbonsEnabled(),
+					"Revocation of ribbons enabled", FFStyles.STYLE_TOGGLE));
 				// AUTO EXPAND RIBBONS
-				config.SetAutoExpandEnabled(GUILayout.Toggle(config.IsAutoExpandEnabled(), "Expand ribbons in hall of fame", FFStyles.STYLE_TOGGLE));
+				config.SetAutoExpandEnabled(GUILayout.Toggle(config.IsAutoExpandEnabled(), "Expand ribbons in hall of fame",
+					FFStyles.STYLE_TOGGLE));
 				// PERMADEATH
-				GameUtils.SetPermadeathEnabled(GUILayout.Toggle(GameUtils.IsPermadeathEnabled(), "Permadeath enabled", FFStyles.STYLE_TOGGLE));
+				GameUtils.SetPermadeathEnabled(GUILayout.Toggle(GameUtils.IsPermadeathEnabled(), "Permadeath enabled",
+					FFStyles.STYLE_TOGGLE));
 				// HOTKEY
 				config.SetHotkeyEnabled(GUILayout.Toggle(config.IsHotkeyEnabled(), "Hotkey enabled", FFStyles.STYLE_TOGGLE));
 				// KERBIN TIME
-				GameUtils.SetKerbinTimeEnabled(GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time", FFStyles.STYLE_TOGGLE));
+				GameUtils.SetKerbinTimeEnabled(GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time",
+					FFStyles.STYLE_TOGGLE));
 				// MISSION SUMMARY POPUP WINDOW
-				config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
+				config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(),
+					"Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
 				// Stock Toolbar
 				if (ToolbarManager.ToolbarAvailable)
 				{
-					config.SetUseStockToolbar(GUILayout.Toggle(config.UseStockToolbar(), "Use Stock Toolbar (needs a restart to take effect)", FFStyles.STYLE_TOGGLE));
+					config.SetUseStockToolbar(GUILayout.Toggle(config.UseStockToolbar(),
+						"Use Stock Toolbar (needs a restart to take effect)", FFStyles.STYLE_TOGGLE));
 				}
 				// FAR Calculations
 				if (FinalFrontier.FarAdapter.IsInstalled())
 				{
-					config.UseFARCalculations = GUILayout.Toggle(config.UseFARCalculations, "Use FAR calculations", FFStyles.STYLE_TOGGLE);
+					config.UseFARCalculations = GUILayout.Toggle(config.UseFARCalculations, "Use FAR calculations",
+						FFStyles.STYLE_TOGGLE);
 				}
 				// Convert Games
 				config.convertGames = GUILayout.Toggle(config.convertGames, "Convert save games", FFStyles.STYLE_TOGGLE);

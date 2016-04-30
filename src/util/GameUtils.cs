@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 
 
@@ -28,7 +27,6 @@ namespace Nereid
 
 			public static void SetKerbinTimeEnabled(bool enabled)
 			{
-
 				if (GameSettings.KERBIN_TIME != enabled)
 				{
 					GameSettings.KERBIN_TIME = enabled;
@@ -48,7 +46,8 @@ namespace Nereid
 				return body;
 			}
 
-			public static double ConvertSpeedToMachNumber(CelestialBody body, double atmDensity, double altitude, Vector3 velocity)
+			public static double ConvertSpeedToMachNumber(CelestialBody body, double atmDensity, double altitude,
+				Vector3 velocity)
 			{
 				if (FinalFrontier.FarAdapter.IsInstalled())
 				{
@@ -91,7 +90,8 @@ namespace Nereid
 				{
 					if (homeworld.orbit != null)
 					{
-						return homeworld.orbit.referenceBody; ;
+						return homeworld.orbit.referenceBody;
+						;
 					}
 				}
 				return null;
@@ -215,7 +215,6 @@ namespace Nereid
 				}
 				return double.NaN;
 			}
-
 		}
 	}
 }

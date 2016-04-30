@@ -100,14 +100,16 @@ namespace Nereid
 					{
 						Log.Info("creating stock toolbar button");
 						stockToolbarButton = ApplicationLauncher.Instance.AddModApplication(
-						OnAppLaunchToggleOn,
-						OnAppLaunchToggleOff,
-						DummyVoid,
-						DummyVoid,
-						DummyVoid,
-						DummyVoid,
-						ApplicationLauncher.AppScenes.FLIGHT | ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.MAPVIEW | ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.TRACKSTATION,
-						(Texture)GameDatabase.Instance.GetTexture(ResourcePath + "ToolbarIcon", false));
+							OnAppLaunchToggleOn,
+							OnAppLaunchToggleOff,
+							DummyVoid,
+							DummyVoid,
+							DummyVoid,
+							DummyVoid,
+							ApplicationLauncher.AppScenes.FLIGHT | ApplicationLauncher.AppScenes.SPACECENTER |
+							ApplicationLauncher.AppScenes.MAPVIEW | ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB |
+							ApplicationLauncher.AppScenes.TRACKSTATION,
+							(Texture)GameDatabase.Instance.GetTexture(ResourcePath + "ToolbarIcon", false));
 						if (stockToolbarButton == null) Log.Warning("no stock toolbar button registered");
 					}
 				}
@@ -134,7 +136,9 @@ namespace Nereid
 				}
 			}
 
-			private void DummyVoid() { }
+			private void DummyVoid()
+			{
+			}
 
 			public void Update()
 			{
@@ -187,13 +191,14 @@ namespace Nereid
 					toolbarButton.TexturePath = iconOff;
 					toolbarButton.ToolTip = "Open Final Frontier";
 					toolbarButton.OnClick += (e) =>
-						{
-							createBrowserOnce();
-							if (browser != null) browser.registerToolbarButton(toolbarButton, iconOn, iconOff);
-							toggleBrowserVisibility();
-						};
+					{
+						createBrowserOnce();
+						if (browser != null) browser.registerToolbarButton(toolbarButton, iconOn, iconOff);
+						toggleBrowserVisibility();
+					};
 
-					toolbarButton.Visibility = new GameScenesVisibility(GameScenes.EDITOR, GameScenes.FLIGHT, GameScenes.SPACECENTER, GameScenes.TRACKSTATION);
+					toolbarButton.Visibility = new GameScenesVisibility(GameScenes.EDITOR, GameScenes.FLIGHT, GameScenes.SPACECENTER,
+						GameScenes.TRACKSTATION);
 				}
 				else
 				{
@@ -246,7 +251,6 @@ namespace Nereid
 				}
 				stockToolbarButton = null;*/
 			}
-
 		}
 	}
 }

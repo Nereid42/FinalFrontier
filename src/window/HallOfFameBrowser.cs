@@ -74,8 +74,9 @@ namespace Nereid
 				public bool showUndecorated { get; set; }
 				public bool showFlightOnly { get; set; }
 
-				public HallOfFameFilter(GameScenes scene, bool showDead = true, bool showAssigned = true, bool showAvailable = true, bool showUndecorated = true, bool showFlightOnly = true)
-				   : base(scene)
+				public HallOfFameFilter(GameScenes scene, bool showDead = true, bool showAssigned = true, bool showAvailable = true,
+					bool showUndecorated = true, bool showFlightOnly = true)
+					: base(scene)
 				{
 					this.showDead = showDead;
 					this.showAssigned = showAssigned;
@@ -97,32 +98,62 @@ namespace Nereid
 					//
 					if (x.GetRibbons().Count == 0 && !showUndecorated) return false;
 					return true;
-
 				}
 
 				public override string ToString()
 				{
-					return GetScene() + ": dead=" + showDead + ", assigned=" + showAssigned + ", available=" + showAvailable + ", undecorated=" + showUndecorated + ", flight only=" + showFlightOnly;
+					return GetScene() + ": dead=" + showDead + ", assigned=" + showAssigned + ", available=" + showAvailable +
+						   ", undecorated=" + showUndecorated + ", flight only=" + showFlightOnly;
 				}
 			}
 
 			public class HallOfFameSorter : GameSceneBase, Sorter<HallOfFameEntry>
 			{
-				public enum SortDirection { Ascending = 1, Descending = 2 };
-				public enum SortableStats { Name = 1, Missions = 2, Missiontime = 3, Ribbons = 4, Dockings = 5, Contracts = 6, Science = 7, EVA = 8, State = 9 }
-				public enum SortableSkills { Specialist = 1, Stupidity = 2, Courage = 3, Experience = 4 }
+				public enum SortDirection
+				{
+					Ascending = 1,
+					Descending = 2
+				};
+
+				public enum SortableStats
+				{
+					Name = 1,
+					Missions = 2,
+					Missiontime = 3,
+					Ribbons = 4,
+					Dockings = 5,
+					Contracts = 6,
+					Science = 7,
+					EVA = 8,
+					State = 9
+				}
+
+				public enum SortableSkills
+				{
+					Specialist = 1,
+					Stupidity = 2,
+					Courage = 3,
+					Experience = 4
+				}
+
 				//
 				private SortDirection sortingDirection;
 				private SortableStats sortingStat;
 				private SortableSkills sortingSkill;
 				//
 				// kerbal display sortMode: statistics / skills
-				public enum SortMode { Stat = 1, Skill = 2 };
+				public enum SortMode
+				{
+					Stat = 1,
+					Skill = 2
+				};
+
 				private SortMode sortMode;
 
-				public HallOfFameSorter(GameScenes scene, SortDirection sortingDirection = SortDirection.Ascending, SortMode mode = SortMode.Stat,
-										SortableStats sortByStat = SortableStats.Name, SortableSkills sortBySkill = SortableSkills.Specialist)
-				 : base(scene)
+				public HallOfFameSorter(GameScenes scene, SortDirection sortingDirection = SortDirection.Ascending,
+					SortMode mode = SortMode.Stat,
+					SortableStats sortByStat = SortableStats.Name, SortableSkills sortBySkill = SortableSkills.Specialist)
+					: base(scene)
 				{
 					this.sortingDirection = sortingDirection;
 					this.sortMode = mode;
@@ -137,15 +168,24 @@ namespace Nereid
 						case SortMode.Stat:
 							switch (sortingStat)
 							{
-								case SortableStats.Name: return "Name";
-								case SortableStats.Missions: return "Missions";
-								case SortableStats.Missiontime: return "Mission Time";
-								case SortableStats.Ribbons: return "Ribbons";
-								case SortableStats.Dockings: return "Dockings";
-								case SortableStats.Contracts: return "Contracts";
-								case SortableStats.Science: return "Science";
-								case SortableStats.EVA: return "Eva";
-								case SortableStats.State: return "State";
+								case SortableStats.Name:
+									return "Name";
+								case SortableStats.Missions:
+									return "Missions";
+								case SortableStats.Missiontime:
+									return "Mission Time";
+								case SortableStats.Ribbons:
+									return "Ribbons";
+								case SortableStats.Dockings:
+									return "Dockings";
+								case SortableStats.Contracts:
+									return "Contracts";
+								case SortableStats.Science:
+									return "Science";
+								case SortableStats.EVA:
+									return "Eva";
+								case SortableStats.State:
+									return "State";
 								default:
 									Log.Warning("Invalid statistic sort predicate: " + sortingStat + " (in " + HighLogic.LoadedScene + ")");
 									break;
@@ -154,10 +194,14 @@ namespace Nereid
 						case SortMode.Skill:
 							switch (sortingSkill)
 							{
-								case SortableSkills.Specialist: return "Specialist";
-								case SortableSkills.Stupidity: return "Stupidy";
-								case SortableSkills.Courage: return "Courage";
-								case SortableSkills.Experience: return "Experience";
+								case SortableSkills.Specialist:
+									return "Specialist";
+								case SortableSkills.Stupidity:
+									return "Stupidy";
+								case SortableSkills.Courage:
+									return "Courage";
+								case SortableSkills.Experience:
+									return "Experience";
 								default:
 									Log.Warning("Invalid skill sort predicate: " + sortingSkill + " (in " + HighLogic.LoadedScene + ")");
 									break;
@@ -171,8 +215,10 @@ namespace Nereid
 				{
 					switch (sortMode)
 					{
-						case SortMode.Skill: return "Skills";
-						case SortMode.Stat: return "Statistics";
+						case SortMode.Skill:
+							return "Skills";
+						case SortMode.Stat:
+							return "Statistics";
 					}
 					return "Unknown";
 				}
@@ -181,8 +227,10 @@ namespace Nereid
 				{
 					switch (sortingDirection)
 					{
-						case SortDirection.Ascending: return "Ascending";
-						case SortDirection.Descending: return "Descending";
+						case SortDirection.Ascending:
+							return "Ascending";
+						case SortDirection.Descending:
+							return "Descending";
 					}
 					return "Unknown";
 				}
@@ -229,7 +277,9 @@ namespace Nereid
 						switch (sortingSkill)
 						{
 							case SortableSkills.Specialist:
-								cmp = sign * string.Compare(leftkerbal.experienceTrait.TypeName, rightkerbal.experienceTrait.TypeName, StringComparison.Ordinal);
+								cmp = sign *
+									  string.Compare(leftkerbal.experienceTrait.TypeName, rightkerbal.experienceTrait.TypeName,
+										  StringComparison.Ordinal);
 								if (cmp != 0) return cmp;
 								cmp = sign * (leftkerbal.experienceLevel - rightkerbal.experienceLevel);
 								if (cmp != 0) return cmp;
@@ -300,7 +350,6 @@ namespace Nereid
 								return 0;
 						}
 					});
-
 				}
 
 				public void Sort(List<HallOfFameEntry> list)
@@ -365,8 +414,10 @@ namespace Nereid
 				{
 					switch (sortMode)
 					{
-						case SortMode.Stat: return GetScene() + ": sort by " + sortingStat + " " + sortingDirection;
-						case SortMode.Skill: return GetScene() + ": sort by " + sortingSkill + " " + sortingDirection;
+						case SortMode.Stat:
+							return GetScene() + ": sort by " + sortingStat + " " + sortingDirection;
+						case SortMode.Skill:
+							return GetScene() + ": sort by " + sortingSkill + " " + sortingDirection;
 					}
 					return "Unknown sort mode";
 				}
@@ -377,7 +428,7 @@ namespace Nereid
 
 
 			public HallOfFameBrowser()
-			   : base(Constants.WINDOW_ID_HALLOFFAMEBROWSER, FinalFrontier.Config.GetHallOfFameWindowTitle())
+				: base(Constants.WINDOW_ID_HALLOFFAMEBROWSER, FinalFrontier.Config.GetHallOfFameWindowTitle())
 			{
 				styleKerbalButton = new GUIStyle(HighLogic.Skin.button);
 				styleKerbalButton.fixedWidth = kButtonWidth;
@@ -412,7 +463,8 @@ namespace Nereid
 			protected override void OnWindow(int id)
 			{
 				// persistent filter for displaying kerbals
-				if (filter == null || filter.GetScene() != HighLogic.LoadedScene) filter = FinalFrontier.Config.GetDisplayFilterForSzene(HighLogic.LoadedScene);
+				if (filter == null || filter.GetScene() != HighLogic.LoadedScene)
+					filter = FinalFrontier.Config.GetDisplayFilterForSzene(HighLogic.LoadedScene);
 				//
 				// persistent sorter for displaying kerbals
 				if (sorter == null || sorter.GetScene() != HighLogic.LoadedScene)
@@ -433,7 +485,8 @@ namespace Nereid
 				}
 				//
 				GUILayout.BeginHorizontal();
-				scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(490), GUILayout.Height(styleScrollviewHeight));
+				scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(490),
+					GUILayout.Height(styleScrollviewHeight));
 				GUILayout.BeginVertical();
 				int index = 0;
 				bool expandDetected = false;
@@ -443,15 +496,19 @@ namespace Nereid
 					foreach (HallOfFameEntry entry in HallOfFame.Instance())
 					{
 						// autoexpand this entry on mouse hover?
-						bool expandedEntry = autoexpandEnabled && (expandedRibbonAreaIndex == index) && (entry.GetRibbons().Count > Constants.MAX_RIBBONS_PER_AREA);
+						bool expandedEntry = autoexpandEnabled && (expandedRibbonAreaIndex == index) &&
+											 (entry.GetRibbons().Count > Constants.MAX_RIBBONS_PER_AREA);
 						//
 						ProtoCrewMember kerbal = entry.GetKerbal();
 						string info = GetInfo(entry);
-						string missionTimeInDays = Utils.GameTimeInDaysAsstring(entry.TotalMissionTime) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
+						string missionTimeInDays = Utils.GameTimeInDaysAsstring(entry.TotalMissionTime) +
+												   (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
 						if (kerbal != null && filter.Accept(entry) && kerbal.IsCrew())
 						{
-							string buttonTooltip = kerbal.name + ": " + entry.MissionsFlown + " missions, " + missionTimeInDays + " days mission time";
-							GUILayout.BeginHorizontal(styleKerbalAreaExpanded); //expandedEntry ? styleKerbalAreaExpanded : styleKerbalArea);          
+							string buttonTooltip = kerbal.name + ": " + entry.MissionsFlown + " missions, " + missionTimeInDays +
+												   " days mission time";
+							GUILayout.BeginHorizontal(styleKerbalAreaExpanded);
+							//expandedEntry ? styleKerbalAreaExpanded : styleKerbalArea);          
 							GUILayout.BeginVertical();
 							GUILayout.BeginHorizontal();
 							// butto to open decoration board
@@ -503,13 +560,18 @@ namespace Nereid
 				}
 				GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL);
 				GUILayout.Label("Filter:", FFStyles.STYLE_STRETCHEDLABEL);
-				if (GUILayout.Toggle(filter.showDead, "dead", FFStyles.STYLE_TOGGLE)) filter.showDead = true; else filter.showDead = false;
-				if (GUILayout.Toggle(filter.showAssigned, "active", FFStyles.STYLE_TOGGLE)) filter.showAssigned = true; else filter.showAssigned = false;
-				if (GUILayout.Toggle(filter.showAvailable, "available", FFStyles.STYLE_TOGGLE)) filter.showAvailable = true; else filter.showAvailable = false;
-				if (GUILayout.Toggle(filter.showUndecorated, "undecorated", FFStyles.STYLE_TOGGLE)) filter.showUndecorated = true; else filter.showUndecorated = false;
+				if (GUILayout.Toggle(filter.showDead, "dead", FFStyles.STYLE_TOGGLE)) filter.showDead = true;
+				else filter.showDead = false;
+				if (GUILayout.Toggle(filter.showAssigned, "active", FFStyles.STYLE_TOGGLE)) filter.showAssigned = true;
+				else filter.showAssigned = false;
+				if (GUILayout.Toggle(filter.showAvailable, "available", FFStyles.STYLE_TOGGLE)) filter.showAvailable = true;
+				else filter.showAvailable = false;
+				if (GUILayout.Toggle(filter.showUndecorated, "undecorated", FFStyles.STYLE_TOGGLE)) filter.showUndecorated = true;
+				else filter.showUndecorated = false;
 				if (HighLogic.LoadedScene == GameScenes.FLIGHT)
 				{
-					if (GUILayout.Toggle(filter.showFlightOnly, "flight only", FFStyles.STYLE_TOGGLE)) filter.showFlightOnly = true; else filter.showFlightOnly = false;
+					if (GUILayout.Toggle(filter.showFlightOnly, "flight only", FFStyles.STYLE_TOGGLE)) filter.showFlightOnly = true;
+					else filter.showFlightOnly = false;
 				}
 				GUILayout.Label("", FFStyles.STYLE_STRETCHEDLABEL); // fixed space
 
@@ -535,7 +597,6 @@ namespace Nereid
 				}
 
 				DragWindow();
-
 			}
 
 			private string GetInfo(HallOfFameEntry entry)
@@ -697,5 +758,3 @@ namespace Nereid
 		}
 	}
 }
-
-
