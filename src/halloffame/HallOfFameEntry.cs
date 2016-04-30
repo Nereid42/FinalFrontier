@@ -12,7 +12,7 @@ namespace Nereid
       public class HallOfFameEntry : IComparable<HallOfFameEntry>
       {
          // name of kerbal
-         private readonly String name;
+         private readonly string name;
          private volatile WeakReference kerbalRef = null;
          // currently awarded ribbons
          private List<Ribbon> ribbons = new List<Ribbon>();
@@ -50,7 +50,7 @@ namespace Nereid
          public bool joolTour = false;
 
 
-         public HallOfFameEntry(String name)
+         public HallOfFameEntry(string name)
          {
             Log.Info("creating new hall of fame entry for kerbal "+name);
             this.name = name;
@@ -118,7 +118,7 @@ namespace Nereid
          /**
           * Returns logbook in textform
           * */
-         public String GetLogText()
+         public string GetLogText()
          {
             return logtext.ToString();
          }
@@ -168,7 +168,7 @@ namespace Nereid
          /**
           * Returns the name of the Kerbal for this entry.
           */
-         public String GetName()
+         public string GetName()
          {
             return name;
          }

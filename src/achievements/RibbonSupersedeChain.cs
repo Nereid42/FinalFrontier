@@ -13,9 +13,9 @@ namespace Nereid
       // this class is not used yet
       public class RibbonSupersedeChain
       {
-         private static readonly String ROOT_PATH = Utils.GetRootPath();
-         private static readonly String PATH = ROOT_PATH + "/GameData/Nereid/FinalFrontier";
-         private static readonly String FILE_NAME = "supersede.cfg";
+         private static readonly string ROOT_PATH = Utils.GetRootPath();
+         private static readonly string PATH = ROOT_PATH + "/GameData/Nereid/FinalFrontier";
+         private static readonly string FILE_NAME = "supersede.cfg";
 
          Dictionary<Ribbon, Ribbon> chain = new Dictionary<Ribbon,Ribbon>();
 
@@ -24,20 +24,20 @@ namespace Nereid
             Load(PATH+"/"+FILE_NAME);
          }
 
-         public void Load(String filename)
+         public void Load(string filename)
          {
             StreamReader file = null;
             try
             {
                file = File.OpenText(filename);
-               String line;
+               string line;
                while ((line = file.ReadLine()) != null)
                {
-                  String[] tokens = line.Split(' ');
+                  string[] tokens = line.Split(' ');
                   if(tokens.Count()>1)
                   {
-                     String code = tokens[0];
-                     String supersede = tokens[1];
+                     string code = tokens[0];
+                     string supersede = tokens[1];
                      Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
                      if (ribbon == null) continue;
                      Ribbon super = RibbonPool.Instance().GetRibbonForCode(supersede);

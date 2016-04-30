@@ -23,9 +23,9 @@ namespace Nereid
 
          public static void ResetAllWindowPositions()
          {
-            if (FinalFrontier.configuration != null)
+            if (FinalFrontier.Config != null)
             {
-               FinalFrontier.configuration.ResetWindowPositions();
+               FinalFrontier.Config.ResetWindowPositions();
             }
             foreach (PositionableWindow window in INSTANCES)
             {
@@ -36,21 +36,21 @@ namespace Nereid
          protected void Reset()
          {
             opened = IsVisible();
-            if (FinalFrontier.configuration != null)
+            if (FinalFrontier.Config != null)
             {
-               SetPosition(FinalFrontier.configuration.GetWindowPosition(this));
+               SetPosition(FinalFrontier.Config.GetWindowPosition(this));
             }
          }
 
          protected override void OnDrawFinished( int id )
          {
-            if (FinalFrontier.configuration != null)
+            if (FinalFrontier.Config != null)
             {
-               FinalFrontier.configuration.SetWindowPosition(this);
+               FinalFrontier.Config.SetWindowPosition(this);
             }
             else
             {
-               Log.Warning("PositionableWindow:: no configuration created, cant store window position");
+               Log.Warning("PositionableWindow:: no Config created, cant store window position");
             }
          }
 
@@ -64,10 +64,10 @@ namespace Nereid
             Log.Trace("positionable window " + GetWindowId() + " opened");
             if (!opened)
             {
-               if (FinalFrontier.configuration != null)
+               if (FinalFrontier.Config != null)
                {
                   Log.Detail("first opening of window " + GetWindowId());
-                  Pair<int, int> position = FinalFrontier.configuration.GetWindowPosition(GetWindowId());
+                  Pair<int, int> position = FinalFrontier.Config.GetWindowPosition(GetWindowId());
                   if (position != null)
                   {
                      SetPosition(position.first, position.second);
@@ -80,7 +80,7 @@ namespace Nereid
                }
                else
                {
-                  Log.Warning("PositionableWindow:: no configuration created");
+                  Log.Warning("PositionableWindow:: no Config created");
                }
             }
          }

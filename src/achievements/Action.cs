@@ -10,12 +10,12 @@ namespace Nereid
    {
       public abstract class Action : Activity
       {
-         public Action(String code, String name)
+         public Action(string code, string name)
             : base (code, name)
          {
          }
 
-         public abstract bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "");
+         public abstract bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "");
 
          public static EvaAction GetEvaAction(ProtoCrewMember kerbal, Vessel fromVessel)
          {
@@ -54,7 +54,7 @@ namespace Nereid
       {
          public BoardingAction() : base("B+", "Kerbal Boarding Vessel") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             if (entry == null)
             {
@@ -112,7 +112,7 @@ namespace Nereid
       {
          public DockingAction() : base("D+", "Vessel docked") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.Dockings++;
             return true;
@@ -128,7 +128,7 @@ namespace Nereid
       {
          public LaunchAction() : base("L+", "Launching Vessel") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.TimeOfLastLaunch = timeOfAction;
             return true;
@@ -144,7 +144,7 @@ namespace Nereid
       {
          public RecoverAction() : base("M+", "Vessel recovered") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             try
@@ -180,7 +180,7 @@ namespace Nereid
 
       public abstract class EvaAction : Action
       {
-         public EvaAction(String code, String name) : base(code, name) { }
+         public EvaAction(string code, string name) : base(code, name) { }
 
          public abstract void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry);
       }
@@ -189,7 +189,7 @@ namespace Nereid
       {
          public EvaNoAtmosphereAction() : base("E+", "Kerbal on Eva in zero atmosphere") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.TimeOfLastEva = timeOfAction;
             return true;
@@ -214,7 +214,7 @@ namespace Nereid
       {
          public EvaWithOxygen() : base("EX+", "Kerbal on Eva in atmosphere with oxygen") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.TimeOfLastEva = timeOfAction;
             return true;
@@ -236,7 +236,7 @@ namespace Nereid
       {
          public EvaInAtmosphereAction() : base("EA+", "Kerbal on Eva in toxic atmosphere without oxygen") { }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.TimeOfLastEva = timeOfAction;
             return true;
@@ -263,7 +263,7 @@ namespace Nereid
             return entry.Name + " has completed a contract";
          }
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
          {
             entry.ContractsCompleted++;
             return true;
@@ -277,7 +277,7 @@ namespace Nereid
          {
          }
 
-         public override bool DoAction(double timeOfService, HallOfFameEntry entry, String data = "")
+         public override bool DoAction(double timeOfService, HallOfFameEntry entry, string data = "")
          {
             try
             {

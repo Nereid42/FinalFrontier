@@ -36,7 +36,8 @@ namespace FinalFrontierAdapter
       *          --- DO NOT EDIT BELOW THIS COMMENT ---          *
       *                                                          *
       * This file contains classes and interfaces to use the     *
-      * Toolbar Plugin without creating a hard dependency on it. *
+      * Toolbar CheckPlugin without creating a hard dependency	 *
+	  * on it.													 *
       *                                                          *
       * There is nothing in this file that needs to be edited    *
       * by hand.                                                 *
@@ -52,7 +53,7 @@ namespace FinalFrontierAdapter
       public partial class ToolbarManager : IToolbarManager
       {
          /// <summary>
-         /// Whether the Toolbar Plugin is available.
+         /// Whether the Toolbar CheckPlugin is available.
          /// </summary>
          public static bool ToolbarAvailable
          {
@@ -180,8 +181,8 @@ namespace FinalFrontierAdapter
          /// Whether this button is currently visible or not. Can be used in addition to or as a replacement for <see cref="Visibility"/>.
          /// </summary>
          /// <remarks>
-         /// Setting this property to true does not affect the player's ability to hide the button using the configuration.
-         /// Conversely, setting this property to false does not enable the player to show the button using the configuration.
+         /// Setting this property to true does not affect the player's ability to hide the button using the Config.
+         /// Conversely, setting this property to false does not enable the player to show the button using the Config.
          /// </remarks>
          bool Visible
          {
@@ -209,7 +210,7 @@ namespace FinalFrontierAdapter
          /// <remarks>
          /// Note that the toolbar is not visible in certain game scenes, for example the loading screens. This property
          /// does not reflect button invisibility in those scenes. In addition, this property does not reflect the
-         /// player's configuration of the button's visibility.
+         /// player's Config of the button's visibility.
          /// </remarks>
          bool EffectivelyVisible
          {
@@ -241,7 +242,7 @@ namespace FinalFrontierAdapter
          /// </para>
          /// <para>
          /// Setting this property to true does not affect the player's ability to hide the button using the
-         /// configuration.
+         /// Config.
          /// </para>
          /// <para>
          /// This feature should be used only sparingly, if at all, since it forces the button to be displayed on

@@ -47,14 +47,14 @@ namespace Nereid
          }
 
          public MissionSummaryWindow()
-            : base(Constants.WINDOW_ID_MISSION_SUMMARY, FinalFrontier.configuration.GetMissionSummaryWindowTitle() )
+            : base(Constants.WINDOW_ID_MISSION_SUMMARY, FinalFrontier.Config.GetMissionSummaryWindowTitle() )
          {
 
          }
 
          protected override void OnWindow(int id)
          {
-            Configuration config = FinalFrontier.configuration;
+            Configuration config = FinalFrontier.Config;
             GUILayout.BeginVertical();
             GUILayout.Label(vessel!=null?vessel.vesselName:"no vessel",FFStyles.STYLE_STRETCHEDLABEL);
             DrawSummary();
@@ -100,7 +100,7 @@ namespace Nereid
                         {
                            GUILayout.BeginHorizontal(STYLE_LINE);
                         }
-                        String tooltip = ribbon.GetName() + "\n" + ribbon.GetDescription();
+                        string tooltip = ribbon.GetName() + "\n" + ribbon.GetDescription();
                         GUILayout.Button(new GUIContent(ribbon.GetTexture(), tooltip), FFStyles.STYLE_RIBBON);
                         n++;
                         if (n % RIBBONS_PER_LINE == 0) GUILayout.EndHorizontal();

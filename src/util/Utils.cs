@@ -13,7 +13,7 @@ namespace Nereid
 
          private static readonly char[] SINGLE_SPACE_ARRAY = new char[] { ' ' };
 
-         private static void MoveFile(String from, String to)
+         private static void MoveFile(string from, string to)
          {
             try
             {
@@ -26,9 +26,9 @@ namespace Nereid
 
          }
 
-         public static String ToString<T>(List<T> list)
+         public static string ToString<T>(List<T> list)
          {
-            String result="";
+            string result="";
             foreach(T x in list)
             {
                if (result.Length > 0) result = result + ",";
@@ -37,7 +37,7 @@ namespace Nereid
             return result+" ("+list.Count+" entries)";
          }
 
-         public static String Roman(int value)
+         public static string Roman(int value)
          {
             switch (value)
             {
@@ -66,7 +66,7 @@ namespace Nereid
             return "?";
          }
 
-         public static CelestialBody GetCelestialBody(String name)
+         public static CelestialBody GetCelestialBody(string name)
          {
             foreach (CelestialBody body in PSystemManager.Instance.localBodies)
             {
@@ -75,11 +75,11 @@ namespace Nereid
             return null;
          }
 
-         public static void FileRotate(String filename, int maxNr)
+         public static void FileRotate(string filename, int maxNr)
          {
             //
             Log.Info("rotating file '" + filename + "' (" + maxNr + " versions)");
-            String obsolete = filename + "." + maxNr;
+            string obsolete = filename + "." + maxNr;
             if (File.Exists(obsolete))
             {
                try
@@ -94,8 +94,8 @@ namespace Nereid
 
             for (int n = maxNr - 1; n > 0; n--)
             {
-               String oldFilename = filename + "." + n;
-               String newFilename = filename + "." + (n + 1);
+               string oldFilename = filename + "." + n;
+               string newFilename = filename + "." + (n + 1);
                if (File.Exists(oldFilename))
                {
                   MoveFile(oldFilename, newFilename);
@@ -116,16 +116,16 @@ namespace Nereid
             return hours * 60 * 60;
          }
 
-         public static String GetRootPath()
+         public static string GetRootPath()
          {
-            String path = KSPUtil.ApplicationRootPath;
+            string path = KSPUtil.ApplicationRootPath;
             path = path.Replace("\\", "/");
             if (path.EndsWith("/")) path = path.Substring(0, path.Length - 1);
             //
             return path;
          }
 
-         public static String ConvertToKerbinDuration(double ut)
+         public static string ConvertToKerbinDuration(double ut)
          {
             double hours = ut / 60.0 / 60.0;
             double kHours = Math.Floor(hours % 24.0);
@@ -143,7 +143,7 @@ namespace Nereid
          }
 
 
-         public static String ConvertToKerbinTime(double ut)
+         public static string ConvertToKerbinTime(double ut)
          {
             double hours = ut / 60.0 / 60.0;
             double kHours = Math.Floor(hours % 6.0);
@@ -158,7 +158,7 @@ namespace Nereid
          }
 
 
-         public static String ConvertToEarthTime(double ut)
+         public static string ConvertToEarthTime(double ut)
          {
             double hours = ut / 60.0 / 60.0;
             double eHours = Math.Floor(hours % 24.0);
@@ -188,13 +188,13 @@ namespace Nereid
          /**
           * Remove multiple spaces
           */
-         public static String Compress(this String s)
+         public static string Compress(this string s)
          {
             if (s == null) return "";
-           return string.Join(" ", s.Trim().Split(SINGLE_SPACE_ARRAY,  StringSplitOptions.RemoveEmptyEntries));
+           return string.Join(" ", s.Trim().Split(SINGLE_SPACE_ARRAY, StringSplitOptions.RemoveEmptyEntries));
          }
 
-         public static String GameTimeInDaysAsString(double time)
+         public static string GameTimeInDaysAsstring(double time)
          {
             double inDays = GameTimeInDays(time);
             if (inDays >= 1000)
@@ -209,7 +209,7 @@ namespace Nereid
             return inDays.ToString("0.00");
          }
 
-         public static String GameTimeAsString(double time)
+         public static string GameTimeAsstring(double time)
          {
             long seconds = (long)time;
             long days = (long)GameTimeInDays(time);
@@ -218,7 +218,7 @@ namespace Nereid
             long hours = (seconds % seconds_per_day) / Constants.SECONDS_PER_HOUR;
             long minutes = (seconds % Constants.SECONDS_PER_HOUR) / Constants.SECONDS_PER_MINUTE;
 
-            String hhmm = hours.ToString("00") + ":" + minutes.ToString("00");
+            string hhmm = hours.ToString("00") + ":" + minutes.ToString("00");
 
             if (days == 0)
             {

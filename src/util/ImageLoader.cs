@@ -15,7 +15,7 @@ namespace Nereid
 
          }
 
-         public static Texture2D GetTexture(String pathInGameData)
+         public static Texture2D GetTexture(string pathInGameData)
          {
             Log.Detail("get texture " + pathInGameData);
             Texture2D texture = GameDatabase.Instance.GetTexture(pathInGameData, false);

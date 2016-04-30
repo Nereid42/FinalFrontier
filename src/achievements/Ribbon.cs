@@ -19,7 +19,7 @@ namespace Nereid
          // ribbon enabled?
          private bool enabled = true;
 
-         public Ribbon(String imagePath, Achievement achievement, Ribbon supersede = null)
+         public Ribbon(string imagePath, Achievement achievement, Ribbon supersede = null)
          {
             this.achievement = achievement;
             this.supersede = supersede;
@@ -56,7 +56,7 @@ namespace Nereid
             return texture;
          }
 
-         public String GetCode()
+         public string GetCode()
          {
             return achievement.GetCode();
          }
@@ -89,18 +89,18 @@ namespace Nereid
             return achievement.GetHashCode();
          }
 
-         public String GetDescription()
+         public string GetDescription()
          {
             if (achievement.GetDescription() == null) return ""; // this should never happen, but its better to be safe than sorry
             return achievement.GetDescription();
          }
 
-         public String GetName()
+         public string GetName()
          {
             return achievement.GetName() + " Ribbon";
          }
 
-         public override String ToString()
+         public override string ToString()
          {
             return achievement.GetCode();
          }

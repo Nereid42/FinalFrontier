@@ -57,7 +57,7 @@ namespace Nereid
          // the hall of fame of all kerbals
          private readonly List<HallOfFameEntry> entries;
          // map of known kerbals by name
-         private readonly Dictionary<String, HallOfFameEntry> mapOfEntries;
+         private readonly Dictionary<string, HallOfFameEntry> mapOfEntries;
 
          // marker if HallOfFame was stored in KSP persistence file
          public bool loaded { get; private set; }
@@ -74,7 +74,7 @@ namespace Nereid
             this.currentTransaction = new HashSet<Achievement>();
             this.accomplished = new HashSet<Achievement>();
             this.logbook = new List<LogbookEntry>();
-            this.mapOfEntries = new Dictionary<String, HallOfFameEntry>();
+            this.mapOfEntries = new Dictionary<string, HallOfFameEntry>();
             this.loaded = false;
          }
 
@@ -145,7 +145,7 @@ namespace Nereid
                Log.Detail("Hall of Fame Statistics: ");
                foreach (HallOfFameEntry entry in entries)
                {
-                  String name = entry.GetName();
+                  string name = entry.GetName();
                   Log.Detail(name + " has " + entry.GetRibbons().Count + " ribbons, " + entry.MissionsFlown + " missions flown in " + entry.TotalMissionTime + " seconds time");
                   if(!mapOfEntries.ContainsKey(name))
                   {
@@ -156,7 +156,7 @@ namespace Nereid
             Log.Detail("- End of Statistics -");
          }
 
-         private HallOfFameEntry CreateEntry(String name, bool sort = true)
+         private HallOfFameEntry CreateEntry(string name, bool sort = true)
          {
             if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("creating entry " + name);
             lock (this)
@@ -202,7 +202,7 @@ namespace Nereid
             }
          }
 
-         public HallOfFameEntry GetEntry(String name)
+         public HallOfFameEntry GetEntry(string name)
          {
             lock (this)
             {
@@ -218,7 +218,7 @@ namespace Nereid
             }
          }
 
-         private LogbookEntry TakeLog(double time, String code, String name, String text = "")
+         private LogbookEntry TakeLog(double time, string code, string name, string text = "")
          {
             lock (this)
             {
@@ -230,13 +230,13 @@ namespace Nereid
          }
 
 
-         private void TakeLog(double time, String code, HallOfFameEntry entry, String text = "")
+         private void TakeLog(double time, string code, HallOfFameEntry entry, string text = "")
          {
             LogbookEntry lbentry = TakeLog(time, code, entry.GetName(), text);
             entry.AddLogRef(lbentry);
          }
 
-         private void TakeLog(String code, HallOfFameEntry entry)
+         private void TakeLog(string code, HallOfFameEntry entry)
          {
             double time = Planetarium.GetUniversalTime();
             TakeLog(time, code, entry);
@@ -348,7 +348,7 @@ namespace Nereid
             }
 
             Action action = ActionPool.ACTION_SCIENCE;
-            String data = science.ToString();
+            string data = science.ToString();
             if (action.DoAction(now, entry, data))
             {
                TakeLog(now, action.GetCode(), entry, data);
@@ -374,9 +374,9 @@ namespace Nereid
             {
                if(entry.Award(ribbon))
                {
-                  if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.configuration.logRibbonAwards)
+                  if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.Config.logRibbonAwards)
                   {
-                     // log directly to make log outputs independent from log level if FinalFrontier.configuration.logRibbonAwards is set to true
+                     // log directly to make log outputs independent from log level if FinalFrontier.Config.logRibbonAwards is set to true
                      Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + time+" ("+Utils.ConvertToKerbinTime(time)+")");
                   }
                   TakeLog(time, ribbon.GetCode(), entry);
@@ -401,7 +401,7 @@ namespace Nereid
                {
                   Log.Detail("new or changed custom ribbon " + ribbon.GetName() + " recorded  at " + Utils.ConvertToKerbinTime(now));
                }
-               String code = DataChange.DATACHANGE_CUSTOMRIBBON.GetCode() + nr;
+               string code = DataChange.DATACHANGE_CUSTOMRIBBON.GetCode() + nr;
                TakeLog(now, code, achievement.GetName(), achievement.GetDescription());
             }
             else
@@ -580,7 +580,7 @@ namespace Nereid
 
          private void changeCustomRibbon(LogbookEntry log)
          {
-            String code = "X" + log.Code.Substring(2);
+            string code = "X" + log.Code.Substring(2);
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("changing custom ribbon for code " + code);
 
             Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
@@ -705,10 +705,10 @@ namespace Nereid
 
          public override string ToString()
          {
-            String result = "HALL OF FAME ("+entries.Count+" entries):\n";
+            string result = "HALL OF FAME ("+entries.Count+" entries):\n";
             foreach(HallOfFameEntry entry in entries)
             {
-               String name =  entry.GetName();
+               string name =  entry.GetName();
                ProtoCrewMember kerbal = entry.GetKerbal();
                if(kerbal!=null)
                {
@@ -732,11 +732,11 @@ namespace Nereid
             List<LogbookEntry> log = new List<LogbookEntry>(entry.GetLogRefs());
             log.Reverse();
             bool start = false;
-            String codeLaunch=ActionPool.ACTION_LAUNCH.GetCode();
-            String codeRecover=ActionPool.ACTION_RECOVER.GetCode();
+            string codeLaunch=ActionPool.ACTION_LAUNCH.GetCode();
+            string codeRecover=ActionPool.ACTION_RECOVER.GetCode();
             foreach(LogbookEntry logentry in log)
             {
-               String code = logentry.Code;
+               string code = logentry.Code;
                if (code.Equals(codeRecover) && !start)
                {
                   start = true;

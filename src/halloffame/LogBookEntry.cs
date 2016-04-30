@@ -15,11 +15,11 @@ namespace Nereid
          private static readonly Char[] FIELD_SEPARATORS = new Char[] { ' ' };
 
          public double UniversalTime { get; set; }
-         public String Code { get; set; }
-         public String Name { get; set; }
-         public String Data { get; set; }
+         public string Code { get; set; }
+         public string Name { get; set; }
+         public string Data { get; set; }
 
-         public LogbookEntry(double time, String code, String name, String text = "")
+         public LogbookEntry(double time, string code, string name, string text = "")
          {
             this.UniversalTime = time;
             this.Code = code;
@@ -33,9 +33,9 @@ namespace Nereid
             }
          }
 
-         public override String ToString()
+         public override string ToString()
          {
-            String timestamp = Utils.ConvertToEarthTime(UniversalTime) + ": ";
+            string timestamp = Utils.ConvertToEarthTime(UniversalTime) + ": ";
             Action action = ActionPool.Instance().GetActionForCode(Code);
             if(action!=null)
             {
@@ -52,30 +52,30 @@ namespace Nereid
             return "unknown logbook entry (code " + Code + ")";
          }
 
-         public String AsString()
+         public string Asstring()
          {
             return Utils.ConvertToKerbinTime(UniversalTime) + ": " + Name + " " + Code;
          }
 
-         public String Serialize()
+         public string Serialize()
          {
-            String line = UniversalTime.ToString() + " " + Code + " " + Name;
+            string line = UniversalTime.ToString() + " " + Code + " " + Name;
             if (Data != null && Data.Length > 0) line = line + TEXT_DELIM + Data;
             return line;
          }
 
-         public static LogbookEntry Deserialize(String line)
+         public static LogbookEntry Deserialize(string line)
          {
-            String[] field = line.Split(FIELD_SEPARATORS, 3);
+            string[] field = line.Split(FIELD_SEPARATORS, 3);
             if (field.Length == 3)
             {
                double time = double.Parse(field[0]);
-               String code = field[1];
-               String name = field[2];
-               String text = "";
+               string code = field[1];
+               string name = field[2];
+               string text = "";
                if (name.Contains(TEXT_DELIM))
                {
-                  String[] subfields = field[2].Split(TEXT_SEPARATORS, 2);
+                  string[] subfields = field[2].Split(TEXT_SEPARATORS, 2);
                   name = subfields[0];
                   text = (subfields.Length == 2) ? subfields[1] : "";
                }

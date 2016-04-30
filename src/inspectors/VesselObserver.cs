@@ -106,7 +106,7 @@ namespace Nereid
 
          public override string ToString()
          {
-            String result = "[VesselObserver::";
+            string result = "[VesselObserver::";
             foreach (Guid id in vesselData.Keys)
             {
                result = result + id + "=" + vesselData[id].HomeworldLaunchTime + "/";

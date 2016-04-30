@@ -20,7 +20,7 @@ namespace Nereid
          protected Vector2 mousePosition;
          private Vector2 tmp = new Vector2(0,0);
 
-         private String tooltip;
+         private string tooltip;
 
          // called on WindowClose
          OnWindowClose onWindowClose;
@@ -227,7 +227,7 @@ namespace Nereid
             bounds.Set(x, y, bounds.width, bounds.height);
          }
 
-         public void SetTitle(String title)
+         public void SetTitle(string title)
          {
             this.title = title;
          }

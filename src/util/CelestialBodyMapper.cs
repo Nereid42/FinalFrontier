@@ -9,7 +9,7 @@ namespace Nereid
    {
       public class CelestialBodyMapper
       {
-         private const String PLUGIN = "FinalFrontier";
+         private const string PLUGIN = "FinalFrontier";
 
          private CelestialBodyInfo info = new CelestialBodyInfo();
 
@@ -34,9 +34,9 @@ namespace Nereid
             return info.GetBool(body, "", "gas giant", false);
          }
 
-         public String GetRibbonPath(CelestialBody body, String defaultpath)
+         public string GetRibbonPath(CelestialBody body, string defaultpath)
          {
-            String path = info.GetString(body, PLUGIN, "ribbon path", defaultpath);
+            string path = info.Getstring(body, PLUGIN, "ribbon path", defaultpath);
             if (!path.EndsWith("/") && !path.EndsWith("\\")) path = path + "/";
             return path;
          }

@@ -8,18 +8,18 @@ namespace Nereid.FinalFrontier
 {
    public class ExternalInterface
    {
-      private const String VERSION_INFIX = "\"VERSION\":";
-      private const String MAJOR_INFIX = "\"MAJOR\":";
-      private const String MINOR_INFIX = "\"MINOR\":";
-      private const String PATCH_INFIX = "\"PATCH\":";
-      private const String BUILD_INFIX = "\"BUILD\":";
+      private const string VERSION_INFIX = "\"VERSION\":";
+      private const string MAJOR_INFIX = "\"MAJOR\":";
+      private const string MINOR_INFIX = "\"MINOR\":";
+      private const string PATCH_INFIX = "\"PATCH\":";
+      private const string BUILD_INFIX = "\"BUILD\":";
 
       public ExternalInterface()
       {
          // no member, no init
       }
 
-      public String GetVersionNumber(String s, int index)
+      public string GetVersionNumber(string s, int index)
       {
          int e1 = s.IndexOf(",",index);
          int e2 = s.IndexOf("}", index);
@@ -30,14 +30,14 @@ namespace Nereid.FinalFrontier
          return s.Substring(index, e2-index);
       }
 
-      public String GetVersion()
+      public string GetVersion()
       {
-         String filename = Utils.GetRootPath()+"/GameData/Nereid/FinalFrontier/FinalFrontier.version";
+         string filename = Utils.GetRootPath()+"/GameData/Nereid/FinalFrontier/FinalFrontier.version";
          if (File.Exists(filename))
          {
             try 
             {
-               String text = File.ReadAllText(filename);
+               string text = File.ReadAllText(filename);
                int pVersion = text.IndexOf(VERSION_INFIX);
                if (pVersion < 0) return "invalid file structure";
                int pMajor = text.IndexOf(MAJOR_INFIX, pVersion);
@@ -48,10 +48,10 @@ namespace Nereid.FinalFrontier
                if (pPatch < 0) return "invalid file structure";
                int pBuild = text.IndexOf(BUILD_INFIX, pVersion);
                if (pBuild < 0) return "invalid file structure";
-               String major = GetVersionNumber(text, pMajor + MAJOR_INFIX.Length);
-               String minor = GetVersionNumber(text, pMinor + MINOR_INFIX.Length);
-               String patch = GetVersionNumber(text, pPatch + PATCH_INFIX.Length);
-               String build = GetVersionNumber(text, pBuild + BUILD_INFIX.Length);
+               string major = GetVersionNumber(text, pMajor + MAJOR_INFIX.Length);
+               string minor = GetVersionNumber(text, pMinor + MINOR_INFIX.Length);
+               string patch = GetVersionNumber(text, pPatch + PATCH_INFIX.Length);
+               string build = GetVersionNumber(text, pBuild + BUILD_INFIX.Length);
                return major + "." + minor + "." + patch + "-" + build;
             }
             catch(Exception e)
@@ -63,12 +63,12 @@ namespace Nereid.FinalFrontier
          return "file not found";
       }
 
-      public Ribbon RegisterRibbon(String code, String pathToRibbonTexture, String name, String description, bool first, int prestige)
+      public Ribbon RegisterRibbon(string code, string pathToRibbonTexture, string name, string description, bool first, int prestige)
       {
          return RibbonPool.Instance().RegisterExternalRibbon(code, pathToRibbonTexture, name, description, first, prestige);
       }
 
-      public Ribbon RegisterCustomRibbon(int id, String pathToRibbonTexture, String name, String description, int prestige)
+      public Ribbon RegisterCustomRibbon(int id, string pathToRibbonTexture, string name, string description, int prestige)
       {
          return RibbonPool.Instance().RegisterCustomRibbon(id, pathToRibbonTexture, name, description, prestige);
       }
@@ -78,7 +78,7 @@ namespace Nereid.FinalFrontier
          HallOfFame.Instance().Record(kerbal, (Ribbon)ribbon);
       }
 
-      public void AwardRibbonToKerbal(String code, ProtoCrewMember kerbal)
+      public void AwardRibbonToKerbal(string code, ProtoCrewMember kerbal)
       {
          Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
          if(ribbon==null)
@@ -100,7 +100,7 @@ namespace Nereid.FinalFrontier
          halloffame.EndArwardOfRibbons();
       }
 
-      public void AwardRibbonToKerbals(String code, ProtoCrewMember[] kerbals)
+      public void AwardRibbonToKerbals(string code, ProtoCrewMember[] kerbals)
       {
          Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
          if (ribbon == null)
@@ -119,7 +119,7 @@ namespace Nereid.FinalFrontier
          return entry.HasRibbon((Ribbon)ribbon);
       }
 
-      public bool IsRibbonAwardedToKerbal(String code, ProtoCrewMember kerbal)
+      public bool IsRibbonAwardedToKerbal(string code, ProtoCrewMember kerbal)
       {
          Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
          if (ribbon == null) return false;

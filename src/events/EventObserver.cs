@@ -356,7 +356,7 @@ namespace Nereid
             // boarding crew is still the active vessel
             Vessel eva = action.from.vessel;
             Vessel vessel = action.to.vessel;
-            String nameOfKerbalOnEva = eva.vesselName;
+            string nameOfKerbalOnEva = eva.vesselName;
             // find kerbal that return from eva in new crew
             ProtoCrewMember member = vessel.GetCrewMember(nameOfKerbalOnEva);
             if (member!=null && member.IsCrew())
@@ -446,7 +446,7 @@ namespace Nereid
             // ------ MissionSummary ------
             if(HighLogic.LoadedScene == GameScenes.SPACECENTER)
             {
-               if (FinalFrontier.configuration.IsMissionSummaryEnabled())
+               if (FinalFrontier.Config.IsMissionSummaryEnabled())
                {
                   double technicalMissionEndTime = Planetarium.GetUniversalTime();
                   MissionSummaryWindow missionSummaryWindow = new MissionSummaryWindow();

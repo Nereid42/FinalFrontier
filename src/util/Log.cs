@@ -11,7 +11,7 @@ namespace Nereid
 
          public static LEVEL level = LEVEL.INFO ;
 
-         private static readonly String PREFIX = "FF: ";
+         private static readonly string PREFIX = "FF: ";
 
          public static LEVEL GetLevel()
          {
@@ -35,7 +35,7 @@ namespace Nereid
             return level <= Log.level;
          }
 
-         public static void Trace(String msg)
+         public static void Trace(string msg)
          {
             if (IsLogable(LEVEL.TRACE))
             {
@@ -43,7 +43,7 @@ namespace Nereid
             }
          }
 
-         public static void Detail(String msg)
+         public static void Detail(string msg)
          {
             if (IsLogable(LEVEL.DETAIL))
             {
@@ -52,7 +52,7 @@ namespace Nereid
          }
 
 
-         public static void Info(String msg)
+         public static void Info(string msg)
          {
             if (IsLogable(LEVEL.INFO))
             {
@@ -61,7 +61,7 @@ namespace Nereid
          }
 
          // for Debbung only; calls should be removed for release
-         public static void Test(String msg)
+         public static void Test(string msg)
          {
             //if (IsLogable(LEVEL.INFO))
             {
@@ -69,7 +69,7 @@ namespace Nereid
             }
          }
 
-         public static void Warning(String msg)
+         public static void Warning(string msg)
          {
             if (IsLogable(LEVEL.WARNING))
             {
@@ -77,7 +77,7 @@ namespace Nereid
             }
          }
 
-         public static void Error(String msg)
+         public static void Error(string msg)
          {
             if (IsLogable(LEVEL.ERROR))
             {
@@ -175,7 +175,7 @@ namespace Nereid
             Debug.Log("  - TimeOfLastLaunch:       " + entry.TimeOfLastLaunch);
             Debug.Log("  - TotalEvaTime:           " + entry.TotalEvaTime);
             Debug.Log("  - TotalMissionTime:       " + entry.TotalMissionTime);
-            String visitedCelestialBodies = "";
+            string visitedCelestialBodies = "";
             foreach (CelestialBody body in entry.visitedCelestialBodies)
             {
                visitedCelestialBodies = visitedCelestialBodies+body.name+" ";

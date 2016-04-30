@@ -10,13 +10,13 @@ namespace Nereid
       abstract class Pool<T>  : IEnumerable<T>
       {
          private readonly List<T> pool = new List<T>();
-         private readonly Dictionary<String, T> map = new Dictionary<String, T>();
+         private readonly Dictionary<string, T> map = new Dictionary<string, T>();
 
-         protected abstract String CodeOf(T x);
+         protected abstract string CodeOf(T x);
 
          protected void Add(T x)
          {
-            String code = CodeOf(x);
+            string code = CodeOf(x);
             try
             {
                Log.Detail("adding object " + x + " (" + code + ") to pool ("+x.GetType()+")");
@@ -60,7 +60,7 @@ namespace Nereid
             return GetElementForCode(CodeOf(x)) != null;
          }
 
-         public T GetElementForCode(String code)
+         public T GetElementForCode(string code)
          {
             try
             {

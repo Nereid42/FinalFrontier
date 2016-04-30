@@ -12,7 +12,7 @@ namespace Nereid
          private bool first;
          public int prestige { get; private set; }
 
-         protected Achievement(String code, String name, int prestige, bool first)
+         protected Achievement(string code, string name, int prestige, bool first)
             : base(code, (first ? "First " : "") + name)
          {
             this.first = first;
@@ -24,7 +24,7 @@ namespace Nereid
             try
             {
                bool result = CheckVesselState(previous, current);
-               if(result && FinalFrontier.configuration.logRibbonAwards)
+               if(result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this,previous,current);
                }
@@ -42,7 +42,7 @@ namespace Nereid
             try
             {
                bool result = CheckEntry(entry);
-               if (result && FinalFrontier.configuration.logRibbonAwards)
+               if (result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this, entry);
                }
@@ -60,7 +60,7 @@ namespace Nereid
             try
             {
                bool result = CheckEventReport(report);
-               if (result && FinalFrontier.configuration.logRibbonAwards)
+               if (result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this, report);
                }
@@ -78,7 +78,7 @@ namespace Nereid
             try
             {
                bool result = CheckContract(contract);
-               if (result && FinalFrontier.configuration.logRibbonAwards)
+               if (result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this, contract);
                }
@@ -97,7 +97,7 @@ namespace Nereid
             try
             {
                bool result = CheckProgress(node);
-               if (result && FinalFrontier.configuration.logRibbonAwards)
+               if (result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this, node);
                }
@@ -115,7 +115,7 @@ namespace Nereid
             try
             {
                bool result = CheckKerbalRosterStatus(kerbal, oldState, newState);
-               if (result && FinalFrontier.configuration.logRibbonAwards)
+               if (result && FinalFrontier.Config.logRibbonAwards)
                {
                   Log.LogAchievement(this, kerbal, oldState, newState);
                }
@@ -136,7 +136,7 @@ namespace Nereid
          protected virtual bool CheckKerbalRosterStatus(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState) { return false; }
 
          // description of the achievement
-         public abstract String GetDescription();
+         public abstract string GetDescription();
 
          public virtual void ChangeEntryOnAward(HallOfFameEntry entry)
          {
@@ -144,7 +144,7 @@ namespace Nereid
          }
 
          // output line in logbook
-         public override String CreateLogBookEntry(LogbookEntry entry)
+         public override string CreateLogBookEntry(LogbookEntry entry)
          {
             return GetName() + " ribbon is awarded to " + entry.Name;
          }
@@ -154,7 +154,7 @@ namespace Nereid
             return first;
          }
 
-         protected String FirstKerbalText()
+         protected string FirstKerbalText()
          {
             return first ? "being first kerbal" : "";
          }
@@ -173,7 +173,7 @@ namespace Nereid
       abstract class NumericAchievement : Achievement
       {
          protected int value;
-         public NumericAchievement(String code, String name, int value, int prestige, bool first)
+         public NumericAchievement(string code, string name, int value, int prestige, bool first)
             : base(code+value, name, prestige, first)
          {
             this.value = value;
@@ -212,7 +212,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for executing EVA while not in a stable orbit";
          }
@@ -236,7 +236,7 @@ namespace Nereid
             return current.Situation==Vessel.Situations.SPLASHED;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for a splashdown of a vessel in water";
          }
@@ -270,7 +270,7 @@ namespace Nereid
             return true;
          }         
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for less than " + value + " seconds into orbit";
          }
@@ -288,7 +288,7 @@ namespace Nereid
             return entry.TotalMissionTime > value;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for more than " + Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled()?" kerbin":"")+" days spent in missions";
          }
@@ -315,7 +315,7 @@ namespace Nereid
             return vessel.missionTime > value;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for more than " + Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "") + " days spent in a single mission and returnig safely";
          }
@@ -336,9 +336,9 @@ namespace Nereid
             return entry.LastEvaDuration >= value;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
-            return "Awarded for continuously spending " + Utils.GameTimeAsString(value) + " in EVA";
+            return "Awarded for continuously spending " + Utils.GameTimeAsstring(value) + " in EVA";
          }
       }
 
@@ -354,9 +354,9 @@ namespace Nereid
             return entry.TotalEvaTime > value;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
-            return "Awarded for more than " + Utils.GameTimeAsString(value) + " spent in EVA";
+            return "Awarded for more than " + Utils.GameTimeAsstring(value) + " spent in EVA";
          }
       }
 
@@ -372,7 +372,7 @@ namespace Nereid
             return entry.MissionsFlown >= value;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for " + value + " or more missions";
          }
@@ -396,7 +396,7 @@ namespace Nereid
             return true;
          }   
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to every crew member of a vehicle with a total mass of " + value + "t or more";
          }
@@ -425,7 +425,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for landing a vehicle with a total mass of " + value + "t or more";
          }
@@ -455,7 +455,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for launching a vehicle with a total mass of " + value + "t or more";
          }
@@ -470,7 +470,7 @@ namespace Nereid
          {
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for surviving a mission abort";
          }
@@ -496,7 +496,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             if (HasToBeFirst())
             {
@@ -528,7 +528,7 @@ namespace Nereid
             return current.MainBody.Equals(body);
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "entering the atmosphere of " + body.GetName();
          }
@@ -540,7 +540,7 @@ namespace Nereid
       {
          protected CelestialBody body;
 
-         public CelestialBodyAchievement(String code, String name, CelestialBody body, int prestige, bool first = false)
+         public CelestialBodyAchievement(string code, string name, CelestialBody body, int prestige, bool first = false)
             : base(code+(first?"1:":":") + body.GetName(), name, prestige, first)
          {
             this.body = body;
@@ -631,7 +631,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for entering the sphere of influence of " + body.GetName();
          }
@@ -660,7 +660,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "landing on " + body.GetName();
          }
@@ -683,7 +683,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "planting a flag on " + body.GetName();
          }
@@ -715,7 +715,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in zero atmosphere around " + body.GetName();
          }
@@ -745,7 +745,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for being the first kerbal on EVA in space ";
          }
@@ -772,7 +772,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in a stable orbit around " + body.GetName();
          }
@@ -800,7 +800,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "taking footsteps on " + body.GetName();
          }
@@ -808,7 +808,7 @@ namespace Nereid
 
       abstract class OrbitalAchievement : CelestialBodyAchievement
       {
-         public OrbitalAchievement(String code, String name, CelestialBody body, int prestige, bool first = false)
+         public OrbitalAchievement(string code, string name, CelestialBody body, int prestige, bool first = false)
             : base(code, name, body, prestige, first)
          {
          }
@@ -835,7 +835,7 @@ namespace Nereid
             return current.MainBody.Equals(body) && current.InOrbit;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "orbiting around " + body.GetName();
          }
@@ -858,7 +858,7 @@ namespace Nereid
             return current.HasMovedOnSurface;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "moving a vehicle on surface of " + body.GetName();
          }
@@ -885,7 +885,7 @@ namespace Nereid
             return current.PeA <= maxDistanceToSun && current.ApA <= maxDistanceToSun;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "orbiting " + base.body.GetName() + " half between " + innermost.GetName() + " and " + base.body.GetName();
          }
@@ -907,7 +907,7 @@ namespace Nereid
             return base.CheckVesselState(previous, current);
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "docking in " + body.GetName()+" orbit";
          }
@@ -915,25 +915,25 @@ namespace Nereid
 
       class CustomAchievement : NumericAchievement
       {
-         private String description;
+         private string description;
 
          public CustomAchievement(int value, int prestige)
             : base("X","no name",value, prestige, false)
          {
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             if(description==null) return "no description";
             return description;
          }
 
-         public void SetDescription(String text)
+         public void SetDescription(string text)
          {
             this.description = text;
          }
 
-         public void SetName(String name)
+         public void SetName(string name)
          {
             base.Rename(name);
          }
@@ -977,7 +977,7 @@ namespace Nereid
             return ratio >= (double)value / 100.0; 
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for launching with solid fuel booster at "+value+"% of ship mass";
          }
@@ -1003,7 +1003,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for withstanding an acceleration of at least " + value + "g for " + GeeForceInspector.DURATION.ToString("0.0") + " or more seconds";
          }
@@ -1035,7 +1035,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for flying horizontally at mach " + value + " below "+MAX_ALTITUDE.ToString("0")+"m in Kerbin atmosphere";
          }
@@ -1056,7 +1056,7 @@ namespace Nereid
             return current.MainBody.Equals(body);
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for entering the deeper atmosphere of " + body.GetName();
          }
@@ -1072,7 +1072,7 @@ namespace Nereid
 
          // this class has no check methods, because the ribbon will be awarded directly
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "entering the sphere of influence of all celestial bodies in the kerbal system";
          }
@@ -1088,7 +1088,7 @@ namespace Nereid
 
          // this class has no check methods, because the ribbon will be awarded directly
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + "entering the sphere of influence of all moons of Jool";
          }
@@ -1132,7 +1132,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
             return "Awarded for" + FirstKerbalText().Envelope() + "in space beyond the sphere of influence of " + outermostBodyInSystem.name;
@@ -1153,7 +1153,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for completing "+value +" or more contracts";
          }
@@ -1173,7 +1173,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for researching " + value + " or more science points";
          }
@@ -1182,9 +1182,9 @@ namespace Nereid
 
       abstract class ServiceAchievement : Achievement
       {
-         private readonly String trait;
+         private readonly string trait;
 
-         public ServiceAchievement(String trait, String code, String name, int prestige)
+         public ServiceAchievement(string trait, string code, string name, int prestige)
             : base(code, name, prestige, false)
          {
             this.trait = trait;
@@ -1207,7 +1207,7 @@ namespace Nereid
          {
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to any kerbal completing at least a single mission as a scientist";
          }
@@ -1220,7 +1220,7 @@ namespace Nereid
          {
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to any kerbal completing at least a single mission as an engineer";
          }
@@ -1233,7 +1233,7 @@ namespace Nereid
          {
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to any kerbal completing at least a single mission as a pilot";
          }
@@ -1276,7 +1276,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any kind of duty on xmas 2014";
          }
@@ -1284,13 +1284,13 @@ namespace Nereid
 
       class DateofYearAchievement : Achievement
       {
-         private readonly String text;
+         private readonly string text;
          private readonly int firstDay;
          private readonly int firstMonth;
          private readonly int lastDay;
          private readonly int lastMonth;
 
-         public DateofYearAchievement(int firstDay, int firstMonth, int lastDay, int lastMonth, String name, String text, int prestige)
+         public DateofYearAchievement(int firstDay, int firstMonth, int lastDay, int lastMonth, string name, string text, int prestige)
             : base("Y" + ":" + firstDay + "." + firstMonth + "-" + lastDay + "." + lastMonth, name, prestige, false)
          {
             this.text = text;
@@ -1328,7 +1328,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return text;
          }
@@ -1351,7 +1351,7 @@ namespace Nereid
             return current.Situation == Vessel.Situations.SPLASHED;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any EVA in kerbin waters";
          }
@@ -1377,7 +1377,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any collision while in a vessel";
          }
@@ -1404,7 +1404,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for" + FirstKerbalText().Envelope() + (HasToBeFirst() ? "on " : "") + "EVA in a wet environment outside of Kerbin";
          }
@@ -1427,7 +1427,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any altitude record";
          }
@@ -1449,7 +1449,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any depth record";
          }
@@ -1473,7 +1473,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any distance record greater than " + MIN_DISTANCE/1000 + " km";
          }
@@ -1498,7 +1498,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for any speed record greater than " + MIN_SPEED +" m/s";
          }
@@ -1534,7 +1534,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to kerbals launching a vessel containing at least " + value + " tourists";
          }
@@ -1558,7 +1558,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for completing any " + cPrestige.ToString().ToLower()+" contract";
          }
@@ -1579,7 +1579,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded to any lost kerbal for returning to active duty";
          }
@@ -1611,7 +1611,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for landing a vessel on Kerbin at an elevation of at least " + value + "m";
          }
@@ -1644,7 +1644,7 @@ namespace Nereid
          }
 
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for landing a vessel with " + value + "% or less liquid fuel left";
          }
@@ -1655,9 +1655,9 @@ namespace Nereid
       {
          private const double POLAR_LATITUDE = 66;
 
-         String hemisphere;
+         string hemisphere;
 
-         public PolarLandingAchievement(String hemisphere, int prestige, bool first)
+         public PolarLandingAchievement(string hemisphere, int prestige, bool first)
             : base("P" + hemisphere.Substring(0, 1).ToUpper() + (first ? "1" : ""), (first ? "First " : "")+hemisphere + "Polar Lander", prestige, first)
          {
             this.hemisphere = hemisphere.ToLower();
@@ -1689,7 +1689,7 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
+         public override string GetDescription()
          {
             return "Awarded for "+ FirstKerbalText().Envelope() + "landing a vessel in the "+hemisphere+" polar region off Kerbin";
          }

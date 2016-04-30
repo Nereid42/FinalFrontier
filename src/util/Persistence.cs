@@ -12,11 +12,11 @@ namespace Nereid
    {
       static class Persistence
       {
-         private static readonly String ROOT_PATH = Utils.GetRootPath();
-         private static readonly String SAVE_BASE_FOLDER = ROOT_PATH + "/saves/"; // suggestion/hint from Cydonian Monk
-         private const String FILE_NAME = "halloffame.ksp";
+         private static readonly string ROOT_PATH = Utils.GetRootPath();
+         private static readonly string SAVE_BASE_FOLDER = ROOT_PATH + "/saves/"; // suggestion/hint from Cydonian Monk
+         private const string FILE_NAME = "halloffame.ksp";
 
-         private const String PERSISTENCE_NODE_ENTRY_NAME = "ENTRY";
+         private const string PERSISTENCE_NODE_ENTRY_NAME = "ENTRY";
 
          /***************************************************************************************************************
           * new persistence model
@@ -66,7 +66,7 @@ namespace Nereid
 
             if(node==null)
             {
-               Log.Warning("no config node found. hall of fame will not load");
+               Log.Warning("no Config node found. hall of fame will not load");
                return logbook;
             }
 
@@ -78,10 +78,10 @@ namespace Nereid
                foreach (ConfigNode childNode in node.GetNodes())
                {
                   if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("child node found: " + childNode.name);
-                  String sTime = childNode.GetValue(Constants.CONFIGNODE_KEY_TIME);
-                  String code = childNode.GetValue(Constants.CONFIGNODE_KEY_CODE);
-                  String name = childNode.GetValue(Constants.CONFIGNODE_KEY_NAME);
-                  String data = childNode.GetValue(Constants.CONFIGNODE_KEY_DATA);
+                  string sTime = childNode.GetValue(Constants.CONFIGNODE_KEY_TIME);
+                  string code = childNode.GetValue(Constants.CONFIGNODE_KEY_CODE);
+                  string name = childNode.GetValue(Constants.CONFIGNODE_KEY_NAME);
+                  string data = childNode.GetValue(Constants.CONFIGNODE_KEY_DATA);
                   try
                   {
                      double time = Double.Parse(sTime);
@@ -107,7 +107,7 @@ namespace Nereid
 
          }
 
-         public static String[] GetSaveGameFolders()
+         public static string[] GetSaveGameFolders()
          {
             return Directory.GetDirectories(SAVE_BASE_FOLDER);
          }
@@ -131,7 +131,7 @@ namespace Nereid
             {
                foreach (Ribbon ribbon in sorted)
                {
-                  String code = ribbon.GetCode().PadRight(20);
+                  string code = ribbon.GetCode().PadRight(20);
                   Ribbon supersede = ribbon.SupersedeRibbon();
                   file.WriteLine(code+(supersede!=null?supersede.GetCode():""));
                }

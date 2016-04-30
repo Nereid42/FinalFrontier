@@ -17,7 +17,7 @@ namespace Nereid
          private static readonly GUIStyle STYLE_CODE = new GUIStyle(HighLogic.Skin.label);
          private static readonly GUIStyle STYLE_NAME = new GUIStyle(HighLogic.Skin.label);
 
-         private List<Pair<String, String>> codes = new List<Pair<String, String>>();
+         private List<Pair<string, string>> codes = new List<Pair<string, string>>();
 
 
          public CodeBrowser()
@@ -33,14 +33,14 @@ namespace Nereid
             Log.Detail("adding action codes to code browser " + ActionPool.Instance());
             foreach (Activity activity in ActivityPool.Instance())
             {
-               Pair<String, String> code = new Pair<String, String>(activity.GetCode(), activity.GetName());
+               Pair<string, string> code = new Pair<string, string>(activity.GetCode(), activity.GetName());
                codes.Add(code);
             }
 
             // sort by code
             Log.Detail("sorting codes in code browser");
             codes.Sort(
-               delegate(Pair<String,String> left, Pair<String,String> right)
+               delegate(Pair<string,string> left, Pair<string,string> right)
                {
                   return left.first.CompareTo(right.first);
                });
@@ -55,10 +55,10 @@ namespace Nereid
             GUILayout.EndHorizontal();
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, FFStyles.STYLE_SCROLLVIEW, GUILayout.Height(HEIGHT));
             GUILayout.BeginVertical();
-            foreach (Pair<String, String> entry in codes)
+            foreach (Pair<string, string> entry in codes)
             {
-               String code = entry.first;
-               String name = entry.second;
+               string code = entry.first;
+               string name = entry.second;
                GUILayout.BeginHorizontal();
                GUILayout.Label(code, STYLE_CODE);
                GUILayout.Label(name, STYLE_NAME);

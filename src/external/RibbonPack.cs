@@ -10,14 +10,14 @@ namespace Nereid
    {
       class RibbonPack : IEnumerable<Ribbon>
       {
-         public String name { get; private set; }
+         public string name { get; private set; }
          private int baseId = 0;
-         private String baseFolder;
-         private String ribbonFolder;
+         private string baseFolder;
+         private string ribbonFolder;
 
          private List<Ribbon> ribbons = new List<Ribbon>();
 
-         public RibbonPack(String config)
+         public RibbonPack(string config)
          {
             name = "unnamed";
             baseFolder = Path.GetDirectoryName(config).Substring(Constants.GAMEDATA_PATH.Length+1).Replace("\\","/");
@@ -25,15 +25,15 @@ namespace Nereid
             Load(config);
          }
 
-         private void ReadLine(String line)
+         private void ReadLine(string line)
          {
             // ignore comments
             if (!line.StartsWith("#") && line.Length>0)
             {
-               String[] fields = line.Split(':');
+               string[] fields = line.Split(':');
                if(fields.Length>0)
                {
-                  String what = fields[0];
+                  string what = fields[0];
                   if (what.Equals("NAME") && fields.Length==2)
                   {
                      this.name = fields[1];
@@ -67,9 +67,9 @@ namespace Nereid
                         Log.Error("failed to parse custom ribbon id");
                         return;
                      }
-                     String fileOfRibbon = ribbonFolder + "/" + fields[1];
-                     String nameOfRibbon = fields[2];
-                     String descOfRibbon = fields[3];
+                     string fileOfRibbon = ribbonFolder + "/" + fields[1];
+                     string nameOfRibbon = fields[2];
+                     string descOfRibbon = fields[3];
                      int prestigeOfRibbon = id;
                      if( fields.Length==5 )
                      {
@@ -105,11 +105,11 @@ namespace Nereid
             }
          }
 
-         private void Load(String config)
+         private void Load(string config)
          {
             using(TextReader reader = File.OpenText(config))
             {
-               String line;
+               string line;
                while ((line = reader.ReadLine()) != null)
                {
                   line = line.Trim();

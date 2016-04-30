@@ -13,7 +13,7 @@ namespace Nereid
 
          public static DataChange DATACHANGE_CUSTOMRIBBON = new CustomRibbonDataChange();
 
-         public DataChange(String code, String name)
+         public DataChange(string code, string name)
          : base(code,name)
          {
          }
@@ -21,7 +21,7 @@ namespace Nereid
          public abstract void DoDataChange(Object[] parameter);
 
          // output line in logbook
-         public override String CreateLogBookEntry(LogbookEntry entry)
+         public override string CreateLogBookEntry(LogbookEntry entry)
          {
             Log.Error("could not add datachanges to personal logbooks");
             throw new System.InvalidOperationException();
@@ -45,9 +45,9 @@ namespace Nereid
                return;
             }
 
-            String s0 = parameter[0] as String;
-            String s1 = parameter[1] as String;
-            String s2 = parameter[2] as String;
+            string s0 = parameter[0] as string;
+            string s1 = parameter[1] as string;
+            string s2 = parameter[2] as string;
 
             if (s0 == null || s1 == null || s2 == null)
             {
@@ -55,9 +55,9 @@ namespace Nereid
                return;
             }
 
-            String code = "X" + s0.Substring(2);
-            String name = s1;
-            String text = s2;
+            string code = "X" + s0.Substring(2);
+            string name = s1;
+            string text = s2;
 
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("changing custom ribbon for code " + code);
 

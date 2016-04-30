@@ -12,14 +12,14 @@ namespace Nereid
       class RibbonPool : Pool<Ribbon>
       {
          private const int CUSTOM_RIBBON_BASE = 1000;
-         private const String FILENAME_RIBBONPACK = "FinalFrontierCustomRibbons.cfg";
+         private const string FILENAME_RIBBONPACK = "FinalFrontierCustomRibbons.cfg";
 
          public delegate void Callback();
 
          public List<Callback> OnRibbonPoolReady {  get; private set; }
 
          // default ribbon path
-         private const String _RP = "Nereid/FinalFrontier/Ribbons/";
+         private const string _RP = "Nereid/FinalFrontier/Ribbons/";
 
          private static volatile RibbonPool instance;
          //
@@ -64,7 +64,7 @@ namespace Nereid
             return x.GetCode();
          }
 
-         public Ribbon GetRibbonForCode(String code)
+         public Ribbon GetRibbonForCode(string code)
          {
             return base.GetElementForCode(code);
          }
@@ -121,7 +121,7 @@ namespace Nereid
                string bodyName = body.GetName();
                int basePrestige = mapper.GetBasePrestige(body);
 
-               String BODY_RIBBON_PATH = mapper.GetRibbonPath(body, _RP)+bodyName;
+               string BODY_RIBBON_PATH = mapper.GetRibbonPath(body, _RP)+bodyName;
                Log.Info("ribbon path for " + bodyName + " is " + BODY_RIBBON_PATH);
 
                Log.Detail("creating ribbons for " + bodyName + ", base prestige is " + basePrestige + "type is "+body.RevealType());
@@ -143,7 +143,7 @@ namespace Nereid
                for (int i = 1; i <= 2; i++)
                {
                   bool first = (i == 2);
-                  String prefix = first ? "/First" : "/";
+                  string prefix = first ? "/First" : "/";
                   Achievement orbit = new OrbitAchievement(body, basePrestige + 10 + i, first);
                   Achievement atmosphere = new EnteringAtmosphereAchievement(body, basePrestige + 15 + i, first);
                   Achievement landing = new LandingAchievement(body, basePrestige + 20 + i, first);
@@ -637,7 +637,7 @@ namespace Nereid
             {
                CustomAchievement achievement = new CustomAchievement(CUSTOM_BASE_INDEX + i, -2000 + i);
                int nr = i + 1;
-               String ss = nr.ToString("00");
+               string ss = nr.ToString("00");
                achievement.SetName(ss + " Custom");
                achievement.SetDescription(ss + " Custom");
                Ribbon ribbon = new Ribbon(_RP + "Custom" + ss, achievement);
@@ -651,7 +651,7 @@ namespace Nereid
             Log.Info("custom ribbons created (" + customRibbons.Count + " custom ribbons)");
          }
 
-         public Ribbon CreateCustomRibbon(int index, String filename, String name, String text, Ribbon supersede = null)
+         public Ribbon CreateCustomRibbon(int index, string filename, string name, string text, Ribbon supersede = null)
          {
             Log.Detail("creating custom ribbon " + name + " (#" + index + ")");
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
@@ -663,7 +663,7 @@ namespace Nereid
          }
 
 
-         public Ribbon CreateCustomRibbon(int index, String filename, String name, String text, int supersedeNr )
+         public Ribbon CreateCustomRibbon(int index, string filename, string name, string text, int supersedeNr )
          {
             Log.Detail("creating custom ribbon " + name + " (#" + index + ")");
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
@@ -688,14 +688,14 @@ namespace Nereid
             return customRibbons;
          }
 
-         public void ScanForRibbonPacks(String basefolder)
+         public void ScanForRibbonPacks(string basefolder)
          {
             if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("scanning folder " + basefolder + " for ribbon packs");
             try
             {
-               foreach (String folder in Directory.GetDirectories(basefolder))
+               foreach (string folder in Directory.GetDirectories(basefolder))
                {
-                  String filename = folder + "/"+FILENAME_RIBBONPACK;
+                  string filename = folder + "/"+FILENAME_RIBBONPACK;
                   if (File.Exists(filename))
                   {
                      Log.Info("custom ribbon pack found in " + folder);
@@ -781,7 +781,7 @@ namespace Nereid
             return ribbonsCreated;
          }
 
-         public Ribbon RegisterExternalRibbon(String code, String pathToRibbonTexture, String name, String description, bool first = false, int prestige = 0)
+         public Ribbon RegisterExternalRibbon(string code, string pathToRibbonTexture, string name, string description, bool first = false, int prestige = 0)
          {
             Log.Info("adding external ribbon " + name + " (code "+code+") ");
             Achievement achievement = new ExternalAchievement(code, name, prestige, first, description);
@@ -791,7 +791,7 @@ namespace Nereid
             return ribbon;
          }
 
-         public Ribbon RegisterCustomRibbon(int id, String pathToRibbonTexture, String name, String description, int prestige = 0)
+         public Ribbon RegisterCustomRibbon(int id, string pathToRibbonTexture, string name, string description, int prestige = 0)
          {
             Log.Info("adding external custom ribbon " + name + " (id " + id + ") ");
             if(id<=CUSTOM_RIBBON_BASE)

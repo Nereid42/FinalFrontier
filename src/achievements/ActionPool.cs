@@ -11,7 +11,7 @@ namespace Nereid
       {
 
          private readonly List<Action> actions = new List<Action>();
-         private readonly Dictionary<String, Action> codeMap = new Dictionary<String, Action>();
+         private readonly Dictionary<string, Action> codeMap = new Dictionary<string, Action>();
 
          public static readonly Action ACTION_LAUNCH   = new LaunchAction();
          public static readonly Action ACTION_DOCKING = new DockingAction();
@@ -55,7 +55,7 @@ namespace Nereid
             return x.GetCode();
          }
 
-         public Action GetActionForCode(String code)
+         public Action GetActionForCode(string code)
          {
             return base.GetElementForCode(code);
          }

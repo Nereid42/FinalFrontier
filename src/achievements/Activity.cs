@@ -11,10 +11,10 @@ namespace Nereid
       {
          private static ActivityPool ACTIVITY_POOL = ActivityPool.Instance();
 
-         private readonly String code;
-         private String name;
+         private readonly string code;
+         private string name;
 
-         public Activity(String code, String name)
+         public Activity(string code, string name)
          {
             this.code = code;
             this.name = name;
@@ -22,13 +22,13 @@ namespace Nereid
          }
 
          // name of the activity
-         public virtual String GetName() 
+         public virtual string GetName() 
          {
             return name;
          }
 
          // unique code of the activity
-         public String GetCode()
+         public string GetCode()
          {
             return code;
          }
@@ -46,14 +46,14 @@ namespace Nereid
             return code.GetHashCode();
          }
 
-         public abstract String CreateLogBookEntry(LogbookEntry entry);
+         public abstract string CreateLogBookEntry(LogbookEntry entry);
 
          public override string ToString()
          {
             return code;
          }
 
-         protected void Rename(String name)
+         protected void Rename(string name)
          {
             this.name = name;
          }

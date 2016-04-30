@@ -14,31 +14,31 @@ namespace Nereid
       public class CelestialBodyInfo
       {
 
-         private static readonly String INFO_FILE = "CelestialBodies.info";
+         private static readonly string INFO_FILE = "CelestialBodies.info";
 
-         private readonly String plugin;
+         private readonly string plugin;
 
          private readonly Dictionary<CelestialBody, Info> infos = new Dictionary<CelestialBody,Info>();
 
          private class CelestialBodyInfoSyntaxException : Exception
          {
-            public CelestialBodyInfoSyntaxException(String msg)
+            public CelestialBodyInfoSyntaxException(string msg)
                : base(msg)
             {
 
             }
          }
 
-         private class Info : Dictionary<String,String>
+         private class Info : Dictionary<string,string>
          {
 
-            private String AsPrefix(String s)
+            private string AsPrefix(string s)
             {
                if ( s == null || s.Length == 0 ) return "";
                return s + ".";
             }
 
-            public String GetString(String plugin, String key, String defaultValue = "")
+            public string Getstring(string plugin, string key, string defaultValue = "")
             {
                key = AsPrefix(plugin) + key;
                if(ContainsKey(key))
@@ -48,7 +48,7 @@ namespace Nereid
                return defaultValue;
             }
 
-            public int GetInt(String plugin, String key, int defaultValue = 0)
+            public int GetInt(string plugin, string key, int defaultValue = 0)
             {
                key = AsPrefix(plugin) + key;
                if (ContainsKey(key))
@@ -66,7 +66,7 @@ namespace Nereid
                return defaultValue;
             }
 
-            public bool GetBool(String plugin, String key, bool defaultValue = false)
+            public bool GetBool(string plugin, string key, bool defaultValue = false)
             {
                key = AsPrefix(plugin) + key;
                if (ContainsKey(key))
@@ -84,13 +84,13 @@ namespace Nereid
                return defaultValue;
             }
 
-            private void ReadAttribute(String plugin, String line)
+            private void ReadAttribute(string plugin, string line)
             {
                int p = line.IndexOf('=');
                if (p > 0)
                {
-                  String key = AsPrefix(plugin) + line.Substring(0, p - 1).Compress();
-                  String value = line.Substring(p + 1).Trim();
+                  string key = AsPrefix(plugin) + line.Substring(0, p - 1).Compress();
+                  string value = line.Substring(p + 1).Trim();
                   Log.Info("celestial body attribute "+key+" is "+value);
                   if(ContainsKey(key))
                   {
@@ -106,11 +106,11 @@ namespace Nereid
                }
             }
 
-            public void ReadSection(StreamReader file, String plugin = "")
+            public void ReadSection(StreamReader file, string plugin = "")
             {
                Log.Info("reading section for plugin '"+plugin+"'");
                bool openingBraceFound = false;
-               String line;
+               string line;
                while ((line = file.ReadLine()) != null)
                {
                   line = line.Trim();
@@ -144,12 +144,12 @@ namespace Nereid
             // default constructor
          }
 
-         public CelestialBodyInfo(String plugin)
+         public CelestialBodyInfo(string plugin)
          {
             this.plugin = plugin;
          }
 
-         private void ReadCelestialBodyData(StreamReader file, String name)
+         private void ReadCelestialBodyData(StreamReader file, string name)
          {
             Log.Info("loading celestial body info for " + name);
             Info info = new Info();
@@ -174,13 +174,13 @@ namespace Nereid
             }
          }
 
-         private void ReadInfoFile(String filename)
+         private void ReadInfoFile(string filename)
          {
             StreamReader file = null;
             try
             {
                file = File.OpenText(filename);
-               String line;
+               string line;
                while ((line = file.ReadLine()) != null)
                {
                   line = line.Trim();
@@ -203,14 +203,14 @@ namespace Nereid
             Log.Detail("scan for celestial body info completed");
          }
 
-         public void ScanGameData(String basefolder)
+         public void ScanGameData(string basefolder)
          {
             if(Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("scanning folder " + basefolder +" for celestial body info");
             try
             {
-               foreach (String folder in Directory.GetDirectories(basefolder))
+               foreach (string folder in Directory.GetDirectories(basefolder))
                {
-                  String filename = folder+"/"+INFO_FILE;
+                  string filename = folder+"/"+INFO_FILE;
                   if (File.Exists(filename))
                   {
                      Log.Info("celestial body infos found in "+folder);
@@ -230,17 +230,17 @@ namespace Nereid
             return this.infos.ContainsKey(body);
          }
 
-         public String GetString(CelestialBody body, String plugin, String key, String defaultValue = "")
+         public string Getstring(CelestialBody body, string plugin, string key, string defaultValue = "")
          {
             if (this.infos.ContainsKey(body))
             {
                Info info = this.infos[body];
-               return info.GetString(plugin, key, defaultValue);
+               return info.Getstring(plugin, key, defaultValue);
             }
             return defaultValue;
          }
 
-         public int GetInt(CelestialBody body, String plugin, String key, int defaultValue = 0)
+         public int GetInt(CelestialBody body, string plugin, string key, int defaultValue = 0)
          {
             if (this.infos.ContainsKey(body))
             {
@@ -250,7 +250,7 @@ namespace Nereid
             return defaultValue;
          }
 
-         public bool GetBool(CelestialBody body, String plugin, String key, bool defaultValue = false)
+         public bool GetBool(CelestialBody body, string plugin, string key, bool defaultValue = false)
          {
             if (this.infos.ContainsKey(body))
             {

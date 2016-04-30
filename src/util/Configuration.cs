@@ -12,9 +12,9 @@ namespace Nereid
    {
       public class Configuration
       {
-         private static readonly String ROOT_PATH = Utils.GetRootPath();
-         private static readonly String CONFIG_BASE_FOLDER = ROOT_PATH + "/GameData/";
-         private static readonly String FILE_NAME = "FinalFrontier.dat";
+         private static readonly string ROOT_PATH = Utils.GetRootPath();
+         private static readonly string CONFIG_BASE_FOLDER = ROOT_PATH + "/GameData/";
+         private static readonly string FILE_NAME = "FinalFrontier.dat";
          private static readonly Int16 FILE_MARKER = 0x7A7A;
          private static readonly Int16 FILE_VERSION = 1;
 
@@ -35,9 +35,9 @@ namespace Nereid
          private Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter> hallOfFameSorter = new Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter>();
 
          // configurable window titles
-         private String hallOfFameWindowTitle = "Final Frontier Hall of Fame";
-         private String decorationBoardWindowTitle = "Kerbal Decoration Board";
-         private String missionSummaryWindowTitle = "Final Frontier Mission Summary";
+         private string hallOfFameWindowTitle = "Final Frontier Hall of Fame";
+         private string decorationBoardWindowTitle = "Kerbal Decoration Board";
+         private string missionSummaryWindowTitle = "Final Frontier Mission Summary";
 
 
          // FAR used?
@@ -68,34 +68,34 @@ namespace Nereid
             }
          }
 
-         public String GetHallOfFameWindowTitle()
+         public string GetHallOfFameWindowTitle()
          {
             return hallOfFameWindowTitle;
          }
 
-         public void SetHallOfFameWindowTitle(String title)
+         public void SetHallOfFameWindowTitle(string title)
          {
             this.hallOfFameWindowTitle = title;
          }
 
-         public String GetDecorationBoardWindowTitle()
+         public string GetDecorationBoardWindowTitle()
          {
             return decorationBoardWindowTitle;
          }
 
 
-         public void SetDecorationBoardWindowTitle(String title)
+         public void SetDecorationBoardWindowTitle(string title)
          {
             this.decorationBoardWindowTitle = title;
          }
 
 
-         public String GetMissionSummaryWindowTitle()
+         public string GetMissionSummaryWindowTitle()
          {
             return missionSummaryWindowTitle;
          }
 
-         public void SetMissionSummaryWindowTitle(String title)
+         public void SetMissionSummaryWindowTitle(string title)
          {
             this.missionSummaryWindowTitle = title;
          }
@@ -208,7 +208,7 @@ namespace Nereid
             }
             catch (KeyNotFoundException)
             {
-               Log.Warning("no initial position found for window "+windowId+" in configuration");
+               Log.Warning("no initial position found for window "+windowId+" in Config");
                return ORIGIN;
             }
          }
@@ -340,7 +340,7 @@ namespace Nereid
          private void WriteHallOfFameFilter(BinaryWriter writer)
          {
             Int16 cnt = (Int16)hallOfFameFilter.Count;
-            Log.Detail("writing "+cnt+" hall of fame filter to config");
+            Log.Detail("writing "+cnt+" hall of fame filter to Config");
             writer.Write(cnt);
             foreach (KeyValuePair<GameScenes, HallOfFameBrowser.HallOfFameFilter> entry in hallOfFameFilter)
             {
@@ -351,7 +351,7 @@ namespace Nereid
          private void WriteHallOfFameSorter(BinaryWriter writer)
          {
             Int16 cnt = (Int16)hallOfFameSorter.Count;
-            Log.Detail("writing " + cnt + " hall of fame sorter to config");
+            Log.Detail("writing " + cnt + " hall of fame sorter to Config");
             writer.Write(cnt);
             foreach (KeyValuePair<GameScenes, HallOfFameBrowser.HallOfFameSorter> entry in hallOfFameSorter)
             {
@@ -362,7 +362,7 @@ namespace Nereid
 
          private void ReadHallOfFameFilter(BinaryReader reader)
          {
-            Log.Detail("reading hall of fame filter from config");
+            Log.Detail("reading hall of fame filter from Config");
             Int16 cnt = (Int16)reader.ReadInt16();
             for (int i = 0; i < cnt; i++)
             {
@@ -377,7 +377,7 @@ namespace Nereid
 
          private void ReadHallOfFameSorter(BinaryReader reader)
          {
-            Log.Detail("reading hall of fame sorter from config");
+            Log.Detail("reading hall of fame sorter from Config");
             Int16 cnt = (Int16)reader.ReadInt16();
             for (int i = 0; i < cnt; i++)
             {
@@ -392,8 +392,8 @@ namespace Nereid
 
          public void Save()
          {
-            String filename = CONFIG_BASE_FOLDER + FILE_NAME;
-            Log.Info("storing configuration in "+filename);
+            string filename = CONFIG_BASE_FOLDER + FILE_NAME;
+            Log.Info("storing Config in "+filename);
             try
             {
                using (BinaryWriter writer = new BinaryWriter(File.Open(filename, FileMode.Create)))
@@ -449,18 +449,18 @@ namespace Nereid
             }
             catch
             {
-               Log.Error("saving configuration failed");
+               Log.Error("saving Config failed");
             }
          }
 
          public void Load()
          {
-            String filename = CONFIG_BASE_FOLDER+FILE_NAME;
+            string filename = CONFIG_BASE_FOLDER+FILE_NAME;
             try
             {
                if (File.Exists(filename))
                {
-                  Log.Info("loading configuration from " + filename);
+                  Log.Info("loading Config from " + filename);
                   using (BinaryReader reader = new BinaryReader(File.OpenRead(filename)))
                   {
                      logLevel = (Log.LEVEL) reader.ReadInt16();
@@ -522,12 +522,12 @@ namespace Nereid
                }
                else
                {
-                  Log.Info("no config file: default configuration");
+                  Log.Info("no Config file: default Config");
                }
             }
             catch
             {
-               Log.Warning("loading configuration failed or incompatible file");
+               Log.Warning("loading Config failed or incompatible file");
             }
          }
       }

@@ -14,7 +14,7 @@ namespace Nereid
          public static int WIDTH = 480;
          public static int HEIGHT = 600;
 
-         private String search = "";
+         private string search = "";
 
 
          public RibbonBrowser()
@@ -40,8 +40,8 @@ namespace Nereid
             int ribbonsFound = 0;
             foreach (Ribbon ribbon in RibbonPool.Instance())
             {
-               String name = ribbon.GetName();
-               String description = ribbon.GetDescription();
+               string name = ribbon.GetName();
+               string description = ribbon.GetDescription();
                if (search == null || search.Trim().Length == 0 || name.ContainsIgnoringCase(search) || description.ContainsIgnoringCase(search))
                {
                   GUILayout.BeginHorizontal(FFStyles.STYLE_RIBBON_AREA);

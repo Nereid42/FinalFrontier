@@ -8,7 +8,6 @@ namespace Nereid
    {
       class DisplayWindow : PositionableWindow
       {
-
          private static readonly int RIBBON_LINES = 10;
          private static readonly int RIBBONS_PER_LINE = 4;
          private static readonly int RIBBON_DISPLAY_HEIGHT = RIBBON_LINES * Ribbon.HEIGHT;
@@ -27,8 +26,8 @@ namespace Nereid
          private enum MODE { DISPLAY, AWARD, REVOCATION };
          private MODE mode = MODE.DISPLAY;
          private Ribbon selected = null;
-         private String customRibbonName = "";
-         private String customRibbonText = "";
+         private string customRibbonName = "";
+         private string customRibbonText = "";
          private bool showOwnedRibbons = false;
          HashSet<Ribbon> revocation = new HashSet<Ribbon>();
 
@@ -45,7 +44,7 @@ namespace Nereid
          private Vector2 scrollPosRevoRib = Vector2.zero;
 
          public DisplayWindow()
-            : base(Constants.WINDOW_ID_DISPLAY, FinalFrontier.configuration.GetDecorationBoardWindowTitle())
+            : base(Constants.WINDOW_ID_DISPLAY, FinalFrontier.Config.GetDecorationBoardWindowTitle())
          {
             //
             STYLE_TEXT_LABEL.fixedWidth = 200;
@@ -88,7 +87,7 @@ namespace Nereid
             switch(mode)
             {
                case MODE.DISPLAY:
-                  if(FinalFrontier.configuration.IsRevocationOfRibbonsEnabled())
+                  if(FinalFrontier.Config.IsRevocationOfRibbonsEnabled())
                   {
                      if (GUILayout.Button("Revocation", FFStyles.STYLE_NARROW_BUTTON)) 
                      {
@@ -101,7 +100,7 @@ namespace Nereid
                   }
                   break;
                case MODE.AWARD:
-                  if(FinalFrontier.configuration.IsRevocationOfRibbonsEnabled())
+                  if(FinalFrontier.Config.IsRevocationOfRibbonsEnabled())
                   {
                      if (GUILayout.Button("Revocation", FFStyles.STYLE_NARROW_BUTTON)) 
                      {
@@ -114,7 +113,7 @@ namespace Nereid
                   }
                   break;
                case MODE.REVOCATION:
-                  if(FinalFrontier.configuration.IsRevocationOfRibbonsEnabled())
+                  if(FinalFrontier.Config.IsRevocationOfRibbonsEnabled())
                   {
                      if (GUILayout.Button("Show Ribbons", FFStyles.STYLE_NARROW_BUTTON)) 
                      {
@@ -136,7 +135,7 @@ namespace Nereid
                   break;
                case MODE.AWARD:
                   // draw warning if not in flight
-                  if (HighLogic.LoadedScene == GameScenes.FLIGHT || FinalFrontier.configuration.IsCustomRibbonAtSpaceCenterEnabled())
+                  if (HighLogic.LoadedScene == GameScenes.FLIGHT || FinalFrontier.Config.IsCustomRibbonAtSpaceCenterEnabled())
                   {
                      DrawCustomAwardDialog();
                   }
@@ -173,7 +172,7 @@ namespace Nereid
          {
             ProtoCrewMember kerbal = entry.GetKerbal();
             double missionTimeInDays = Utils.GameTimeInDays(entry.TotalMissionTime);
-            String evaTime = Utils.GameTimeAsString(entry.TotalEvaTime);
+            string evaTime = Utils.GameTimeAsstring(entry.TotalEvaTime);
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
             GUILayout.Label("Completed Missions: ", STYLE_TEXT_LABEL);
@@ -205,7 +204,7 @@ namespace Nereid
             GUILayout.Label("Warning: Assigning ribbons at space center may not work as expected!", FFStyles.STYLE_BUTTON_LABEL);
             if(GUILayout.Toggle(false, "ignore this warning", FFStyles.STYLE_TOGGLE)) 
             {
-               FinalFrontier.configuration.SetCustomRibbonAtSpaceCenterEnabled(true);
+               FinalFrontier.Config.SetCustomRibbonAtSpaceCenterEnabled(true);
             }
             GUILayout.EndVertical();
          }
@@ -223,7 +222,7 @@ namespace Nereid
                {
                   GUILayout.BeginHorizontal();
                   Achievement achievement = ribbon.GetAchievement();
-                  String tooltip = ribbon.GetName();
+                  string tooltip = ribbon.GetName();
                   GUIContent content = new GUIContent(ribbon.GetTexture(), tooltip);
                   if (GUILayout.Button(content, FFStyles.STYLE_RIBBON))
                   {
@@ -270,7 +269,7 @@ namespace Nereid
             }
             else
             {
-               String tooltip = "no ribbon selected";
+               string tooltip = "no ribbon selected";
                GUIContent selected = new GUIContent("NO RIBBON SELECTED", tooltip);
                GUILayout.Label(selected, FFStyles.STYLE_SINGLE_RIBBON);
             }
@@ -345,7 +344,7 @@ namespace Nereid
             foreach(Ribbon ribbon in entry.GetRibbons())
             {
                if (n % RIBBONS_PER_LINE == 0) GUILayout.BeginHorizontal();
-               String tooltip = ribbon.GetName();
+               string tooltip = ribbon.GetName();
                GUIContent content = new GUIContent(ribbon.GetTexture(), tooltip);
                GUILayout.Label(content, FFStyles.STYLE_SINGLE_RIBBON);
                n++;
@@ -419,7 +418,7 @@ namespace Nereid
 
          private void DrawStatus(ProtoCrewMember kerbal)
          {
-            String status = "unknown";
+            string status = "unknown";
             switch(kerbal.rosterStatus)
             {
                case ProtoCrewMember.RosterStatus.Missing:
@@ -491,7 +490,7 @@ namespace Nereid
 
          private void DrawLocation(ProtoCrewMember kerbal)
          {
-            String location = "no kerbal selected";
+            string location = "no kerbal selected";
             if(kerbal != null)
             {
                if(kerbal.rosterStatus==ProtoCrewMember.RosterStatus.Dead || kerbal.rosterStatus==ProtoCrewMember.RosterStatus.Missing)

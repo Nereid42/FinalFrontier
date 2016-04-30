@@ -34,18 +34,18 @@ namespace Nereid
          public const int SECONDS_PER_EARTH_DAY = HOURS_PER_EARTH_DAY * SECONDS_PER_HOUR;
          public const int SECONDS_PER_KERBIN_DAY = HOURS_PER_KERBIN_DAY * SECONDS_PER_HOUR;
 
-         public const String CONFIGNODE_KEY_VERSION = "version";
-         public const String CONFIGNODE_KEY_TIME = "time";
-         public const String CONFIGNODE_KEY_NAME = "name";
-         public const String CONFIGNODE_KEY_CODE = "code";
-         public const String CONFIGNODE_KEY_DATA = "data";
+         public const string CONFIGNODE_KEY_VERSION = "version";
+         public const string CONFIGNODE_KEY_TIME = "time";
+         public const string CONFIGNODE_KEY_NAME = "name";
+         public const string CONFIGNODE_KEY_CODE = "code";
+         public const string CONFIGNODE_KEY_DATA = "data";
 
-         public const String OLD_NODE_ROOT_NAME = "FinalFrontierHallOfFameRoot";
+         public const string OLD_NODE_ROOT_NAME = "FinalFrontierHallOfFameRoot";
 
-         public static readonly String ROOT_PATH = Utils.GetRootPath();
-         public static readonly String GAMEDATA_PATH = ROOT_PATH + "/GameData";
+         public static readonly string ROOT_PATH = Utils.GetRootPath();
+         public static readonly string GAMEDATA_PATH = ROOT_PATH + "/GameData";
 
-         public const String RESOURCE_NAME_LIQUID_FUEL = "LiquidFuel";
+         public const string RESOURCE_NAME_LIQUID_FUEL = "LiquidFuel";
 
       }
    }

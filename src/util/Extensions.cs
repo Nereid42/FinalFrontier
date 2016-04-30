@@ -24,7 +24,7 @@ namespace Nereid
             this.second = second;
          }
 
-         public override String ToString()
+         public override string ToString()
          {
             return "(" + first + "," + second + ")";
          }
@@ -47,7 +47,7 @@ namespace Nereid
       static class Extensions
       {
 
-         public static String Envelope(this String s)
+         public static string Envelope(this string s)
          {
             if (s.Trim().Length == 0) return " ";
             return " " + s.Trim() + " ";
@@ -127,7 +127,7 @@ namespace Nereid
             return true;
          }
 
-         public static ProtoCrewMember GetCrewMember(this Vessel vessel, String name)
+         public static ProtoCrewMember GetCrewMember(this Vessel vessel, string name)
          {
             foreach (ProtoCrewMember member in vessel.GetVesselCrew())
             {
@@ -167,7 +167,7 @@ namespace Nereid
             return body.GetName().Equals("Kerbin");
          }
 
-         public static String ToString(this Vector3d v, String format)
+         public static string ToString(this Vector3d v, string format)
          {
             return "("+v[0].ToString(format)+","+v[1].ToString(format)+","+v[2].ToString(format)+")";
          }
@@ -249,25 +249,25 @@ namespace Nereid
          public static HallOfFameBrowser.HallOfFameSorter ReadSorter(this BinaryReader reader)
          {
             long sceneCode = reader.ReadInt64();
-            HallOfFameBrowser.HallOfFameSorter.DIRECTION direction = (HallOfFameBrowser.HallOfFameSorter.DIRECTION)reader.ReadInt16();
-            HallOfFameBrowser.HallOfFameSorter.SORT_MODE mode = (HallOfFameBrowser.HallOfFameSorter.SORT_MODE)reader.ReadInt16();
-            HallOfFameBrowser.HallOfFameSorter.STATS_SORTING stats_sort = (HallOfFameBrowser.HallOfFameSorter.STATS_SORTING)reader.ReadInt16();
-            HallOfFameBrowser.HallOfFameSorter.SKILL_SORTING skill_sort = (HallOfFameBrowser.HallOfFameSorter.SKILL_SORTING)reader.ReadInt16();
+            HallOfFameBrowser.HallOfFameSorter.SortDirection sortDirection = (HallOfFameBrowser.HallOfFameSorter.SortDirection)reader.ReadInt16();
+            HallOfFameBrowser.HallOfFameSorter.SortMode mode = (HallOfFameBrowser.HallOfFameSorter.SortMode)reader.ReadInt16();
+            HallOfFameBrowser.HallOfFameSorter.SortableStats sortableStatsSort = (HallOfFameBrowser.HallOfFameSorter.SortableStats)reader.ReadInt16();
+            HallOfFameBrowser.HallOfFameSorter.SortableSkills skill_sort = (HallOfFameBrowser.HallOfFameSorter.SortableSkills)reader.ReadInt16();
             //
             GameScenes scene = (GameScenes)sceneCode;
             //
             // check values
             // TODO: remove magic numbers
-            if ( (int)direction > 2  || (int)direction < 1  ) direction  = HallOfFameBrowser.HallOfFameSorter.DIRECTION.ASCENDING;
-            if ( (int)mode > 2       || (int)mode < 1       ) mode       = HallOfFameBrowser.HallOfFameSorter.SORT_MODE.STATISTIC;
-            if ( (int)stats_sort > 9 || (int)stats_sort < 1 ) stats_sort = HallOfFameBrowser.HallOfFameSorter.STATS_SORTING.NAME;
-            if ( (int)skill_sort > 4 || (int)skill_sort < 1 ) skill_sort = HallOfFameBrowser.HallOfFameSorter.SKILL_SORTING.SPECIALIST;
+            if ( (int)sortDirection > 2  || (int)sortDirection < 1  ) sortDirection  = HallOfFameBrowser.HallOfFameSorter.SortDirection.Ascending;
+            if ( (int)mode > 2       || (int)mode < 1       ) mode       = HallOfFameBrowser.HallOfFameSorter.SortMode.Stat;
+            if ( (int)sortableStatsSort > 9 || (int)sortableStatsSort < 1 ) sortableStatsSort = HallOfFameBrowser.HallOfFameSorter.SortableStats.Name;
+            if ( (int)skill_sort > 4 || (int)skill_sort < 1 ) skill_sort = HallOfFameBrowser.HallOfFameSorter.SortableSkills.Specialist;
             if(Log.IsLogable(Log.LEVEL.DETAIL))
             {
-               Log.Detail("Sorter fro scene " + scene + ": direction=" + direction + " / mode=" + mode + " / stats=" + stats_sort + " / skill=" + skill_sort);
+               Log.Detail("Sorter fro scene " + scene + ": SortDirection=" + sortDirection + " / mode=" + mode + " / stats=" + sortableStatsSort + " / skill=" + skill_sort);
             }
             //
-            HallOfFameBrowser.HallOfFameSorter sorter = new HallOfFameBrowser.HallOfFameSorter(scene, direction, mode, stats_sort, skill_sort);
+            HallOfFameBrowser.HallOfFameSorter sorter = new HallOfFameBrowser.HallOfFameSorter(scene, sortDirection, mode, sortableStatsSort, skill_sort);
             return sorter;
          }
 
@@ -302,11 +302,11 @@ namespace Nereid
          }
 
 
-         /*public static String GetPath(this Game game)
+         /*public static string GetPath(this Game game)
          {
-            String title = game.Title;
+            string title = game.Title;
             int index = title.LastIndexOf(" (");
-            String name = title.Remove(index);
+            string name = title.Remove(index);
 
             return "saves/" + name;
          }*/

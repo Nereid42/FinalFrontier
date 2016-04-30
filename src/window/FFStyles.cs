@@ -5,8 +5,7 @@ namespace Nereid
 {
    namespace FinalFrontier
    {
-
-      static class FFStyles
+	   internal static class FFStyles
       {
          private static readonly GUIStyle _STYLE_SINGLE_RIBBON = new GUIStyle(HighLogic.Skin.label);
          public static GUIStyle STYLE_SINGLE_RIBBON
