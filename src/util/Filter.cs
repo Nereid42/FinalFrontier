@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Nereid
 {
-   namespace FinalFrontier
-   {
-      public interface Filter<T>
-      {
-         bool Accept(T x);
-      }
-   }
+	namespace FinalFrontier
+	{
+		public interface Filter<T>
+		{
+			bool Accept(T x);
+		}
+	}
 }

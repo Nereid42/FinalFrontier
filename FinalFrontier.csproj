@@ -36,63 +36,20 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-UnityScript">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Assembly-UnityScript.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-UnityScript-firstpass">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Boo.Lang">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Boo.Lang.dll</HintPath>
-    </Reference>
-    <Reference Include="KSPAssets">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\KSPAssets.dll</HintPath>
+      <HintPath>C:\Users\jpmac\Desktop\Games\SteamLibrary\steamapps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="KSPCore">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\KSPCore.dll</HintPath>
+      <HintPath>C:\Users\jpmac\Desktop\Games\SteamLibrary\steamapps\common\Kerbal Space Program\KSP_Data\Managed\KSPCore.dll</HintPath>
     </Reference>
-    <Reference Include="KSPUtil">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\KSPUtil.dll</HintPath>
-    </Reference>
-    <Reference Include="MiscUtil-r285">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\MiscUtil-r285.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Mono.Security.dll</HintPath>
+    <Reference Include="KSPUtil, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\jpmac\Desktop\Games\SteamLibrary\steamapps\common\Kerbal Space Program\KSP_Data\Managed\KSPUtil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="TDx.TDxInput">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\TDx.TDxInput.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="TrackIRUnity">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\TrackIRUnity.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Vectrosity">
-      <HintPath>..\..\..\1.1.0-0_development\KSP_x64_Data\Managed\Vectrosity.dll</HintPath>
+      <HintPath>C:\Users\jpmac\Desktop\Games\SteamLibrary\steamapps\common\Kerbal Space Program\KSP_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -115,8 +72,8 @@
     <Compile Include="src\halloffame\HallOfFame.cs" />
     <Compile Include="src\halloffame\HallOfFameEntry.cs" />
     <Compile Include="src\halloffame\LogBookEntry.cs" />
-    <Compile Include="src\inspecteurs\StateInspector.cs" />
-    <Compile Include="src\inspecteurs\VesselObserver.cs" />
+    <Compile Include="src\inspectors\StateInspector.cs" />
+    <Compile Include="src\inspectors\VesselObserver.cs" />
     <Compile Include="src\util\Adapter.cs" />
     <Compile Include="src\util\CelestialBodyInfo.cs" />
     <Compile Include="src\util\CelestialBodyMapper.cs" />
@@ -148,9 +105,7 @@
     <Compile Include="src\window\RibbonBrowser.cs" />
     <Compile Include="src\window\WindowManager.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ribbons\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

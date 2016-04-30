@@ -1,308 +1,310 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 
 namespace Nereid
 {
-   namespace FinalFrontier
-   {
-      public abstract class Action : Activity
-      {
-         public Action(String code, String name)
-            : base (code, name)
-         {
-         }
+	namespace FinalFrontier
+	{
+		public abstract class Action : Activity
+		{
+			protected Action(string code, string name) : base(code, name)
+			{
+			}
 
-         public abstract bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "");
+			public abstract bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "");
 
-         public static EvaAction GetEvaAction(ProtoCrewMember kerbal, Vessel fromVessel)
-         {
-            if (fromVessel != null)
-            {
-               bool atmosphere = fromVessel.IsInAtmosphere();
-               bool oxygen = fromVessel.IsInAtmosphereWithOxygen();
-               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("creating EVA action for kerbal " + kerbal.name + " in atmosphere:" + atmosphere + ", oxygen:" + oxygen);
-               if (atmosphere && oxygen)
-               {
-                  return ActionPool.ACTION_EVA_OXYGEN;                     
-               }
-               else if (atmosphere && ! oxygen)
-               {
-                  return ActionPool.ACTION_EVA_INATM;                     
-               }
-               else if (!atmosphere)
-               {
-                  return ActionPool.ACTION_EVA_NOATM;                     
-               }
-               else
-               {
-                  Log.Warning("unexpected EVA situation");
-                  return ActionPool.ACTION_EVA_NOATM;
-               }
-            }
-            else
-            {
-               Log.Warning("no vessel for kerbal "+kerbal.name+" on EVA");
-               return ActionPool.ACTION_EVA_NOATM;
-            }
-         }
-      }
+			public static EvaAction GetEvaAction(ProtoCrewMember kerbal, Vessel fromVessel)
+			{
+				if (fromVessel != null)
+				{
+					bool atmosphere = fromVessel.IsInAtmosphere();
+					bool oxygen = fromVessel.IsInAtmosphereWithOxygen();
+					if (Log.IsLogable(Log.LEVEL.DETAIL))
+						Log.Detail("Creating EVA action for kerbal " + kerbal.name + " in atmosphere:" + atmosphere + ", oxygen:" + oxygen);
+					if (atmosphere && oxygen)
+					{
+						return ActionPool.ACTION_EVA_OXYGEN;
+					}
 
-      public class BoardingAction : Action
-      {
-         public BoardingAction() : base("B+", "Kerbal Boarding Vessel") { }
+					return atmosphere ? ActionPool.ACTION_EVA_INATM : ActionPool.ACTION_EVA_NOATM;
+				}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            if (entry == null)
-            {
-               Log.Error("boarding: no hall of fame entry");
-               return false;
-            }
-            ProtoCrewMember kerbal = entry.GetKerbal();
-            if(kerbal==null)
-            {
-               Log.Error("boarding: no kerbal in hall of fame entry");
-               return false;
-            }
-            try
-            {
-               if (entry.TimeOfLastEva >= 0)
-               {
-                  if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("end of EVA for kerbal " + kerbal.name + ": " + entry.TotalEvaTime + " eva time");
-                  if (entry.TotalEvaTime >= 0)
-                  {
-                     entry.LastEvaDuration = timeOfAction - entry.TimeOfLastEva;
-                     entry.TotalEvaTime += entry.LastEvaDuration;
-                     // specific EVA actions
-                     if(entry.evaAction!=null)
-                     {
-                        entry.evaAction.OnBoardingVessel(timeOfAction, entry);
-                     }
-                     else
-                     {
-                        if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("boarding vessel ingored: no EVA action defined for " + kerbal.name + " at " + timeOfAction);
-                     }
-                  }
-                  return true;
-               }
-               else
-               {
-                  Log.Warning("return from EVA ignored for "+kerbal.name+" at "+timeOfAction);
-                  return false;
-               }
-            }
-            finally
-            {
-               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("EVA for kerbal " + kerbal.name + " has ended");
-               entry.IsOnEva = false;
-               entry.evaAction = null;
-            }
-         }
+				Log.Warning("No vessel for kerbal " + kerbal.name + " on EVA");
+				return ActionPool.ACTION_EVA_NOATM;
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " returns from EVA";
-         }  
-      }
+		public class BoardingAction : Action
+		{
+			public BoardingAction() : base("B+", "Kerbal Boarding Vessel")
+			{
+			}
 
-      public class DockingAction : Action
-      {
-         public DockingAction() : base("D+", "Vessel docked") { }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				if (entry == null)
+				{
+					Log.Error("boarding: no hall of fame entry");
+					return false;
+				}
+				ProtoCrewMember kerbal = entry.GetKerbal();
+				if (kerbal == null)
+				{
+					Log.Error("boarding: no kerbal in hall of fame entry");
+					return false;
+				}
+				try
+				{
+					if (entry.TimeOfLastEva >= 0)
+					{
+						if (Log.IsLogable(Log.LEVEL.DETAIL))
+							Log.Detail("end of EVA for kerbal " + kerbal.name + ": " + entry.TotalEvaTime + " eva time");
+						if (entry.TotalEvaTime >= 0)
+						{
+							entry.LastEvaDuration = timeOfAction - entry.TimeOfLastEva;
+							entry.TotalEvaTime += entry.LastEvaDuration;
+							// specific EVA actions
+							if (entry.evaAction != null)
+							{
+								entry.evaAction.OnBoardingVessel(timeOfAction, entry);
+							}
+							else
+							{
+								if (Log.IsLogable(Log.LEVEL.DETAIL))
+									Log.Detail("boarding vessel ingored: no EVA action defined for " + kerbal.name + " at " + timeOfAction);
+							}
+						}
+						return true;
+					}
+					else
+					{
+						Log.Warning("return from EVA ignored for " + kerbal.name + " at " + timeOfAction);
+						return false;
+					}
+				}
+				finally
+				{
+					if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("EVA for kerbal " + kerbal.name + " has ended");
+					entry.IsOnEva = false;
+					entry.evaAction = null;
+				}
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.Dockings++;
-            return true;
-         }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " returns from EVA";
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " has docked on another spacecraft";
-         }   
-      }
+		public class DockingAction : Action
+		{
+			public DockingAction() : base("D+", "Vessel docked")
+			{
+			}
 
-      public class LaunchAction : Action
-      {
-         public LaunchAction() : base("L+", "Launching Vessel") { }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.Dockings++;
+				return true;
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.TimeOfLastLaunch = timeOfAction;
-            return true;
-         }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " has docked on another spacecraft";
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " launched a mission";
-         }
-      }
+		public class LaunchAction : Action
+		{
+			public LaunchAction() : base("L+", "Launching Vessel")
+			{
+			}
 
-      public class RecoverAction : Action
-      {
-         public RecoverAction() : base("M+", "Vessel recovered") { }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.TimeOfLastLaunch = timeOfAction;
+				return true;
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            ProtoCrewMember kerbal = entry.GetKerbal();
-            try
-            {
-               // no ongoing mission mission, no mission at all
-               if (entry.TimeOfLastLaunch >= 0)
-               {
-                  entry.MissionsFlown++;
-                  if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("mission recover recorded for kerbal " + kerbal.name + ": " + entry.MissionsFlown + " missions flown");
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " launched a mission";
+			}
+		}
 
-                  entry.TotalMissionTime += (timeOfAction - entry.TimeOfLastLaunch);
-                  return true;
-               }
-               else
-               {
-                  Log.Warning("recover of kerbal " + kerbal.name + " without ongoing mission");
-                  return false;
-               }
-            }
-            finally
-            {
-               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("kerbal " + kerbal.name + " no longer on mission");
-               entry.TimeOfLastLaunch = -1;
-               entry.IsOnEva = false;
-            }
-         }
+		public class RecoverAction : Action
+		{
+			public RecoverAction() : base("M+", "Vessel recovered")
+			{
+			}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " has returned from a mission";
-         }
-      }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				ProtoCrewMember kerbal = entry.GetKerbal();
+				try
+				{
+					// no ongoing mission mission, no mission at all
+					if (entry.TimeOfLastLaunch >= 0)
+					{
+						entry.MissionsFlown++;
+						if (Log.IsLogable(Log.LEVEL.DETAIL))
+							Log.Detail("mission recover recorded for kerbal " + kerbal.name + ": " + entry.MissionsFlown + " missions flown");
 
-      public abstract class EvaAction : Action
-      {
-         public EvaAction(String code, String name) : base(code, name) { }
+						entry.TotalMissionTime += (timeOfAction - entry.TimeOfLastLaunch);
+						return true;
+					}
+					else
+					{
+						Log.Warning("recover of kerbal " + kerbal.name + " without ongoing mission");
+						return false;
+					}
+				}
+				finally
+				{
+					if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("kerbal " + kerbal.name + " no longer on mission");
+					entry.TimeOfLastLaunch = -1;
+					entry.IsOnEva = false;
+				}
+			}
 
-         public abstract void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry);
-      }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " has returned from a mission";
+			}
+		}
 
-      public class EvaNoAtmosphereAction : EvaAction
-      {
-         public EvaNoAtmosphereAction() : base("E+", "Kerbal on Eva in zero atmosphere") { }
+		public abstract class EvaAction : Action
+		{
+			public EvaAction(string code, string name) : base(code, name)
+			{
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.TimeOfLastEva = timeOfAction;
-            return true;
-         }
+			public abstract void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry);
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " begins EVA in zero atmosphere";
-         }
+		public class EvaNoAtmosphereAction : EvaAction
+		{
+			public EvaNoAtmosphereAction() : base("E+", "Kerbal on Eva in zero atmosphere")
+			{
+			}
 
-         public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
-         {
-            if (entry.TimeOfLastEva <= 0) return;
-            entry.TotalTimeInEvaWithoutOxygen += timeOfAction - entry.TimeOfLastEva;
-         }
-      }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.TimeOfLastEva = timeOfAction;
+				return true;
+			}
+
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " begins EVA in zero atmosphere";
+			}
+
+			public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
+			{
+				if (entry.TimeOfLastEva <= 0) return;
+				entry.TotalTimeInEvaWithoutOxygen += timeOfAction - entry.TimeOfLastEva;
+			}
+		}
 
 
+		public class EvaWithOxygen : EvaAction
+		{
+			public EvaWithOxygen() : base("EX+", "Kerbal on Eva in atmosphere with oxygen")
+			{
+			}
 
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.TimeOfLastEva = timeOfAction;
+				return true;
+			}
 
-      public class EvaWithOxygen : EvaAction
-      {
-         public EvaWithOxygen() : base("EX+", "Kerbal on Eva in atmosphere with oxygen") { }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " begins EVA in atmosphere";
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.TimeOfLastEva = timeOfAction;
-            return true;
-         }
+			public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
+			{
+				if (entry.TimeOfLastEva <= 0) return;
+				entry.TotalTimeInEvaWithOxygen += timeOfAction - entry.TimeOfLastEva;
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " begins EVA in atmosphere";
-         }
+		public class EvaInAtmosphereAction : EvaAction
+		{
+			public EvaInAtmosphereAction() : base("EA+", "Kerbal on Eva in toxic atmosphere without oxygen")
+			{
+			}
 
-         public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
-         {
-            if (entry.TimeOfLastEva <= 0) return;
-            entry.TotalTimeInEvaWithOxygen += timeOfAction - entry.TimeOfLastEva;
-         }
-      }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.TimeOfLastEva = timeOfAction;
+				return true;
+			}
 
-      public class EvaInAtmosphereAction : EvaAction
-      {
-         public EvaInAtmosphereAction() : base("EA+", "Kerbal on Eva in toxic atmosphere without oxygen") { }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " begins EVA in toxic atmosphere";
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.TimeOfLastEva = timeOfAction;
-            return true;
-         }
+			public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
+			{
+				if (entry.TimeOfLastEva <= 0) return;
+				entry.TotalTimeInEvaWithoutOxygen += timeOfAction - entry.TimeOfLastEva;
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " begins EVA in toxic atmosphere";
-         }
+		public class ContractAction : Action
+		{
+			public ContractAction() : base("C+", "Contract completed")
+			{
+			}
 
-         public override void OnBoardingVessel(double timeOfAction, HallOfFameEntry entry)
-         {
-            if (entry.TimeOfLastEva <= 0) return;
-            entry.TotalTimeInEvaWithoutOxygen += timeOfAction - entry.TimeOfLastEva;
-         }
-      }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				return entry.Name + " has completed a contract";
+			}
 
-      public class ContractAction : Action
-      {
-         public ContractAction() : base("C+", "Contract completed") { }
+			public override bool DoAction(double timeOfAction, HallOfFameEntry entry, string data = "")
+			{
+				entry.ContractsCompleted++;
+				return true;
+			}
+		}
 
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            return entry.Name + " has completed a contract";
-         }
+		public class ScienceAction : Action
+		{
+			public ScienceAction()
+				: base("S+", "Science")
+			{
+			}
 
-         public override bool DoAction(double timeOfAction, HallOfFameEntry entry, String data = "")
-         {
-            entry.ContractsCompleted++;
-            return true;
-         }
-      }
+			public override bool DoAction(double timeOfService, HallOfFameEntry entry, string data = "")
+			{
+				try
+				{
+					entry.Research += Double.Parse(data);
+					return true;
+				}
+				catch
+				{
+					Log.Error("invalid data for science in entry for kerbal " + entry.GetName() + ": " + data);
+					return false;
+				}
+			}
 
-      public class ScienceAction : Action
-      {
-         public ScienceAction()
-            : base("S+", "Science")
-         {
-         }
-
-         public override bool DoAction(double timeOfService, HallOfFameEntry entry, String data = "")
-         {
-            try
-            {
-              entry.Research += Double.Parse(data);
-              return true;
-            }
-            catch
-            {
-               Log.Error("invalid data for science in entry for kerbal "+entry.GetName()+": "+data);
-               return false;
-            }
-         }
-
-         public override string CreateLogBookEntry(LogbookEntry entry)
-         {
-            try
-            {
-               double science = Double.Parse(entry.Data);
-               return entry.Name + " has researched " + science.ToString("0.0") + " science points";
-            }
-            catch
-            {
-               return entry.Name + " has researched an unknown amount of science points";
-            }
-         }
-      }
-   }
+			public override string CreateLogBookEntry(LogbookEntry entry)
+			{
+				try
+				{
+					double science = Double.Parse(entry.Data);
+					return entry.Name + " has researched " + science.ToString("0.0") + " science points";
+				}
+				catch
+				{
+					return entry.Name + " has researched an unknown amount of science points";
+				}
+			}
+		}
+	}
 }

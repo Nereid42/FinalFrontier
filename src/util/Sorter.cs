@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Nereid
 {
-   namespace FinalFrontier
-   {
-      public interface Sorter<T>
-      {
-         void Sort(List<T> list);
-      }
-   }
+	namespace FinalFrontier
+	{
+		public interface Sorter<T>
+		{
+			void Sort(List<T> list);
+		}
+	}
 }
