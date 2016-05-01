@@ -142,9 +142,9 @@ namespace Nereid
             if (Input.GetKeyUp(KeyCode.LeftAlt)) keyAltPressed = false;
             if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
             if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
-            if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(KeyCode.F))
+            if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(configuration.hotkey))
             {
-               Log.Info("hotkey ALT-F detected");
+               Log.Info("hotkey detected");
                
                switch (HighLogic.LoadedScene)
                {

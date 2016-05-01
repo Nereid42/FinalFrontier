@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using UnityEngine;
 
 namespace Nereid
 {
@@ -207,6 +208,33 @@ namespace Nereid
 
             }
             return inDays.ToString("0.00");
+         }
+
+         public static KeyCode GetKeyCode(char c)
+         {
+            KeyCode[] codes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
+            foreach(KeyCode code in codes)
+            {
+               String name = code.ToString();
+               if (name.Length > 0 && name == c.ToString()) return code;
+            }
+            throw new ArgumentException("no keycode for '"+c+"'");
+         }
+
+         public static KeyCode[] GetPressedKeys()
+         {
+            List<KeyCode> pressed = new List<KeyCode>();
+            KeyCode[] keycodes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
+            foreach (KeyCode key in keycodes)
+            {
+               if(Input.GetKeyDown(key))
+               {
+                  pressed.Add(key);
+               }
+            }
+            KeyCode[] result = new KeyCode[pressed.Count];
+            pressed.CopyTo(result);
+            return result;
          }
 
          public static String GameTimeAsString(double time)

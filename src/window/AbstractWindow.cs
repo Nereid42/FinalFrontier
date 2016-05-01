@@ -167,7 +167,7 @@ namespace Nereid
             onWindowClose = method;
          }
 
-         public void SetVisible(bool visible)
+         public virtual void SetVisible(bool visible)
          {
             if (!this.visible && visible) OnOpen();
             if (this.visible && !visible) OnClose();

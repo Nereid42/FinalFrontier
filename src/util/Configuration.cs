@@ -27,6 +27,7 @@ namespace Nereid
          public bool useStockToolbar { get; set; }
          public bool convertGames { get; set; }
          public bool logRibbonAwards { get; set; }
+         public KeyCode hotkey { get; set; } // for use with LEFT-ALT
 
          private readonly Pair<int, int> ORIGIN = new Pair<int, int>(0, 0);
          private Dictionary<int, Pair<int, int>> windowPositions = new Dictionary<int, Pair<int, int>>();
@@ -58,6 +59,7 @@ namespace Nereid
             useStockToolbar = !ToolbarManager.ToolbarAvailable;
             convertGames = true;
             logRibbonAwards = false;
+            hotkey = Utils.GetKeyCode('F');
 
             // 
             // Default filter/sorts
@@ -445,6 +447,9 @@ namespace Nereid
                   //
                   // log ribbon awards
                   writer.Write(logRibbonAwards);
+                  //
+                  // hotkey
+                  writer.Write((UInt16)hotkey);
                }
             }
             catch
@@ -518,6 +523,9 @@ namespace Nereid
                      //
                      // log ribbon awards
                      logRibbonAwards = reader.ReadBoolean();
+                     //
+                     // hotkey
+                     hotkey = (KeyCode)reader.ReadInt16();
                   }
                }
                else
