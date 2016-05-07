@@ -197,12 +197,22 @@ namespace Nereid
                   if (body.IsSun())
                   {
                      Log.Detail(bodyName+" is sun");
-                     CelestialBody innermost = body.Innermost();
-                     if(innermost != null)
+                     // is Kerbin orbiting around this star? (if multiple star system)
+                     if (body.IsSunOfHomeWorld())
                      {
-                        Log.Detail("innermost planet of "+bodyName+" is "+innermost.name);
-                        closerSolarOrbitRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "CloserSolarOrbit", new CloserSolarOrbitAchievement(body, 50500 + i, innermost, first), first ? closerSolarOrbitRibbon : soiRibbon);
-                        AddRibbon(closerSolarOrbitRibbon);
+                        Log.Detail("Homeworld is orbiting around " + bodyName);
+                        CelestialBody innermost = body.Innermost();
+                        if (innermost != null)
+                        {
+                           Log.Detail("innermost planet of " + bodyName + " is " + innermost.name);
+                           closerSolarOrbitRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "CloserSolarOrbit", new CloserSolarOrbitAchievement(body, 50500 + i, innermost, first), first ? closerSolarOrbitRibbon : soiRibbon);
+                           AddRibbon(closerSolarOrbitRibbon);
+                        }
+                        else
+                        {
+                           // cant be
+                           Log.Warning("no innermost body for "+bodyName);
+                        }
                      }
                   }
                }
