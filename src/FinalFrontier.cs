@@ -138,10 +138,10 @@ namespace Nereid
 
          public void Update()
          {
+            keyAltPressed = false;
+            keyCtrlPressed = false;
             if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftAlt)) keyAltPressed = false;
             if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
             if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(configuration.hotkey))
             {
                Log.Info("hotkey detected");
