@@ -32,6 +32,7 @@ namespace Nereid
 
          private volatile bool keyAltPressed = false;
          private volatile bool keyCtrlPressed = false;
+         private volatile bool hotkeyPressed = false;
 
          private volatile bool destroyed = false;
 
@@ -138,11 +139,14 @@ namespace Nereid
 
          public void Update()
          {
-            keyAltPressed = false;
-            keyCtrlPressed = false;
+            if (Input.GetKeyUp(KeyCode.LeftAlt))  keyAltPressed = false;
+            if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
             if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
             if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
-            if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(configuration.hotkey))
+            if (Input.GetKeyUp(configuration.hotkey)) hotkeyPressed = false;
+            if (Input.GetKeyDown(configuration.hotkey)) hotkeyPressed = true;
+
+            if (configuration.IsHotkeyEnabled() && keyAltPressed && hotkeyPressed)
             {
                Log.Info("hotkey detected");
                
@@ -168,6 +172,8 @@ namespace Nereid
                      Log.Info("cant open/close hall of fame in game scene " + HighLogic.LoadedScene);
                      break;
                }
+               // don't detect the same keypress next frame
+               hotkeyPressed = false;
             }
 
             if (observer != null)
