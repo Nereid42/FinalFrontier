@@ -30,9 +30,9 @@ namespace Nereid
          private RibbonPool ribbons = RibbonPool.Instance();
          private ActionPool actions = ActionPool.Instance();
 
-         private volatile bool keyAltPressed = false;
-         private volatile bool keyCtrlPressed = false;
-         private volatile bool hotkeyPressed = false;
+         private bool keyAltPressed = false;
+         private bool keyCtrlPressed = false;
+         private bool hotkeyPressed = false;
 
          private volatile bool destroyed = false;
 
@@ -137,18 +137,39 @@ namespace Nereid
 
          private void DummyVoid() { }
 
+         private bool CheckKeyPressed(KeyCode code, ref bool status)
+         {
+            if (Input.GetKeyDown(code))
+            {
+               if (!status) Log.Info("KEY "+code+" pressed");
+               status = true;
+            }
+            return status;
+         }
+
+         private bool CheckKeyReleased(KeyCode code, ref bool status)
+         {
+            if (Input.GetKeyUp(code))
+            {
+               if (status) Log.Info("KEY " + code + " released");
+               status = false;
+            }
+            return status;
+         }
+
+
          public void Update()
          {
-            if (Input.GetKeyUp(KeyCode.LeftAlt))  keyAltPressed = false;
-            if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
-            if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
-            if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
-            if (Input.GetKeyUp(configuration.hotkey)) hotkeyPressed = false;
-            if (Input.GetKeyDown(configuration.hotkey)) hotkeyPressed = true;
+            CheckKeyReleased(KeyCode.LeftAlt,ref keyAltPressed);
+            CheckKeyReleased(KeyCode.LeftControl, ref keyCtrlPressed);
+            CheckKeyReleased(configuration.hotkey, ref hotkeyPressed);
+            CheckKeyPressed(KeyCode.LeftAlt, ref keyAltPressed);
+            CheckKeyPressed(KeyCode.LeftControl, ref keyCtrlPressed);
+            CheckKeyPressed(configuration.hotkey, ref hotkeyPressed);
 
             if (configuration.IsHotkeyEnabled() && keyAltPressed && hotkeyPressed)
             {
-               Log.Info("hotkey detected");
+               Log.Info("hotkey chord detected");
                
                switch (HighLogic.LoadedScene)
                {

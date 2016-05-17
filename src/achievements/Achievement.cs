@@ -1630,23 +1630,30 @@ namespace Nereid
             if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
-            // check mass
+            // check vessel
             if (current.Origin == null) return false;
             // landed?
-            if (current.Situation != Vessel.Situations.LANDED) return false;
+            if (!current.IsLandedOrSplashed) return false;
             // situation has to change from non-landed to landed (prelaunch wont count)
             if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // scan Vessel
+            VesselScan scan = new VesselScan(current.Origin);
             // check fuel
-            double pct = GameUtils.GetResourcePercentageLeft(current.Origin, Constants.RESOURCE_NAME_LIQUID_FUEL);
+            double pct = scan.GetResourcePercentage(Constants.RESOURCE_NAME_LIQUID_FUEL);
             // no tanks or enough fuel left?
             if (double.IsNaN(pct) || pct*100 > value) return false;
+            // deployed parachutes?
+            if (scan.deployedParachutes > 0 || scan.semiDeployedParachutes > 0) return false;
+            // cut or active parachutes?
+            if (scan.activeParachutes > 0 || scan.cutParachutes > 0) return false;
+            //
             return true;
          }
 
 
          public override String GetDescription()
          {
-            return "Awarded for landing a vessel with " + value + "% or less liquid fuel left";
+            return "Awarded for landing a vessel with " + value + "% or less liquid fuel left and no deployed parachutes";
          }
       }
 
@@ -1669,7 +1676,7 @@ namespace Nereid
             if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
-            // check mass
+            // check vessel
             if (current.Origin == null) return false;
             // landed?
             if (current.Situation != Vessel.Situations.LANDED) return false;
