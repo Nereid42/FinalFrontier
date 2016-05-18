@@ -35,7 +35,7 @@ namespace Nereid
 
          public override String ToString()
          {
-            String timestamp = Utils.ConvertToEarthTime(UniversalTime) + ": ";
+            String timestamp = Utils.TimeAsString(UniversalTime) + ": ";
             Action action = ActionPool.Instance().GetActionForCode(Code);
             if(action!=null)
             {

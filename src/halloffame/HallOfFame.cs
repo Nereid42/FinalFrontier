@@ -84,7 +84,7 @@ namespace Nereid
          private bool CheckKerbalType(ProtoCrewMember kerbal)
          {
             if(kerbal==null) return false;
-            if (!kerbal.IsCrew())
+            if (!kerbal.IsCrew() && !kerbal.IsApplicant())
             {
                if (Log.IsLogable(Log.LEVEL.DETAIL))
                {
@@ -359,7 +359,7 @@ namespace Nereid
          public void Record(ProtoCrewMember kerbal, Ribbon ribbon)
          {
             if (!CheckKerbalType(kerbal)) return;
-            if(Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("Record ribbon "+ribbon.GetName());
+            if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("Record ribbon " + ribbon.GetName());
             HallOfFameEntry entry = GetEntry(kerbal);
             // entry==null should never happen, but to analyze a bug in conjunction with other mods, we do a check
             if(entry==null)
@@ -372,7 +372,7 @@ namespace Nereid
             double time = currentTransactionTime > 0 ? currentTransactionTime : Planetarium.GetUniversalTime();
             if (!achievement.HasToBeFirst() || !accomplished.Contains(achievement))
             {
-               if(entry.Award(ribbon))
+               if (entry.Award(ribbon))
                {
                   if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.configuration.logRibbonAwards)
                   {
@@ -384,6 +384,13 @@ namespace Nereid
                   if(currentTransactionTime==0)
                   {
                      accomplished.Add(achievement);
+                  }
+               }
+               else
+               {
+                  if(Log.IsLogable(Log.LEVEL.DETAIL))
+                  {
+                     Log.Detail("award of ribbon "+ribbon+" to kerbal "+kerbal.name+" failed");
                   }
                }
             }

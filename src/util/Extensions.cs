@@ -149,6 +149,11 @@ namespace Nereid
             return kerbal.type == ProtoCrewMember.KerbalType.Crew;
          }
 
+         public static bool IsApplicant(this ProtoCrewMember kerbal)
+         {
+            return kerbal.type == ProtoCrewMember.KerbalType.Applicant;
+         }
+
          public static double MachNumber(this Vessel vessel)
          {
             if (vessel == null) return 0.0;

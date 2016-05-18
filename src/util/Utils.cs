@@ -143,6 +143,14 @@ namespace Nereid
                + ((kSeconds > 0) ? (kSeconds.ToString() + " Seconds ") : "");
          }
 
+         public static String TimeAsString(double ut)
+         {
+            if (GameSettings.KERBIN_TIME)
+            {
+               return ConvertToKerbinTime(ut);
+            }
+            return ConvertToEarthTime(ut);
+         }
 
          public static String ConvertToKerbinTime(double ut)
          {
@@ -157,7 +165,6 @@ namespace Nereid
 
             return "Year " + kYears.ToString() + ", Day " + kDays.ToString() + " " + " " + kHours.ToString("00") + ":" + kMinutes.ToString("00") + ":" + kSeconds.ToString("00");
          }
-
 
          public static String ConvertToEarthTime(double ut)
          {

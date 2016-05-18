@@ -77,6 +77,7 @@ namespace Nereid
             GameEvents.onKerbalAdded.Add(this.OnKerbalAdded);
             GameEvents.onKerbalRemoved.Add(this.OnKerbalRemoved);
             GameEvents.onKerbalStatusChange.Add(this.OnKerbalStatusChange);
+            GameEvents.OnCrewmemberHired.Add(this.OnCrewmemberHired);
             //
             // Other
             GameEvents.OnProgressAchieved.Add(this.OnProgressAchieved);
@@ -183,6 +184,15 @@ namespace Nereid
          private void OnKerbalAdded(ProtoCrewMember kerbal)
          {
             Log.Info("kerbal added: " + kerbal.name);
+            // just make sure this kerbal is in the hall of fame
+            HallOfFame.Instance().GetEntry(kerbal);
+            // and refresh
+            HallOfFame.Instance().Refresh();
+         }
+
+         private void OnCrewmemberHired(ProtoCrewMember kerbal, int n)
+         {
+            Log.Info("crew member hired: " + kerbal.name+" ("+n+")");
             // just make sure this kerbal is in the hall of fame
             HallOfFame.Instance().GetEntry(kerbal);
             // and refresh
