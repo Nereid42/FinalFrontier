@@ -95,7 +95,6 @@
     <Compile Include="src\halloffame\LogBookEntry.cs" />
     <Compile Include="src\inspecteurs\StateInspector.cs" />
     <Compile Include="src\inspecteurs\VesselObserver.cs" />
-    <Compile Include="src\inspecteurs\VesselScan.cs" />
     <Compile Include="src\util\Adapter.cs" />
     <Compile Include="src\util\CelestialBodyInfo.cs" />
     <Compile Include="src\util\CelestialBodyMapper.cs" />
@@ -114,6 +113,7 @@
     <Compile Include="src\util\Sorter.cs" />
     <Compile Include="src\util\ToolbarWrapper.cs" />
     <Compile Include="src\util\Utils.cs" />
+    <Compile Include="src\util\VesselScan.cs" />
     <Compile Include="src\util\VesselState.cs" />
     <Compile Include="src\window\AboutWindow.cs" />
     <Compile Include="src\window\AbstractWindow.cs" />

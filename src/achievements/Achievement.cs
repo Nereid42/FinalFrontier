@@ -1637,7 +1637,7 @@ namespace Nereid
             // situation has to change from non-landed to landed (prelaunch wont count)
             if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             // scan Vessel
-            VesselScan scan = new VesselScan(current.Origin);
+            VesselScan scan = current.ScanVessel();
             // check fuel
             double pct = scan.GetResourcePercentage(Constants.RESOURCE_NAME_LIQUID_FUEL);
             // no tanks or enough fuel left?

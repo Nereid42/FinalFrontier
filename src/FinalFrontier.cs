@@ -30,9 +30,7 @@ namespace Nereid
          private RibbonPool ribbons = RibbonPool.Instance();
          private ActionPool actions = ActionPool.Instance();
 
-         private bool keyAltPressed = false;
-         private bool keyCtrlPressed = false;
-         private bool hotkeyPressed = false;
+         private bool hotkeyLastFrame = false;
 
          private volatile bool destroyed = false;
 
@@ -137,37 +135,17 @@ namespace Nereid
 
          private void DummyVoid() { }
 
-         private bool CheckKeyPressed(KeyCode code, ref bool status)
-         {
-            if (Input.GetKeyDown(code))
-            {
-               if (!status) Log.Info("KEY "+code+" pressed");
-               status = true;
-            }
-            return status;
-         }
-
-         private bool CheckKeyReleased(KeyCode code, ref bool status)
-         {
-            if (Input.GetKeyUp(code))
-            {
-               if (status) Log.Info("KEY " + code + " released");
-               status = false;
-            }
-            return status;
-         }
-
 
          public void Update()
          {
-            CheckKeyReleased(KeyCode.LeftAlt,ref keyAltPressed);
-            CheckKeyReleased(KeyCode.LeftControl, ref keyCtrlPressed);
-            CheckKeyReleased(configuration.hotkey, ref hotkeyPressed);
-            CheckKeyPressed(KeyCode.LeftAlt, ref keyAltPressed);
-            CheckKeyPressed(KeyCode.LeftControl, ref keyCtrlPressed);
-            CheckKeyPressed(configuration.hotkey, ref hotkeyPressed);
 
-            if (configuration.IsHotkeyEnabled() && keyAltPressed && hotkeyPressed)
+            bool keyAlt = Input.GetKey(KeyCode.LeftAlt);
+            bool keyCtrl = Input.GetKey(KeyCode.LeftControl);
+
+            bool hotkey = Input.GetKey(configuration.hotkey);
+
+
+            if (configuration.IsHotkeyEnabled() && keyAlt && hotkey && !hotkeyLastFrame)
             {
                Log.Info("hotkey chord detected");
                
@@ -177,7 +155,7 @@ namespace Nereid
                   case GameScenes.FLIGHT:
                   case GameScenes.SPACECENTER:
                   case GameScenes.TRACKSTATION:
-                     if (!keyCtrlPressed)
+                     if (!keyCtrl)
                      {
                         Log.Info("hotkey hall of fame browser");
                         createBrowserOnce();
@@ -194,8 +172,10 @@ namespace Nereid
                      break;
                }
                // don't detect the same keypress next frame
-               hotkeyPressed = false;
+               hotkeyLastFrame = false;
             }
+
+            hotkeyLastFrame = hotkey;
 
             if (observer != null)
             {
