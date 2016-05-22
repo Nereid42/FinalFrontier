@@ -30,8 +30,6 @@ namespace Nereid
          private RibbonPool ribbons = RibbonPool.Instance();
          private ActionPool actions = ActionPool.Instance();
 
-         private bool hotkeyLastFrame = false;
-
          private volatile bool destroyed = false;
 
 
@@ -142,10 +140,10 @@ namespace Nereid
             bool keyAlt = Input.GetKey(KeyCode.LeftAlt);
             bool keyCtrl = Input.GetKey(KeyCode.LeftControl);
 
-            bool hotkey = Input.GetKey(configuration.hotkey);
+            bool hotkey = Input.GetKeyDown(configuration.hotkey);
 
 
-            if (configuration.IsHotkeyEnabled() && keyAlt && hotkey && !hotkeyLastFrame)
+            if (configuration.IsHotkeyEnabled() && keyAlt && hotkey)
             {
                Log.Info("hotkey chord detected");
                
@@ -171,11 +169,7 @@ namespace Nereid
                      Log.Info("cant open/close hall of fame in game scene " + HighLogic.LoadedScene);
                      break;
                }
-               // don't detect the same keypress next frame
-               hotkeyLastFrame = false;
             }
-
-            hotkeyLastFrame = hotkey;
 
             if (observer != null)
             {
