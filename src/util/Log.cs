@@ -113,22 +113,29 @@ namespace Nereid
 
          private static void LogVesselState(VesselState state)
          {
-            Debug.Log("  - Timestamp:          " + state.Timestamp);
-            Debug.Log("  - Origin:             ");
-            LogVessel(state.Origin);
-            Debug.Log("  - MainBody:           " + (state.MainBody != null ? state.MainBody.name : "<null>"));
-            Debug.Log("  - IsLanded:           " + state.IsLanded);
-            Debug.Log("  - IsSplashed:         " + state.IsSplashed);
-            Debug.Log("  - IsLandedOrSplashed: " + state.IsLandedOrSplashed);
-            Debug.Log("  - IsEVA:              " + state.IsEVA);
-            Debug.Log("  - IsLaunch:           " + state.IsLaunch);
-            Debug.Log("  - IsPrelaunch:        " + state.IsPrelaunch);
-            Debug.Log("  - OnSurface:          " + state.OnSurface);
-            Debug.Log("  - IsInAtmosphere:     " + state.IsInAtmosphere);
-            Debug.Log("  - HasFlagPlanted:     " + state.HasFlagPlanted);
-            Debug.Log("  - InOrbit:            " + state.InOrbit);
-            Debug.Log("  - Situation:          " + state.Situation);
-            Debug.Log("  - HasMovedOnSurface:  " + state.HasMovedOnSurface);
+            if(state!=null)
+            {
+               Debug.Log("  - Timestamp:          " + state.Timestamp);
+               Debug.Log("  - Origin:             ");
+               LogVessel(state.Origin);
+               Debug.Log("  - MainBody:           " + (state.MainBody != null ? state.MainBody.name : "<null>"));
+               Debug.Log("  - IsLanded:           " + state.IsLanded);
+               Debug.Log("  - IsSplashed:         " + state.IsSplashed);
+               Debug.Log("  - IsLandedOrSplashed: " + state.IsLandedOrSplashed);
+               Debug.Log("  - IsEVA:              " + state.IsEVA);
+               Debug.Log("  - IsLaunch:           " + state.IsLaunch);
+               Debug.Log("  - IsPrelaunch:        " + state.IsPrelaunch);
+               Debug.Log("  - OnSurface:          " + state.OnSurface);
+               Debug.Log("  - IsInAtmosphere:     " + state.IsInAtmosphere);
+               Debug.Log("  - HasFlagPlanted:     " + state.HasFlagPlanted);
+               Debug.Log("  - InOrbit:            " + state.InOrbit);
+               Debug.Log("  - Situation:          " + state.Situation);
+               Debug.Log("  - HasMovedOnSurface:  " + state.HasMovedOnSurface);
+            }
+            else
+            {
+               Debug.Log("  - vessel state is <null>");
+            }
          }
 
          public static void LogAchievement(Achievement achievement, VesselState previous, VesselState current)

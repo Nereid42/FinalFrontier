@@ -377,9 +377,14 @@ namespace Nereid
                   if (Log.IsLogable(Log.LEVEL.INFO) || FinalFrontier.configuration.logRibbonAwards)
                   {
                      // log directly to make log outputs independent from log level if FinalFrontier.configuration.logRibbonAwards is set to true
-                     Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + Utils.ConvertToEarthTime(currentTransactionTime) + "(" + currentTransactionTime + ")");
+                     Debug.Log("FF: ribbon " + ribbon.GetName() + " awarded to " + kerbal.name + " at " + time+" ("+Utils.ConvertToKerbinTime(time)+")");
                   }
                   TakeLog(time, ribbon.GetCode(), entry);
+                  // no transaktion?
+                  if(currentTransactionTime==0)
+                  {
+                     accomplished.Add(achievement);
+                  }
                }
             }
             currentTransaction.Add(achievement);
@@ -431,7 +436,10 @@ namespace Nereid
          {
             foreach (Achievement achievement in currentTransaction)
             {
-               accomplished.Add(achievement);
+               if (!accomplished.Contains(achievement))
+               {
+                  accomplished.Add(achievement);
+               }
             }
             currentTransaction.Clear();
             currentTransactionTime = 0.0;
@@ -718,8 +726,9 @@ namespace Nereid
          public List<Ribbon> GetRibbonsOfLatestMission(ProtoCrewMember kerbal, double missionEndTime=0)
          {
             List<Ribbon> result = new List<Ribbon>();
-            HashSet<Ribbon> ignored = new HashSet<Ribbon>();
             HallOfFameEntry entry = GetEntry(kerbal);
+            //
+            HashSet<Ribbon> ignored = new HashSet<Ribbon>();
             List<LogbookEntry> log = new List<LogbookEntry>(entry.GetLogRefs());
             log.Reverse();
             bool start = false;
@@ -728,11 +737,14 @@ namespace Nereid
             foreach(LogbookEntry logentry in log)
             {
                String code = logentry.Code;
-               if (code.Equals(codeRecover) )
+               if (code.Equals(codeRecover) && !start)
                {
                   start = true;
                }
-               else if (code.Equals(codeLaunch))
+               // last launch or previous recover ends search
+               // last launch: mission start detected
+               // previous recover: there was no real launch
+               else if (code.Equals(codeLaunch) || code.Equals(codeRecover))
                {
                   break;
                }

@@ -375,6 +375,36 @@ namespace Nereid
             AddRibbon(heavyVehicleLaunch6);
             AddRibbon(heavyVehicleLaunch7);
             //
+            // Mountain Ribbons
+            Ribbon mountain1 = new Ribbon(_RP + "Mountain01", new MountainLandingAchievement(1500, 431));
+            Ribbon mountain2 = new Ribbon(_RP + "Mountain02", new MountainLandingAchievement(2000, 432), mountain1);
+            Ribbon mountain3 = new Ribbon(_RP + "Mountain03", new MountainLandingAchievement(2500, 433), mountain2);
+            Ribbon mountain4 = new Ribbon(_RP + "Mountain04", new MountainLandingAchievement(3000, 434), mountain3);
+            Ribbon mountain5 = new Ribbon(_RP + "Mountain05", new MountainLandingAchievement(3500, 435), mountain4);
+            Ribbon mountain6 = new Ribbon(_RP + "Mountain06", new MountainLandingAchievement(4000, 436), mountain4);
+            AddRibbon(mountain1);
+            AddRibbon(mountain2);
+            AddRibbon(mountain3);
+            AddRibbon(mountain4);
+            AddRibbon(mountain5);
+            AddRibbon(mountain6);
+            //
+            // Fuel Left on Landing ribbons
+            Ribbon nofuel1 = new Ribbon(_RP + "NoFuel01", new NoFuelLandingAchievement(5, 441));
+            Ribbon nofuel2 = new Ribbon(_RP + "NoFuel02", new NoFuelLandingAchievement(1, 442), nofuel1);
+            AddRibbon(nofuel1);
+            AddRibbon(nofuel2);
+            //
+            // Polar ribbons
+            Ribbon northPolar = new Ribbon(_RP + "NorthPolar", new PolarLandingAchievement("North", 491, false));
+            Ribbon northPolar1st = new Ribbon(_RP + "FirstNorthPolar", new PolarLandingAchievement("North", 492, true), northPolar);
+            Ribbon southPolar = new Ribbon(_RP + "SouthPolar", new PolarLandingAchievement("South", 493, false));
+            Ribbon southPolar1st = new Ribbon(_RP + "FirstSouthPolar", new PolarLandingAchievement("South", 494, true), southPolar);
+            AddRibbon(northPolar);
+            AddRibbon(northPolar1st);
+            AddRibbon(southPolar);
+            AddRibbon(southPolar1st);
+            //
             // Eva Time
             Ribbon evaTime1 = new Ribbon(_RP+"TotalEva1", new EvaTotalTimeAchievement(Utils.ConvertHoursToSeconds(1),   471));
             Ribbon evaTime2 = new Ribbon(_RP+"TotalEva2", new EvaTotalTimeAchievement(Utils.ConvertHoursToSeconds(2),   472), evaTime1);
@@ -452,7 +482,8 @@ namespace Nereid
             AddRibbon(exceptionalContract);
             //
             // Lost And Found
-            AddRibbon(new Ribbon(_RP + "LostAndFound", new LostAndFoundAchievement(99)));
+            // (not working)
+            //AddRibbon(new Ribbon(_RP + "LostAndFound", new LostAndFoundAchievement(99)));
             //
             // Research/Science
             Ribbon research1 = new Ribbon(_RP + "Research1", new ResearchAchievement(1, 10, 201));
@@ -463,8 +494,8 @@ namespace Nereid
             Ribbon research6 = new Ribbon(_RP + "Research6", new ResearchAchievement(6, 400, 206), research5);
             Ribbon research7 = new Ribbon(_RP + "Research7", new ResearchAchievement(7, 600, 207), research6);
             Ribbon research8 = new Ribbon(_RP + "Research8", new ResearchAchievement(8, 1000, 208), research7);
-            Ribbon research9 = new Ribbon(_RP + "Research9", new ResearchAchievement(9, 2000, 209), research8);
-            Ribbon research10 = new Ribbon(_RP + "Research10", new ResearchAchievement(10, 5000, 210), research9);
+            Ribbon research9 = new Ribbon(_RP + "Research9", new ResearchAchievement(9, 1500, 209), research8);
+            Ribbon research10 = new Ribbon(_RP + "Research10", new ResearchAchievement(10, 2000, 210), research9);
             AddRibbon(research1);
             AddRibbon(research2);
             AddRibbon(research3);

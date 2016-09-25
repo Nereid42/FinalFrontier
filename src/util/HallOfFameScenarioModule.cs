@@ -14,7 +14,7 @@ namespace Nereid
 
          public override void OnSave(ConfigNode node)
          {
-            Log.Info("saving hall of fame scenario module");
+            Log.Info("saving hall of fame scenario module (at "+Planetarium.GetUniversalTime()+")");
             HallOfFame.Instance().Save(node);
          }
 
