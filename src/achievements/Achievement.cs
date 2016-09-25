@@ -646,7 +646,7 @@ namespace Nereid
 
          protected override bool CheckVesselState(VesselState previous, VesselState current)
          {
-            if (current == null) return false; 
+            if (current == null) return false;
             if (previous == null) return false;
             // Launching wont count
             if (previous.IsPrelaunch) return false;
@@ -656,7 +656,7 @@ namespace Nereid
             // are we on the correct planet/moon?
             if (!current.MainBody.Equals(body)) return false;
             // situation has to change from non-landed to landed ( a splashed will count as a landed )
-            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed  || previous.IsPrelaunch) return false;
+            if (!current.IsLandedOrSplashed || previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             return true;
          }
 
@@ -887,7 +887,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting " + base.body.GetName() + " half between " + innermost.GetName() + " and " + base.body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting " + base.body.GetName() + " half between periapse of " + innermost.GetName() + " and " + base.body.GetName();
          }
       }
 
@@ -1135,7 +1135,7 @@ namespace Nereid
          public override String GetDescription()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
-            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyound the sphere of influence of " + outermostBodyInSystem.name;
+            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyond the sphere of influence of " + outermostBodyInSystem.name;
          }
       }
 
@@ -1423,13 +1423,13 @@ namespace Nereid
             KSPAchievements.RecordsAltitude record = node as KSPAchievements.RecordsAltitude;
             if (record == null) return false;
             if (!record.IsReached) return false;
-            if (record.record <= 0) return false;
+            if (record.record <= 1000) return false;
             return true;
          }
 
          public override String GetDescription()
          {
-            return "Awarded for any altitude record";
+            return "Awarded for any altitude record above 1000m";
          }
       }
 
@@ -1579,7 +1579,6 @@ namespace Nereid
             return true;
          }
 
-
          public override String GetDescription()
          {
             return "Awarded to any lost kerbal for returning to active duty";
@@ -1607,6 +1606,8 @@ namespace Nereid
             if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
             // check altitude
             if (current.altitude < value) return false;
+            // and we have to be at Kerbin
+            if (!current.MainBody.IsKerbin()) return false;
             return true;
          }
 
@@ -1629,23 +1630,30 @@ namespace Nereid
             if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
-            // check mass
+            // check vessel
             if (current.Origin == null) return false;
             // landed?
-            if (current.Situation != Vessel.Situations.LANDED) return false;
+            if (!current.IsLandedOrSplashed) return false;
             // situation has to change from non-landed to landed (prelaunch wont count)
             if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // scan Vessel
+            VesselScan scan = current.ScanVessel();
             // check fuel
-            double pct = GameUtils.GetResourcePercentageLeft(current.Origin, Constants.RESOURCE_NAME_LIQUID_FUEL);
+            double pct = scan.GetResourcePercentage(Constants.RESOURCE_NAME_LIQUID_FUEL);
             // no tanks or enough fuel left?
             if (double.IsNaN(pct) || pct*100 > value) return false;
+            // deployed parachutes?
+            if (scan.deployedParachutes > 0 || scan.semiDeployedParachutes > 0) return false;
+            // cut or active parachutes?
+            if (scan.activeParachutes > 0 || scan.cutParachutes > 0) return false;
+            //
             return true;
          }
 
 
          public override String GetDescription()
          {
-            return "Awarded for landing a vessel with " + value + "% or less liquid fuel left";
+            return "Awarded for landing a vessel with " + value + "% or less liquid fuel left and no deployed parachutes";
          }
       }
 
@@ -1668,7 +1676,7 @@ namespace Nereid
             if (current == null) return false;
             // no EVA
             if (current.IsEVA) return false;
-            // check mass
+            // check vessel
             if (current.Origin == null) return false;
             // landed?
             if (current.Situation != Vessel.Situations.LANDED) return false;
@@ -1683,6 +1691,8 @@ namespace Nereid
             {
                if (current.Origin.latitude > -POLAR_LATITUDE) return false;
             }
+            // and we have to be at Kerbin
+            if (!current.MainBody.IsKerbin()) return false;
             return true;
          }
 

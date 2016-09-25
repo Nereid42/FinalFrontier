@@ -14,11 +14,19 @@ namespace Nereid
 
          private GUIStyle STYLE_TEXTFIELD_WIDOWTITLE = new GUIStyle(HighLogic.Skin.textField);
 
+         private bool hotkeyInput = false;
+
          public ConfigWindow()
             : base(Constants.WINDOW_ID_CONFIG, "Final Frontier Configuration")
          {
             STYLE_TEXTFIELD_WIDOWTITLE.stretchWidth = false;
             STYLE_TEXTFIELD_WIDOWTITLE.fixedWidth = 190;
+         }
+
+         public override void SetVisible(bool visible)
+         {
+            if (!IsVisible() && visible) hotkeyInput = false;
+            base.SetVisible(visible);
          }
 
          protected override void OnWindow(int id)
@@ -86,7 +94,12 @@ namespace Nereid
             // PERMADEATH
             GameUtils.SetPermadeathEnabled( GUILayout.Toggle(GameUtils.IsPermadeathEnabled(), "Permadeath enabled", FFStyles.STYLE_TOGGLE) );
             // HOTKEY
-            config.SetHotkeyEnabled( GUILayout.Toggle(config.IsHotkeyEnabled(), "Hotkey enabled", FFStyles.STYLE_TOGGLE) ); 
+            GUILayout.BeginHorizontal();
+            config.SetHotkeyEnabled( GUILayout.Toggle(config.IsHotkeyEnabled(), "Hotkey enabled", FFStyles.STYLE_TOGGLE) );
+            GUILayout.FlexibleSpace();
+            DrawHotKeyField();
+            //GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
             // KERBIN TIME
             GameUtils.SetKerbinTimeEnabled( GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time", FFStyles.STYLE_TOGGLE) );
             // MISSION SUMMARY POPUP WINDOW
@@ -108,6 +121,28 @@ namespace Nereid
 
             GUILayout.EndVertical();
             DragWindow();
+         }
+
+         private void DrawHotKeyField()
+         {
+            String text = hotkeyInput?"press key":FinalFrontier.configuration.hotkey.ToString();
+            GUILayout.Label("Hotkey: LEFT-ALT + ");
+            if (GUILayout.Button(" "+text+" ",FFStyles.STYLE_BUTTON_HOTYKEY))
+            {
+               hotkeyInput = true;
+            }
+            if(hotkeyInput)
+            {
+               if (Input.anyKeyDown)
+               {
+                  hotkeyInput = false;
+                  KeyCode[] keys = Utils.GetPressedKeys();
+                  if (keys != null && keys.Length > 0)
+                  {
+                     FinalFrontier.configuration.hotkey = keys[0];
+                  }
+               }
+            }
          }
 
          private void LogLevelButton(Log.LEVEL level, String text)

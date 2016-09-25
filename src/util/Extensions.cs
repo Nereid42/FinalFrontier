@@ -103,6 +103,16 @@ namespace Nereid
             return false;
          }
 
+         public static bool IsTouchingGround(this Vessel vessel)
+         {
+            if (vessel.mainBody == null) return false;
+            foreach(Part part in vessel.Parts)
+            {
+               if (part.GroundContact) return true;
+            }
+            return false;
+         }
+
          public static bool IsInAtmosphereWithOxygen(this Vessel vessel)
          {
             if (vessel.mainBody == null) return false;
@@ -137,6 +147,11 @@ namespace Nereid
          public static bool IsCrew(this ProtoCrewMember kerbal)
          {
             return kerbal.type == ProtoCrewMember.KerbalType.Crew;
+         }
+
+         public static bool IsApplicant(this ProtoCrewMember kerbal)
+         {
+            return kerbal.type == ProtoCrewMember.KerbalType.Applicant;
          }
 
          public static double MachNumber(this Vessel vessel)
@@ -266,6 +281,14 @@ namespace Nereid
             return GameUtils.IsSun(body);
          }
 
+         public static bool IsSunOfHomeWorld(this CelestialBody body)
+         {
+            if (!body.IsSun()) return false;
+            CelestialBody homeworld = GameUtils.GetHomeworld();
+            if(homeworld==null) return false;
+            return homeworld.referenceBody.Equals(body);
+         }
+
          public static double MaxAtmosphereAltitude(this CelestialBody body)
          {
             return body.atmosphereDepth;
@@ -282,10 +305,13 @@ namespace Nereid
             foreach(CelestialBody orbiter in body.orbitingBodies)
             {
                double pea = orbiter.GetOrbit().PeA;
-               if(pea<minPeA)
+               if(orbiter.referenceBody!=null && orbiter.referenceBody.Equals(body))
                {
-                  minPeA = pea;
-                  result = orbiter;
+                  if (pea < minPeA)
+                  {
+                     minPeA = pea;
+                     result = orbiter;
+                  }
                }
             }
             return result;

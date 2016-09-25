@@ -63,7 +63,7 @@ namespace Nereid
          // for Debbung only; calls should be removed for release
          public static void Test(String msg)
          {
-            //if (IsLogable(LEVEL.INFO))
+            if (IsLogable(LEVEL.INFO))
             {
                Debug.LogWarning(PREFIX+"TEST:" + msg);
             }

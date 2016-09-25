@@ -2,6 +2,7 @@
 using UnityEngine;
 using KSP.IO;
 using FinalFrontierAdapter;
+using KSP.UI.Screens;
 
 namespace Nereid
 {
@@ -19,8 +20,6 @@ namespace Nereid
 
          public static readonly FARAdapter farAdapter = new FARAdapter();
 
-         private SaveGameConverter converter;
-
          private volatile IButton toolbarButton;
          private volatile HallOfFameBrowser browser;
 
@@ -30,9 +29,6 @@ namespace Nereid
          private ActivityPool activities = ActivityPool.Instance();
          private RibbonPool ribbons = RibbonPool.Instance();
          private ActionPool actions = ActionPool.Instance();
-
-         private volatile bool keyAltPressed = false;
-         private volatile bool keyCtrlPressed = false;
 
          private volatile bool destroyed = false;
 
@@ -62,8 +58,6 @@ namespace Nereid
          {
             Log.Info("starting FinalFrontier");
 
-            this.converter = this.gameObject.AddComponent<SaveGameConverter>();
-
             GameEvents.onGameSceneSwitchRequested.Add(this.OnGameSceneSwitchRequested);
 
             CreateToolbarButton();
@@ -74,6 +68,7 @@ namespace Nereid
             if(e.from!=GameScenes.MAINMENU && e.to==GameScenes.MAINMENU)
             {
                configuration.Save();
+               WindowManager.instance.CloseAll();
             }
          }
 
@@ -138,16 +133,19 @@ namespace Nereid
 
          private void DummyVoid() { }
 
+
          public void Update()
          {
-            //
-            if (Input.GetKeyDown(KeyCode.LeftAlt)) keyAltPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftAlt)) keyAltPressed = false;
-            if (Input.GetKeyDown(KeyCode.LeftControl)) keyCtrlPressed = true;
-            if (Input.GetKeyUp(KeyCode.LeftControl)) keyCtrlPressed = false;
-            if (configuration.IsHotkeyEnabled() && keyAltPressed && Input.GetKeyDown(KeyCode.F))
+
+            bool keyAlt = Input.GetKey(KeyCode.LeftAlt);
+            bool keyCtrl = Input.GetKey(KeyCode.LeftControl);
+
+            bool hotkey = Input.GetKeyDown(configuration.hotkey);
+
+
+            if (configuration.IsHotkeyEnabled() && keyAlt && hotkey)
             {
-               Log.Info("hotkey ALT-F detected");
+               Log.Info("hotkey chord detected");
                
                switch (HighLogic.LoadedScene)
                {
@@ -155,7 +153,7 @@ namespace Nereid
                   case GameScenes.FLIGHT:
                   case GameScenes.SPACECENTER:
                   case GameScenes.TRACKSTATION:
-                     if (!keyCtrlPressed)
+                     if (!keyCtrl)
                      {
                         Log.Info("hotkey hall of fame browser");
                         createBrowserOnce();
@@ -226,6 +224,11 @@ namespace Nereid
             {
                stockToolbarButton.toggleButton.Value = false;
             }            
+         }
+
+         private void OnGUI()
+         {
+            WindowManager.instance.OnGUI();
          }
 
          internal void OnDestroy()

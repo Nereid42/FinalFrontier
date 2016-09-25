@@ -34,9 +34,25 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\1.0.5-0_development_32bit\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="KSPAssets, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\KSPAssets.dll</HintPath>
+    </Reference>
+    <Reference Include="KSPCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\KSPCore.dll</HintPath>
+    </Reference>
+    <Reference Include="KSPUtil, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\KSPUtil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,7 +62,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\1.0.5-0_development_32bit\KSP_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\1.1.2-0_development\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,10 +110,10 @@
     <Compile Include="src\util\Log.cs" />
     <Compile Include="src\util\Persistence.cs" />
     <Compile Include="src\util\Pool.cs" />
-    <Compile Include="src\util\SaveGameConverter.cs" />
     <Compile Include="src\util\Sorter.cs" />
     <Compile Include="src\util\ToolbarWrapper.cs" />
     <Compile Include="src\util\Utils.cs" />
+    <Compile Include="src\util\VesselScan.cs" />
     <Compile Include="src\util\VesselState.cs" />
     <Compile Include="src\window\AboutWindow.cs" />
     <Compile Include="src\window\AbstractWindow.cs" />
@@ -101,6 +125,7 @@
     <Compile Include="src\window\MissionSummaryWindow.cs" />
     <Compile Include="src\window\PositionableWindow.cs" />
     <Compile Include="src\window\RibbonBrowser.cs" />
+    <Compile Include="src\window\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ribbons\" />

@@ -278,7 +278,11 @@ namespace Nereid
                         if (cmp != 0) return cmp;
                         return left.GetName().CompareTo(right.GetName());
                      case STATS_SORTING.STATE:
-                        cmp = sign * (left.GetKerbal().rosterStatus.CompareTo(right.GetKerbal().rosterStatus));
+                        ProtoCrewMember leftKerbal = left.GetKerbal();
+                        ProtoCrewMember rightKerbal = right.GetKerbal();
+                        if (left == null) return -1;
+                        if (right == null) return 1;
+                        cmp = sign * (leftKerbal.rosterStatus.CompareTo(rightKerbal.rosterStatus));
                         if (cmp != 0) return cmp;
                         return left.GetName().CompareTo(right.GetName());
                      case STATS_SORTING.DOCKINGS:

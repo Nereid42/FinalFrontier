@@ -28,6 +28,7 @@ namespace Nereid
          public AbstractWindow(int id, string title) 
          {
             Log.Detail("creating window "+id+" with title '"+title+"'");
+            WindowManager.instance.AddWindow(this);
             this.id = id;
             this.title = title;
             GameEvents.onGameStateCreated.Add(this.OnGameStateCreated);
@@ -57,7 +58,7 @@ namespace Nereid
             GUI.DragWindow();
          }
 
-         private void OnDraw()
+         public void OnGUI()
          {
             if (visible)
             {
@@ -166,29 +167,12 @@ namespace Nereid
             onWindowClose = method;
          }
 
-         public void SetVisible(bool visible)
+         public virtual void SetVisible(bool visible)
          {
             if (!this.visible && visible) OnOpen();
             if (this.visible && !visible) OnClose();
             if (this.visible && !visible && onWindowClose != null)  onWindowClose();
             this.visible = visible;
-            if (Log.IsLogable(Log.LEVEL.TRACE) && visible) Log.Trace("set window ID "+id+" to visible");
-            try
-            {
-               if(visible)
-               {
-                 RenderingManager.AddToPostDrawQueue(0, OnDraw);
-               }
-               else
-               {
-                  RenderingManager.RemoveFromPostDrawQueue(0, OnDraw);
-               }
-            }
-            catch
-            {
-               Log.Error("failed to change window visibility for id " + id + ": " + title);
-            }
-
          }
 
          public bool IsVisible()

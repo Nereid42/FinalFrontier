@@ -7,13 +7,8 @@ namespace Nereid
    namespace FinalFrontier
    {
 
-      class ImageLoader
+      static class ImageLoader
       {
-
-         private ImageLoader()
-         {
-
-         }
 
          public static Texture2D GetTexture(String pathInGameData)
          {

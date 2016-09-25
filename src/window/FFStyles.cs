@@ -148,6 +148,12 @@ namespace Nereid
          {
             get { return _STYLE_SCROLLVIEW; }
          }
+
+         private static readonly GUIStyle _STYLE_BUTTON_HOTYKEY = new GUIStyle(HighLogic.Skin.textField);
+         public static GUIStyle STYLE_BUTTON_HOTYKEY
+         {
+            get { return _STYLE_BUTTON_HOTYKEY; }
+         }
   
          static FFStyles()
          {
@@ -229,6 +235,13 @@ namespace Nereid
             STYLE_LABEL_OFF5.padding = new RectOffset(0, 0, 0, 0);
             STYLE_SCROLLVIEW.alignment = TextAnchor.UpperLeft;
             STYLE_STRETCHEDTEXTFIELD.stretchWidth = true;
+            STYLE_TOGGLE.margin = new RectOffset(0, 120, 0, 0);
+            STYLE_BUTTON_HOTYKEY.padding = new RectOffset(0, 0, 0, 0);
+            //STYLE_BUTTON_HOTYKEY.border = new RectOffset(0, 0, 18, 0);
+            STYLE_BUTTON_HOTYKEY.fixedWidth = 80;
+            STYLE_BUTTON_HOTYKEY.alignment = TextAnchor.MiddleCenter;
+            STYLE_BUTTON_HOTYKEY.stretchHeight = true;
+            STYLE_BUTTON_HOTYKEY.stretchWidth = false;
          }
       }
    }

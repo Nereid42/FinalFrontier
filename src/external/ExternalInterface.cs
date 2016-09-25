@@ -75,6 +75,8 @@ namespace Nereid.FinalFrontier
 
       public void AwardRibbonToKerbal(object ribbon, ProtoCrewMember kerbal)
       {
+         if (kerbal == null) return;
+         Log.Detail("awarding (external) '"+((Ribbon)ribbon).GetName()+"' to kerbal "+kerbal.name);
          HallOfFame.Instance().Record(kerbal, (Ribbon)ribbon);
       }
 

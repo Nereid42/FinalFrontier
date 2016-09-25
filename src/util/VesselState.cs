@@ -37,6 +37,7 @@ namespace Nereid
          public double MissionTime { get; private set; }
          public double LaunchTime { get; private set; }
 
+         private VesselScan scan;
 
          public VesselState(Vessel vessel)
          {
@@ -85,6 +86,15 @@ namespace Nereid
             this.HasMovedOnSurface = state.HasMovedOnSurface;
             this.altitude = state.altitude;
             this.IsInAtmosphere = state.IsInAtmosphere;
+         }
+
+         public VesselScan ScanVessel()
+         {
+            if (scan == null)
+            {
+               scan = new VesselScan(Origin);
+            }
+            return scan;
          }
 
          public VesselState NonEva()

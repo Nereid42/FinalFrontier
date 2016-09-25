@@ -20,9 +20,9 @@ namespace Nereid
             GUILayout.Label("Final Frontier - written by Nereid (A.Kolster)",FFStyles.STYLE_STRETCHEDLABEL);
             GUILayout.Label("");
             GUILayout.Label("  Some ribbons and graphics are inspired and/or created by Unistrut.", FFStyles.STYLE_STRETCHEDLABEL);
+            GUILayout.Label("  The First-In-Space and First-EVA-In-Space ribbons are created by SmarterThanMe.", FFStyles.STYLE_STRETCHEDLABEL);
             GUILayout.Label("  The toolbar was created by blizzy78.", FFStyles.STYLE_STRETCHEDLABEL);
-            GUILayout.Label("  Some custom ribbons are created/provided by nothke, SmarterThanMe,", FFStyles.STYLE_STRETCHEDLABEL);
-            GUILayout.Label("  helldiver and Wyrmshadow.", FFStyles.STYLE_STRETCHEDLABEL);
+            GUILayout.Label("  Some custom ribbons are created/provided by nothke, SmarterThanMe, helldiver and Wyrmshadow.", FFStyles.STYLE_STRETCHEDLABEL);
             GUILayout.Label("");
             GUILayout.Label("  Special thanks to Unistrut for giving permissions to use his ribbon graphics.", FFStyles.STYLE_STRETCHEDLABEL);
             GUILayout.Label("");

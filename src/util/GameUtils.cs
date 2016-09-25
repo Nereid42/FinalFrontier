@@ -198,7 +198,6 @@ namespace Nereid
 
             foreach (Part part in vessel.Parts)
             {
-               if (part.packed) part.Unpack();
                foreach (PartResource r in part.Resources)
                {
                   if (r.info.name.Equals(resourceName))

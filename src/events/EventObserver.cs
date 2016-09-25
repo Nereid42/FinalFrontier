@@ -77,6 +77,7 @@ namespace Nereid
             GameEvents.onKerbalAdded.Add(this.OnKerbalAdded);
             GameEvents.onKerbalRemoved.Add(this.OnKerbalRemoved);
             GameEvents.onKerbalStatusChange.Add(this.OnKerbalStatusChange);
+            GameEvents.OnCrewmemberHired.Add(this.OnCrewmemberHired);
             //
             // Other
             GameEvents.OnProgressAchieved.Add(this.OnProgressAchieved);
@@ -189,6 +190,15 @@ namespace Nereid
             HallOfFame.Instance().Refresh();
          }
 
+         private void OnCrewmemberHired(ProtoCrewMember kerbal, int n)
+         {
+            Log.Info("crew member hired: " + kerbal.name+" ("+n+")");
+            // just make sure this kerbal is in the hall of fame
+            HallOfFame.Instance().GetEntry(kerbal);
+            // and refresh
+            HallOfFame.Instance().Refresh();
+         }
+
          private void OnKerbalRemoved(ProtoCrewMember kerbal)
          {
             Log.Info("kerbal removed: "+kerbal.name);
@@ -213,6 +223,15 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
+            Log.Test("OnProgressAchieved "+node.GetType());
+
+            
+            Vessel vessel = FlightGlobals.ActiveVessel;
+            // records achieved while not in a vessel won't count
+            if (vessel == null) return;
+            // records achieved while on a launch pad won't count
+            if (vessel.situation == Vessel.Situations.PRELAUNCH) return;
+            // ok, now check the record
             CheckAchievementsForProgress(node);
          }
 
@@ -417,8 +436,9 @@ namespace Nereid
          }
 
 
-         private void OnVesselRecovered(ProtoVessel vessel)
+         private void OnVesselRecovered(ProtoVessel vessel, bool flag)
          {
+            // TODO: check what synopsis of "flag"
             if (vessel == null)
             {
                Log.Warning("vessel recover without a valid vessel detected");
