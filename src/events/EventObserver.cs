@@ -88,7 +88,6 @@ namespace Nereid
          private void OnFlyBy(Vessel vessel,CelestialBody body)
          {
             // for later usage
-            //Log.Test("OnFlyBy "+vessel.name+" on "+body.name);
          }
 
          private void OnFlightReady()
@@ -342,19 +341,6 @@ namespace Nereid
             Vessel vessel = FlightGlobals.ActiveVessel;
             if (vessel == null) return;
             Log.Detail("stage " +  stage +" activated for vessel "+vessel.name+" current mission time is "+vessel.missionTime);
-         }
-
-         private void SetSphereOfInfluence()
-         {
-            Vessel vessel = FlightGlobals.ActiveVessel;
-            if(vessel!=null)
-            {
-               currentSphereOfInfluence = vessel.mainBody;
-            }
-            else
-            {
-               currentSphereOfInfluence = null;
-            }
          }
 
          private void  OnCrewBoardVessel(GameEvents.FromToAction<Part, Part> action)
