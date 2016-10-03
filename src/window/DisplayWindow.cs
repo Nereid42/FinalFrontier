@@ -500,7 +500,7 @@ namespace Nereid
                }
                else if (kerbal.rosterStatus==ProtoCrewMember.RosterStatus.Available)
                {
-                  location = "Kerbin Spacecenter";
+                  location = "Space Center";
                }
                else if(vessel!=null)
                {
