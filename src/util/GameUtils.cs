@@ -71,39 +71,25 @@ namespace Nereid
 
          public static bool IsSun(CelestialBody body)
          {
-            return body.RevealType().Equals("Sun");
+				return (body.orbit == null || body.orbit.referenceBody == null);
          }
 
          public static CelestialBody GetHomeworld()
          {
-            return GetCelestialBody("Kerbin");
+				return PSystemManager.Instance.localBodies.Find(x => x.isHomeWorld);
          }
 
          public static CelestialBody GetSun()
          {
-            return GetCelestialBody("Sun");
+				return PSystemManager.Instance.localBodies.Find(x => (x.orbit == null || x.orbit.referenceBody == null));
          }
 
-         public static CelestialBody GetKerbol()
-         {
-            CelestialBody homeworld = GetHomeworld();
-            if (homeworld != null)
-            {
-               if(homeworld.orbit !=null)
-               {
-                  return homeworld.orbit.referenceBody;;
-               }
-            }
-            return null;
-         }
-
-         // BROKEN: needs to b fixed
          public static CelestialBody GetOutermostPlanet()
          {
             CelestialBody result = null;
             double distanceFromSun = 0;
 
-            CelestialBody center = GetKerbol();
+            CelestialBody center = GetSun();
             if (center == null)
             {
                Log.Error("no central star found; cant get outermost planet");

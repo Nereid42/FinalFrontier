@@ -502,7 +502,7 @@ namespace Nereid
             {
                return "Awarded for being the first kerbal in space";
             }
-            return "Awarded for leaving Kerbin atmosphere";
+				return "Awarded for leaving " + GameUtils.GetHomeworld().name + "'s atmosphere";
          }
       }
 
@@ -1031,13 +1031,13 @@ namespace Nereid
             if (current.Origin.altitude >= MAX_ALTITUDE) return false;
             double mach = current.Origin.MachNumberHorizontal();
             if (mach < value) return false;
-            if (!current.Origin.mainBody.name.Equals("Kerbin") ) return false;
+				if (!current.Origin.mainBody.isHomeWorld ) return false;
             return true;
          }
 
          public override String GetDescription()
          {
-            return "Awarded for flying horizontally at mach " + value + " below "+MAX_ALTITUDE.ToString("0")+"m in Kerbin atmosphere";
+            return "Awarded for flying horizontally at mach " + value + " below "+MAX_ALTITUDE.ToString("0")+"m in " + GameUtils.GetHomeworld().name + "'s atmosphere";
          }
       }
 
@@ -1103,7 +1103,7 @@ namespace Nereid
          public DeepSpaceAchievement(int prestige, bool first)
             : base("DS" + (first ? "1" : ""), "Deep Space", prestige, first)
          {
-            kerbol = GameUtils.GetKerbol();
+            kerbol = GameUtils.GetSun();
             outermostBodyInSystem = GameUtils.GetOutermostPlanet();
 
             if (outermostBodyInSystem != null)
@@ -1337,7 +1337,7 @@ namespace Nereid
       class EvaInHomeWatersAchievement : Achievement
       {
          public EvaInHomeWatersAchievement(int prestige)
-            : base("WE", "EVA in Kerbin waters", prestige, false)
+            : base("WE", "EVA in " + GameUtils.GetHomeworld().name + "'s waters", prestige, false)
          {
          }
 
@@ -1353,7 +1353,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for any EVA in kerbin waters";
+            return "Awarded for any EVA in " + GameUtils.GetHomeworld().name + "'s waters";
          }
       }
 
@@ -1406,7 +1406,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + (HasToBeFirst() ? "on " : "") + "EVA in a wet environment outside of Kerbin";
+            return "Awarded for" + FirstKerbalText().Envelope() + (HasToBeFirst() ? "on " : "") + "EVA in a wet environment outside of " + GameUtils.GetHomeworld().name;
          }
       }
 
@@ -1613,7 +1613,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for landing a vessel on Kerbin at an elevation of at least " + value + "m";
+            return "Awarded for landing a vessel on " + GameUtils.GetHomeworld().name + " at an elevation of at least " + value + "m";
          }
       }
 
@@ -1698,7 +1698,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for "+ FirstKerbalText().Envelope() + "landing a vessel in the "+hemisphere+" polar region off Kerbin";
+            return "Awarded for "+ FirstKerbalText().Envelope() + "landing a vessel in the "+hemisphere+" polar region of " + GameUtils.GetHomeworld().name;
          }
       }
 

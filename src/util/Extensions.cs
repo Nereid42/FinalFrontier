@@ -169,7 +169,7 @@ namespace Nereid
 
          public static bool IsKerbin(this CelestialBody body)
          {
-            return body.GetName().Equals("Kerbin");
+				return body.isHomeWorld;
          }
 
          public static String ToString(this Vector3d v, String format)
