@@ -223,9 +223,6 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
-            Log.Test("OnProgressAchieved "+node.GetType());
-
-            
             Vessel vessel = FlightGlobals.ActiveVessel;
             // records achieved while not in a vessel won't count
             if (vessel == null) return;
