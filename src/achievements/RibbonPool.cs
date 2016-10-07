@@ -391,7 +391,7 @@ namespace Nereid
             Ribbon mountain3 = new Ribbon(_RP + "Mountain03", new MountainLandingAchievement(2500, 433), mountain2);
             Ribbon mountain4 = new Ribbon(_RP + "Mountain04", new MountainLandingAchievement(3000, 434), mountain3);
             Ribbon mountain5 = new Ribbon(_RP + "Mountain05", new MountainLandingAchievement(3500, 435), mountain4);
-            Ribbon mountain6 = new Ribbon(_RP + "Mountain06", new MountainLandingAchievement(4000, 436), mountain4);
+            Ribbon mountain6 = new Ribbon(_RP + "Mountain06", new MountainLandingAchievement(4000, 436), mountain5);
             AddRibbon(mountain1);
             AddRibbon(mountain2);
             AddRibbon(mountain3);
