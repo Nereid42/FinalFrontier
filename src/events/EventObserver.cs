@@ -108,7 +108,7 @@ namespace Nereid
             {
                Log.Info("showing mission summary window");
                MissionSummaryWindow summary = new MissionSummaryWindow();
-               summary.SetMissionSummary(missionSummary);
+               summary.SetMissionContents(missionSummary);
                summary.SetVisible(true);
             }
          }
@@ -412,6 +412,7 @@ namespace Nereid
                // record crew member only
                if (member.IsCrew())
                {
+                  Log.Test("OnCrewOnEva " + member.name + " is EVA: " + crew.isEVA+", situation: "+crew.situation);
                   recorder.RecordEva(member, vessel);
                }
             }
@@ -461,6 +462,10 @@ namespace Nereid
                return;
             }
 
+            //
+            // update mission summary
+            missionSummary.AddSummaryForCrewOfVessel(vessel);
+
             Log.Info("vessel recovered " + vessel.vesselName);
             // record recover of vessel
             recorder.RecordVesselRecovered(vessel);
@@ -475,8 +480,7 @@ namespace Nereid
             // refresh roster status
             HallOfFame.Instance().Refresh();
             //
-            // update mission summary
-            missionSummary.AddVessel(vessel);
+
          }
 
 

@@ -730,7 +730,7 @@ namespace Nereid
             return result;
          }
 
-         public List<Ribbon> GetRibbonsOfLatestMission(ProtoCrewMember kerbal, double missionEndTime=0)
+         public List<Ribbon> GetRibbonsOfLatestOngoingMission(ProtoCrewMember kerbal)
          {
             List<Ribbon> result = new List<Ribbon>();
             HallOfFameEntry entry = GetEntry(kerbal);
@@ -738,24 +738,19 @@ namespace Nereid
             HashSet<Ribbon> ignored = new HashSet<Ribbon>();
             List<LogbookEntry> log = new List<LogbookEntry>(entry.GetLogRefs());
             log.Reverse();
-            bool start = false;
             String codeLaunch=ActionPool.ACTION_LAUNCH.GetCode();
             String codeRecover=ActionPool.ACTION_RECOVER.GetCode();
             foreach(LogbookEntry logentry in log)
             {
                String code = logentry.Code;
-               if (code.Equals(codeRecover) && !start)
-               {
-                  start = true;
-               }
                // last launch or previous recover ends search
                // last launch: mission start detected
                // previous recover: there was no real launch
-               else if (code.Equals(codeLaunch) || code.Equals(codeRecover))
+               if (code.Equals(codeLaunch) || code.Equals(codeRecover))
                {
                   break;
                }
-               else if (start || logentry.UniversalTime <= missionEndTime)
+               else
                {
                   Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
                   if(ribbon!=null)

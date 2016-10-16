@@ -7,16 +7,16 @@ namespace Nereid
 {
    namespace FinalFrontier
    {
-      public class MissionSummary : IEnumerable<MissionSummary.Summary>
+      public class MissionSummary : IEnumerable<MissionSummary.Event>
       {
-         private readonly List<Summary> summaries = new List<Summary>();
+         private readonly List<Event> summaries = new List<Event>();
 
-         public class Summary
+         public class Event
          {
             public readonly ProtoCrewMember kerbal;
             public readonly List<Ribbon> newRibbons = new List<Ribbon>();
 
-            public Summary(ProtoCrewMember kerbal)
+            public Event(ProtoCrewMember kerbal)
             {
                this.kerbal = kerbal;
             }
@@ -28,7 +28,7 @@ namespace Nereid
             return summaries.GetEnumerator();
          }
 
-         IEnumerator<MissionSummary.Summary> IEnumerable<MissionSummary.Summary>.GetEnumerator()
+         IEnumerator<MissionSummary.Event> IEnumerable<MissionSummary.Event>.GetEnumerator()
          {
             return summaries.GetEnumerator();
          }
@@ -40,24 +40,27 @@ namespace Nereid
          }
 
 
-         public void AddVessel(ProtoVessel vessel, double missionEndTime = 0)
+         public void AddSummaryForCrewOfVessel(ProtoVessel vessel)
          {
             if (vessel == null) return;
             Log.Info("adding mission summary for vessel " + vessel);
             foreach (ProtoCrewMember kerbal in vessel.GetVesselCrew())
             {
+               // DEBUG
+               Log.Test("ADD MISSION SUMMRAY ");
+               HallOfFameEntry hoe = HallOfFame.Instance().GetEntry(kerbal);
+               Log.Test(hoe.ToString());
+
+
                Log.Info("adding mission summary for kerbal " + kerbal.name + ", crew=" + kerbal.IsCrew());
                if (kerbal.IsCrew())
                {
-                  Summary summary = new Summary(kerbal);
+                  Event summary = new Event(kerbal);
                   summaries.Add(summary);
                   // only real missions will count
-                  //if (vessel.missionTime > 0)
+                  foreach (Ribbon ribbon in HallOfFame.Instance().GetRibbonsOfLatestOngoingMission(kerbal))
                   {
-                     foreach (Ribbon ribbon in HallOfFame.Instance().GetRibbonsOfLatestMission(kerbal, missionEndTime))
-                     {
-                        summary.newRibbons.Add(ribbon);
-                     }
+                     summary.newRibbons.Add(ribbon);
                   }
                }
             }

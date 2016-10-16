@@ -8,6 +8,9 @@ namespace Nereid
    {
       public class MissionSummaryWindow : PositionableWindow
       {
+         public const int WIDTH = 300;
+         public const int HEIGHT = 300;
+
 
          private static readonly GUIStyle STYLE_SUMMARY = new GUIStyle(HighLogic.Skin.scrollView);
          private static readonly GUIStyle STYLE_NAME = new GUIStyle(FFStyles.STYLE_STRETCHEDLABEL);
@@ -53,6 +56,7 @@ namespace Nereid
             if (GUILayout.Button("Close", FFStyles.STYLE_BUTTON))
             {
                Event.current.Use();
+               missionSummary.Clear();
                SetVisible(false);
             }
             GUILayout.EndHorizontal();
@@ -63,16 +67,15 @@ namespace Nereid
 
          protected override int GetInitialHeight()
          {
-            return 300;
+            return HEIGHT;
          }
-         
 
          private void DrawSummary()
          {
             scrollPosSummary = GUILayout.BeginScrollView(scrollPosSummary, FFStyles.STYLE_SCROLLVIEW);
             if (missionSummary != null && missionSummary.Count() > 0)
             {
-               foreach (MissionSummary.Summary s in missionSummary)
+               foreach (MissionSummary.Event s in missionSummary)
                {
                   GUILayout.Label(s.kerbal.name, STYLE_NAME);
                   if (s.newRibbons.Count == 0)
@@ -111,7 +114,7 @@ namespace Nereid
             GUILayout.EndScrollView();
          }
 
-         public void SetMissionSummary(MissionSummary summary)
+         public void SetMissionContents(MissionSummary summary)
          {
             Log.Info("mission summary for "+summary.Count()+" kerbals");
             this.missionSummary = summary;

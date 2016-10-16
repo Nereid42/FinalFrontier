@@ -704,9 +704,10 @@ namespace Nereid
             if (current == null) return false;
             // no EVA, no achievement
             if (!current.IsEVA) return false;
-            if (current.Situation == Vessel.Situations.LANDED) return false;
-            if (current.Situation == Vessel.Situations.PRELAUNCH ) return false;
-            if (current.Situation == Vessel.Situations.SPLASHED) return false;
+            // Landed or on ground get different EVA achievements
+            if (current.IsLanded) return false;
+            if (current.IsPrelaunch) return false;
+            if (current.IsSplashed) return false;
             // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
             if (current.atmDensity > NO_ATM) return false;

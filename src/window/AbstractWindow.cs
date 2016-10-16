@@ -10,8 +10,12 @@ namespace Nereid
       {
          public delegate void OnWindowClose();
 
-         public static readonly int AUTO_HEIGHT = -1;
-         private static readonly int DEFAULT_WIDTH = 400;
+         public const int AUTO_HEIGHT = -1;
+         public const int CENTER_VERTICALLY = int.MinValue;
+         public const int CENTER_HORIZONTALLY = int.MinValue;
+
+         //
+         private const int DEFAULT_WIDTH = 400;
          //
          private readonly int id;
          private string title;
@@ -109,6 +113,20 @@ namespace Nereid
          private void CheckBounds()
          {
             const float MARGIN = 5;
+
+
+            // Auto Center
+            if (bounds.x == CENTER_HORIZONTALLY)
+            {
+               bounds.x = (int)((Screen.width - bounds.width) / 2);
+            }
+            if (bounds.y == CENTER_VERTICALLY)
+            {
+               bounds.y = (int)((Screen.height - bounds.height) / 2);
+            }
+
+
+            // not visible
             if (bounds.x > Screen.width - MARGIN)
             {
                Log.Warning("WINDOW "+id+" OUT OF SCREEN (x=" + bounds.x+"); resetting x coordinates");

@@ -241,6 +241,23 @@ namespace Nereid
             }
             return false;
          }
+
+         public override string ToString()
+         {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("Hall Of Fame Entry for " + name + "\n");
+            sb.Append("Time Of Last Launch: " + TimeOfLastLaunch + "\n");
+            sb.Append("Missions: " + MissionsFlown + "\n");
+            sb.Append("Dockings: " + Dockings + "\n");
+            sb.Append("Log:\n");
+            foreach (LogbookEntry entry in logbook)
+            {
+               sb.Append("  " + entry.ToString()+"\n");
+            }
+            return sb.ToString();
+         }
+
       }
    }
 }
