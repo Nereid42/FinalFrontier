@@ -113,6 +113,24 @@ namespace Nereid.FinalFrontier
          AwardRibbonToKerbals(ribbon, kerbals);
       }
 
+      public void RevokeRibbonfromKerbal(String code, ProtoCrewMember kerbal)
+      {
+         Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
+         if (ribbon == null)
+         {
+            Log.Error("no ribbon for code '" + code + "' found!");
+            return;
+         }
+         RevokeRibbonFromKerbal((object)ribbon, kerbal);
+      }
+
+      public void RevokeRibbonFromKerbal(object ribbon, ProtoCrewMember kerbal)
+      {
+         if (kerbal == null) return;
+         Log.Detail("revoking (external) '" + ((Ribbon)ribbon).GetName() + "' from kerbal " + kerbal.name);
+         HallOfFame.Instance().Revocation(kerbal, (Ribbon)ribbon);
+      }
+
       public bool IsRibbonAwardedToKerbal(object ribbon, ProtoCrewMember kerbal)
       {
          HallOfFame halloffame = HallOfFame.Instance();

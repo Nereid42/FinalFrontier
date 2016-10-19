@@ -75,12 +75,13 @@ namespace Nereid
             decorationBoardWindowTitle = GUILayout.TextField(decorationBoardWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
             FinalFrontier.configuration.SetDecorationBoardWindowTitle(decorationBoardWindowTitle);
             GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Mission Summary window title:", FFStyles.STYLE_STRETCHEDLABEL);
-            String missionSummaryWindowTitle = FinalFrontier.configuration.GetMissionSummaryWindowTitle();
-            missionSummaryWindowTitle = GUILayout.TextField(missionSummaryWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
-            FinalFrontier.configuration.SetMissionSummaryWindowTitle(missionSummaryWindowTitle);
-            GUILayout.EndHorizontal();
+            // Mission-Summary is not working in KSP 1.2
+            //GUILayout.BeginHorizontal();
+            //GUILayout.Label("Mission Summary window title:", FFStyles.STYLE_STRETCHEDLABEL);
+            //String missionSummaryWindowTitle = FinalFrontier.configuration.GetMissionSummaryWindowTitle();
+            //missionSummaryWindowTitle = GUILayout.TextField(missionSummaryWindowTitle, STYLE_TEXTFIELD_WIDOWTITLE);
+            //FinalFrontier.configuration.SetMissionSummaryWindowTitle(missionSummaryWindowTitle);
+            //GUILayout.EndHorizontal();
             GUILayout.Label("(window titles needs a restart to take effect)", FFStyles.STYLE_RLABEL);
             //
             //
@@ -102,8 +103,8 @@ namespace Nereid
             GUILayout.EndHorizontal();
             // KERBIN TIME
             GameUtils.SetKerbinTimeEnabled( GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time", FFStyles.STYLE_TOGGLE) );
-            // MISSION SUMMARY POPUP WINDOW
-            config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
+            // MISSION SUMMARY POPUP WINDOW (not working in KSP 1.2)
+            //config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
             // Stock Toolbar
             if(ToolbarManager.ToolbarAvailable)
             {

@@ -35,6 +35,7 @@ namespace Nereid
          private readonly AtmosphereInspector atmosphereInspector = new AtmosphereInspector();
          private readonly OrbitInspector orbitInspector = new OrbitInspector();
 
+         private readonly MissionSummary missionSummary = new MissionSummary();
 
          public EventObserver()
          {
@@ -47,6 +48,9 @@ namespace Nereid
             GameEvents.onGamePause.Add(this.OnGamePause);
             GameEvents.onGameSceneLoadRequested.Add(this.OnGameSceneLoadRequested);
             GameEvents.onGameStateCreated.Add(this.OnGameStateCreated);
+            GameEvents.onGameSceneSwitchRequested.Add(this.OnGameSceneSwitchRequested);
+            GameEvents.onGUIRecoveryDialogSpawn.Add(this.OnGUIRecoveryDialogSpawn);
+            GameEvents.onGUIRecoveryDialogDespawn.Add(this.onGUIRecoveryDialogDespawn);
             //
             // Docking
             GameEvents.onPartCouple.Add(this.OnPartCouple);
@@ -88,12 +92,30 @@ namespace Nereid
          private void OnFlyBy(Vessel vessel,CelestialBody body)
          {
             // for later usage
-            //Log.Test("OnFlyBy "+vessel.name+" on "+body.name);
          }
 
          private void OnFlightReady()
          {
             // for later usage
+         }
+
+
+
+         private void onGUIRecoveryDialogDespawn(KSP.UI.Screens.MissionRecoveryDialog dialog)
+         {
+            // Mission Summary
+            if(FinalFrontier.configuration.IsMissionSummaryEnabled())
+            {
+               Log.Info("showing mission summary window");
+               MissionSummaryWindow summary = new MissionSummaryWindow();
+               summary.SetMissionContents(missionSummary);
+               summary.SetVisible(true);
+            }
+         }
+
+         private void OnGUIRecoveryDialogSpawn(KSP.UI.Screens.MissionRecoveryDialog dialog)
+         {
+            // not used
          }
 
          private void OnOrbit(Vessel vessel, CelestialBody body)
@@ -223,9 +245,6 @@ namespace Nereid
 
          private void OnProgressAchieved(ProgressNode node)
          {
-            Log.Test("OnProgressAchieved "+node.GetType());
-
-            
             Vessel vessel = FlightGlobals.ActiveVessel;
             // records achieved while not in a vessel won't count
             if (vessel == null) return;
@@ -329,6 +348,15 @@ namespace Nereid
             }
          }
 
+         private void OnGameSceneSwitchRequested(GameEvents.FromToAction<GameScenes, GameScenes> change)
+         {
+            if (change.from == GameScenes.SPACECENTER && change.to != GameScenes.SPACECENTER)
+            {
+               Log.Info("clearing mission summary info");
+               missionSummary.Clear();
+            }
+         }
+
          private void OnGameSceneLoadRequested(GameScenes scene)
          {
             Log.Info("EventObserver:: OnGameSceneLoadRequested: "+scene+" current="+HighLogic.LoadedScene);
@@ -345,19 +373,6 @@ namespace Nereid
             Vessel vessel = FlightGlobals.ActiveVessel;
             if (vessel == null) return;
             Log.Detail("stage " +  stage +" activated for vessel "+vessel.name+" current mission time is "+vessel.missionTime);
-         }
-
-         private void SetSphereOfInfluence()
-         {
-            Vessel vessel = FlightGlobals.ActiveVessel;
-            if(vessel!=null)
-            {
-               currentSphereOfInfluence = vessel.mainBody;
-            }
-            else
-            {
-               currentSphereOfInfluence = null;
-            }
          }
 
          private void  OnCrewBoardVessel(GameEvents.FromToAction<Part, Part> action)
@@ -397,6 +412,7 @@ namespace Nereid
                // record crew member only
                if (member.IsCrew())
                {
+                  Log.Test("OnCrewOnEva " + member.name + " is EVA: " + crew.isEVA+", situation: "+crew.situation);
                   recorder.RecordEva(member, vessel);
                }
             }
@@ -409,6 +425,7 @@ namespace Nereid
          private void OnGameStateCreated(Game game)
          {
             Log.Detail("OnGameStateCreated ");
+            //
             // do not load a game while in MAIN-MENU or SETTINGS
             // TODO: check if STILL NECESSARY????
             if (HighLogic.LoadedScene == GameScenes.MAINMENU || HighLogic.LoadedScene==GameScenes.SETTINGS)
@@ -445,7 +462,11 @@ namespace Nereid
                return;
             }
 
-            Log.Info("EventObserver:: OnVesselRecovered " + vessel.vesselName);
+            //
+            // update mission summary
+            missionSummary.AddSummaryForCrewOfVessel(vessel);
+
+            Log.Info("vessel recovered " + vessel.vesselName);
             // record recover of vessel
             recorder.RecordVesselRecovered(vessel);
             // check for kerbal specific achiements
@@ -456,20 +477,10 @@ namespace Nereid
             }
             HallOfFame.Instance().EndArwardOfRibbons();
             //
-            // ------ MissionSummary ------
-            if(HighLogic.LoadedScene == GameScenes.SPACECENTER)
-            {
-               if (FinalFrontier.configuration.IsMissionSummaryEnabled())
-               {
-                  double technicalMissionEndTime = Planetarium.GetUniversalTime();
-                  MissionSummaryWindow missionSummaryWindow = new MissionSummaryWindow();
-                  missionSummaryWindow.SetSummaryForVessel(vessel, technicalMissionEndTime);
-                  missionSummaryWindow.SetVisible(true);
-               }
-            }
-            // 
             // refresh roster status
             HallOfFame.Instance().Refresh();
+            //
+
          }
 
 

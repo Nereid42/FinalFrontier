@@ -124,77 +124,7 @@ namespace Nereid
             SetWindowPosition(Constants.WINDOW_ID_DISPLAY, 810, 50);
             SetWindowPosition(Constants.WINDOW_ID_ABOUT, 50, 50);
             SetWindowPosition(Constants.WINDOW_ID_CONFIG, 150, 50);
-            SetWindowPosition(Constants.WINDOW_ID_MISSION_SUMMARY, GetDefaultMissionSummaryWindowPosition());
-         }
-
-         /**
-          * This method returns default postions for the Mission Summary Window 
-          * to avoid overlapping with the stock summary window
-          */
-         private Pair<int, int> GetDefaultMissionSummaryWindowPosition()
-         {
-            // Defaults
-            int x = Screen.width - 400;
-            int y = 30;
-
-            switch (Screen.width)
-            {
-               case 1152:
-                  x = 45;
-                  break;
-               case 1280: 
-                  x = 100;
-                  break;
-               case 1360:
-               case 1366:
-               case 1400:
-                  x = 140;
-                  break;
-               case 1440:
-                  x = 162;
-                  break;
-               case 1600:  
-                  x = 223;
-                  break;
-               case 1680: 
-                  x = 256;
-                  break;
-               case 1920:
-                  x = 1180;
-                  break;
-            }
-            switch (Screen.height)
-            {
-               case 720:
-                  y = 38; 
-                  break;
-               case 768:
-                  y = 57; 
-                  break;
-               case 800:
-                  y = 86;
-                  break;
-               case 864:
-                  y = 96; 
-                  break;
-               case 900: 
-                  y = 110;
-                  break;
-               case 960:
-                  y = 134;
-                  break;
-               case 1024:
-                  y = 159;
-                  break;
-               case 1050:
-                  y = 170;
-                  break;
-               case 1080:
-                  y = 182;
-                  break;
-            }
-
-            return new Pair<int, int>(x, y);
+            SetWindowPosition(Constants.WINDOW_ID_MISSION_SUMMARY, AbstractWindow.CENTER_HORIZONTALLY,AbstractWindow.CENTER_VERTICALLY);
          }
 
          public Pair<int, int> GetWindowPosition(AbstractWindow window)

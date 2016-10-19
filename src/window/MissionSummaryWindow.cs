@@ -8,6 +8,9 @@ namespace Nereid
    {
       public class MissionSummaryWindow : PositionableWindow
       {
+         public const int WIDTH = 300;
+         public const int HEIGHT = 300;
+
 
          private static readonly GUIStyle STYLE_SUMMARY = new GUIStyle(HighLogic.Skin.scrollView);
          private static readonly GUIStyle STYLE_NAME = new GUIStyle(FFStyles.STYLE_STRETCHEDLABEL);
@@ -31,20 +34,9 @@ namespace Nereid
 
          private Vector2 scrollPosSummary = Vector2.zero;
 
-         private readonly List<Summary> Summaries = new List<Summary>();
+         private MissionSummary missionSummary;
 
-         private ProtoVessel vessel;
 
-         private class Summary
-         {
-            public readonly ProtoCrewMember kerbal;
-            public  readonly List<Ribbon> newRibbons = new List<Ribbon>();
-
-            public Summary(ProtoCrewMember kerbal)
-            {
-               this.kerbal = kerbal;
-            }
-         }
 
          public MissionSummaryWindow()
             : base(Constants.WINDOW_ID_MISSION_SUMMARY, FinalFrontier.configuration.GetMissionSummaryWindowTitle() )
@@ -56,7 +48,6 @@ namespace Nereid
          {
             Configuration config = FinalFrontier.configuration;
             GUILayout.BeginVertical();
-            GUILayout.Label(vessel!=null?vessel.vesselName:"no vessel",FFStyles.STYLE_STRETCHEDLABEL);
             DrawSummary();
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
@@ -65,6 +56,7 @@ namespace Nereid
             if (GUILayout.Button("Close", FFStyles.STYLE_BUTTON))
             {
                Event.current.Use();
+               missionSummary.Clear();
                SetVisible(false);
             }
             GUILayout.EndHorizontal();
@@ -75,15 +67,15 @@ namespace Nereid
 
          protected override int GetInitialHeight()
          {
-            return 300;
+            return HEIGHT;
          }
 
          private void DrawSummary()
          {
             scrollPosSummary = GUILayout.BeginScrollView(scrollPosSummary, FFStyles.STYLE_SCROLLVIEW);
-            if (Summaries.Count > 0)
+            if (missionSummary != null && missionSummary.Count() > 0)
             {
-               foreach(Summary s in Summaries)
+               foreach (MissionSummary.Event s in missionSummary)
                {
                   GUILayout.Label(s.kerbal.name, STYLE_NAME);
                   if (s.newRibbons.Count == 0)
@@ -119,28 +111,13 @@ namespace Nereid
             GUILayout.FlexibleSpace();
             // filler
             GUILayout.Label(" ", STYLE_TEXT);
-            GUILayout.EndScrollView();            
+            GUILayout.EndScrollView();
          }
 
-         public void SetSummaryForVessel(ProtoVessel vessel, double missionEndTime = 0)
+         public void SetMissionContents(MissionSummary summary)
          {
-            Summaries.Clear();
-            this.vessel = vessel;
-            if (vessel == null) return;
-            Log.Detail("showing mission summary for "+vessel);
-            foreach(ProtoCrewMember kerbal in vessel.GetVesselCrew())
-            {
-               Summary summary = new Summary(kerbal);
-               Summaries.Add(summary);
-               // only real missions will count
-               if(vessel.missionTime>0)
-               {
-                  foreach (Ribbon ribbon in HallOfFame.Instance().GetRibbonsOfLatestMission(kerbal, missionEndTime))
-                  {
-                     summary.newRibbons.Add(ribbon);
-                  }
-               }
-            }
+            Log.Info("mission summary for "+summary.Count()+" kerbals");
+            this.missionSummary = summary;
          }
       }
    }
