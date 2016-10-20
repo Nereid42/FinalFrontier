@@ -103,8 +103,8 @@ namespace Nereid
             GUILayout.EndHorizontal();
             // KERBIN TIME
             GameUtils.SetKerbinTimeEnabled( GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time", FFStyles.STYLE_TOGGLE) );
-            // MISSION SUMMARY POPUP WINDOW (not working in KSP 1.2)
-            //config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
+            // MISSION SUMMARY POPUP WINDOW 
+            config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
             // Stock Toolbar
             if(ToolbarManager.ToolbarAvailable)
             {

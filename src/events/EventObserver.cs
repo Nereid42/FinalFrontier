@@ -104,7 +104,7 @@ namespace Nereid
          private void onGUIRecoveryDialogDespawn(KSP.UI.Screens.MissionRecoveryDialog dialog)
          {
             // Mission Summary
-            if(FinalFrontier.configuration.IsMissionSummaryEnabled())
+            if (FinalFrontier.configuration.IsMissionSummaryEnabled() && missionSummary.MissionContainsCrewData())
             {
                Log.Info("showing mission summary window");
                MissionSummaryWindow summary = new MissionSummaryWindow();
@@ -412,7 +412,6 @@ namespace Nereid
                // record crew member only
                if (member.IsCrew())
                {
-                  Log.Test("OnCrewOnEva " + member.name + " is EVA: " + crew.isEVA+", situation: "+crew.situation);
                   recorder.RecordEva(member, vessel);
                }
             }

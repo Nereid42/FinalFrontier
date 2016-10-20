@@ -14,17 +14,16 @@ namespace Nereid
 
          private static readonly char[] SINGLE_SPACE_ARRAY = new char[] { ' ' };
 
-         private static void MoveFile(String from, String to)
+         public static bool CheckInstallationPath()
          {
-            try
+            String ROOT_PATH = Utils.GetRootPath();
+
+            if(!File.Exists(ROOT_PATH + "/GameData/Nereid/FinalFrontier/FinalFrontier.version"))
             {
-               File.Move(from, to);
-            }
-            catch
-            {
-               Log.Warning("failed to move  file '" + from + "' to '" + to + "'");
+               return false;
             }
 
+            return true;
          }
 
          public static String ToString<T>(List<T> list)
@@ -74,36 +73,6 @@ namespace Nereid
                if (body.GetName().Equals(name)) return body;
             }
             return null;
-         }
-
-         public static void FileRotate(String filename, int maxNr)
-         {
-            //
-            Log.Info("rotating file '" + filename + "' (" + maxNr + " versions)");
-            String obsolete = filename + "." + maxNr;
-            if (File.Exists(obsolete))
-            {
-               try
-               {
-                  File.Delete(obsolete);
-               }
-               catch
-               {
-                  Log.Warning("failed to delete obsolete file '" + obsolete + "'");
-               }
-            }
-
-            for (int n = maxNr - 1; n > 0; n--)
-            {
-               String oldFilename = filename + "." + n;
-               String newFilename = filename + "." + (n + 1);
-               if (File.Exists(oldFilename))
-               {
-                  MoveFile(oldFilename, newFilename);
-               }
-            }
-            //
-            MoveFile(filename, filename + ".1");
          }
 
 

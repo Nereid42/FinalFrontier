@@ -710,6 +710,7 @@ namespace Nereid
             if (current.IsSplashed) return false;
             // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
+            // just in case of no atmosphere
             if (current.atmDensity > NO_ATM) return false;
             if (current.altitude < current.MainBody.MaxAtmosphereAltitude()) return false;
             if (!current.MainBody.Equals(body)) return false;
