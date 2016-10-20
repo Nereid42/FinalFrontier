@@ -25,9 +25,15 @@ namespace Nereid
 
          protected Type GetType(String name)
          {
-            return AssemblyLoader.loadedAssemblies
-               .SelectMany(x => x.assembly.GetExportedTypes())
-               .SingleOrDefault(t => t.FullName == name);
+            Type type = null;
+				AssemblyLoader.loadedAssemblies.TypeOperation(t =>
+				{
+					if (t.FullName == name)
+					{
+						type = t;
+					}
+				});
+				return type;
          }
 
          protected bool IsTypeLoaded(String name)
