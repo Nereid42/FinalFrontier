@@ -28,12 +28,12 @@ namespace Nereid
             Type type = null;
 				AssemblyLoader.loadedAssemblies.TypeOperation(t =>
 				{
-					if (t.FullName == name)
-					{
-						type = t;
-					}
-				});
-				return type;
+				   if (t.FullName == name)
+				   {
+				      type = t;
+				   }
+		      });
+			   return type;
          }
 
          protected bool IsTypeLoaded(String name)
