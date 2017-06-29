@@ -551,6 +551,15 @@ namespace Nereid
             // Achievement missionAbort = new MissionAbortedAchievement(55);
             // AddRibbon(new Ribbon(_RP+"MissionAborted", missionAbort));
 
+            // Low Gravity Landing
+            Ribbon lowgravlanding10 = new Ribbon(_RP + "LowGravityLanding10", new LowGravityLandingAchievement(10, 570));
+            Ribbon lowgravlanding5 = new Ribbon(_RP + "LowGravityLanding5", new LowGravityLandingAchievement(5, 571), lowgravlanding10);
+            Ribbon lowgravlanding1 = new Ribbon(_RP + "LowGravityLanding1", new LowGravityLandingAchievement(1, 572), lowgravlanding5);
+            AddRibbon(lowgravlanding10);
+            AddRibbon(lowgravlanding5);
+            AddRibbon(lowgravlanding1);
+
+
             // special ribbons for direct award
             //
             // Grand Tour

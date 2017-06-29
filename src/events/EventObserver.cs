@@ -150,6 +150,14 @@ namespace Nereid
          {
             Log.Detail("EventObserver::OnScienceReceived: " + science + ", flag=" + flag);
             if (vessel == null) return;
+
+            // no science, no record
+            if (science <= 0)
+            {
+               if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("science ignored");
+               return;
+            }
+
             HallOfFame halloffame = HallOfFame.Instance();
             //
             halloffame.BeginArwardOfRibbons();
