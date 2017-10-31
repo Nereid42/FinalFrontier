@@ -11,7 +11,7 @@ namespace Nereid
 
          private Vector2 scrollPosition = Vector2.zero;
 
-         public static int WIDTH = 520;
+         public static int WIDTH = 555;
          public static int HEIGHT = 600;
 
          private String search = "";
