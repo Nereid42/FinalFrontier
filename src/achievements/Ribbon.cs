@@ -17,7 +17,7 @@ namespace Nereid
          private readonly Ribbon supersede;
 
          // ribbon enabled?
-         private bool enabled = true;
+         public bool enabled = true;
 
          public Ribbon(String imagePath, Achievement achievement, Ribbon supersede = null)
          {
@@ -34,11 +34,6 @@ namespace Nereid
                Log.Warning("ribbon "+achievement.GetName()+" disabled");
                enabled = false;
             }
-         }
-
-         public bool IsEnabled()
-         {
-            return enabled;
          }
 
          public int GetWidth()

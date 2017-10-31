@@ -35,6 +35,9 @@ namespace Nereid
          private Dictionary<GameScenes, HallOfFameBrowser.HallOfFameFilter> hallOfFameFilter = new Dictionary<GameScenes, HallOfFameBrowser.HallOfFameFilter>();
          private Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter> hallOfFameSorter = new Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter>();
 
+         // ribbon states
+         private Dictionary<String, bool> ribbonStates = new Dictionary<String, bool>();
+
          // configurable window titles
          private String hallOfFameWindowTitle = "Final Frontier Hall of Fame";
          private String decorationBoardWindowTitle = "Kerbal Decoration Board";
@@ -116,6 +119,38 @@ namespace Nereid
             if (sorter != null) return sorter;
             hallOfFameSorter[scene] = new HallOfFameBrowser.HallOfFameSorter(scene);
             return hallOfFameSorter[scene];
+         }
+
+         public bool GetRibbonState(String code)
+         {
+            try
+            {
+               return ribbonStates[code];
+            }
+            catch
+            {
+               return autoExpandEnabled;
+            }
+         }
+
+         public void SetRibbonState(String code, bool enabled)
+         {
+            ribbonStates[code] = enabled;
+            Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
+            if(ribbon != null)
+            {
+               ribbon.enabled = enabled;
+            }
+         }
+
+         public void EnableAllRibbons()
+         {
+            // clear all states (Default is enabled)
+            ribbonStates.Clear();
+            foreach(Ribbon ribbon in RibbonPool.Instance())
+            {
+               ribbon.enabled = true;
+            }
          }
 
          public void ResetWindowPositions()
@@ -322,6 +357,35 @@ namespace Nereid
             }
          }
 
+         private void writeRibbonStates(BinaryWriter writer)
+         {
+
+            Log.Detail("writing ribbon states (" + ribbonStates.Count + " ribbons)");
+
+            writer.Write((Int16)ribbonStates.Count);
+            foreach(String code in ribbonStates.Keys)
+            {
+               bool enabled = ribbonStates[code];
+               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("writing ribbon states: ribbon '" + code + "' is " + (enabled ? "enabled" : "disabled"));
+               writer.Write(code);
+               writer.Write(enabled);
+            }
+         }
+
+         private void readRibbonStates(BinaryReader reader)
+         {
+            int cnt = reader.ReadInt16();
+
+            Log.Detail("reading ribbon states ("+cnt+" ribbons)");
+
+            for (int i=0; i<cnt; i++)
+            {
+               String code = reader.ReadString();
+               bool enabled = reader.ReadBoolean();
+               ribbonStates[code] = enabled;
+            }
+         }
+
          public void Save()
          {
             String filename = CONFIG_BASE_FOLDER + FILE_NAME;
@@ -380,6 +444,9 @@ namespace Nereid
                   //
                   // hotkey
                   writer.Write((UInt16)hotkey);
+                  //
+                  // ribbon states (enabled/disabled)
+                  writeRibbonStates(writer);
                }
             }
             catch
@@ -399,6 +466,7 @@ namespace Nereid
                   using (BinaryReader reader = new BinaryReader(File.OpenRead(filename)))
                   {
                      logLevel = (Log.LEVEL) reader.ReadInt16();
+                     Log.SetLevel(logLevel);
                      Log.Info("log level loaded: "+logLevel);
                      customRibbonAtSpaceCenterEnabled = reader.ReadBoolean();
                      // File Version
@@ -456,6 +524,9 @@ namespace Nereid
                      //
                      // hotkey
                      hotkey = (KeyCode)reader.ReadInt16();
+                     //
+                     // ribbon states (enabled/disabled)
+                     readRibbonStates(reader);
                   }
                }
                else

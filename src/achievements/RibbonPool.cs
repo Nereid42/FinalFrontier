@@ -83,7 +83,7 @@ namespace Nereid
 
          private Ribbon AddRibbon(Ribbon ribbon)
          {
-            if(ribbon.IsEnabled())
+            if(ribbon.enabled)
             {
                Add(ribbon);
             }
@@ -96,7 +96,7 @@ namespace Nereid
 
          private void AddCustomRibbon(int index, Ribbon ribbon)
          {
-            if (ribbon.IsEnabled())
+            if (ribbon.enabled)
             {
                customRibbons.Add(ribbon);
                customMap.Add(index, ribbon);
@@ -170,7 +170,7 @@ namespace Nereid
                         AddRibbon(landingRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Landing", landing, first ? landingRibbon : soiRibbon));
                         AddRibbon(evagroundRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "EvaGround", evaground, first ? evagroundRibbon : landingRibbon));
                         AddRibbon(flagRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "PlantFlag", flag, first ? flagRibbon : evagroundRibbon));
-                        AddRibbon(roverRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Rover", rover, first ? roverRibbon ));
+                        AddRibbon(roverRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Rover", rover, roverRibbon ));
                      }
                   }
                   // some achievements are impossible without atmosphere
@@ -737,6 +737,17 @@ namespace Nereid
             }
          }
 
+         private void SetRibbonStates()
+         {
+            Configuration config = FinalFrontier.configuration;
+
+            foreach(Ribbon ribbon in this)
+            {
+               String code = ribbon.GetCode();
+               ribbon.enabled = config.GetRibbonState(code);
+            }
+         }
+
          private void OnGameStateCreated(Game game)
          {
             // we won't load ribbons twice
@@ -744,6 +755,8 @@ namespace Nereid
             // create ribbons
             CreateRibbons();
             CreateCustomRibbons();
+            // set state of ribbons from configuration
+            SetRibbonStates();
             //
             Log.Detail("ribbon pool is ready");
             foreach(Callback callback in OnRibbonPoolReady)

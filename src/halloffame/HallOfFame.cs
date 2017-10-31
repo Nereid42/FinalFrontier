@@ -358,8 +358,17 @@ namespace Nereid
 
          public void Record(ProtoCrewMember kerbal, Ribbon ribbon)
          {
+            // no ribbons for tourists
             if (!CheckKerbalType(kerbal)) return;
+            // ribbon disabled?
+            if (!ribbon.enabled)
+            {
+               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("ribbon " + ribbon.GetName()+" is disabled and not recorded");
+               return;
+            }
+
             if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("Record ribbon " + ribbon.GetName());
+
             HallOfFameEntry entry = GetEntry(kerbal);
             // entry==null should never happen, but to analyze a bug in conjunction with other mods, we do a check
             if(entry==null)
