@@ -124,7 +124,7 @@ namespace Nereid
                String BODY_RIBBON_PATH = mapper.GetRibbonPath(body, _RP)+bodyName;
                Log.Info("ribbon path for " + bodyName + " is " + BODY_RIBBON_PATH);
 
-               Log.Detail("creating ribbons for " + bodyName + ", base prestige is " + basePrestige + "type is "+body.RevealType());
+               Log.Detail("creating ribbons for " + bodyName + ", base prestige is " + basePrestige + ", type is "+body.RevealType());
 
                Achievement soi = new SphereOfInfluenceAchievement(body, basePrestige);
                Ribbon soiRibbon = new Ribbon(BODY_RIBBON_PATH + "/SphereOfInfluence", soi);
