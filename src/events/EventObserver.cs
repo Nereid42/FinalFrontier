@@ -88,8 +88,7 @@ namespace Nereid
             //
          }
 
-
-         private void OnFlyBy(Vessel vessel,CelestialBody body)
+         private void OnFlyBy(Vessel vessel, CelestialBody body)
          {
             // for later usage
          }
@@ -261,6 +260,7 @@ namespace Nereid
             // ok, now check the record
             CheckAchievementsForProgress(node);
          }
+
 
          private void OnVesselWasModified(Vessel vessel)
          {
