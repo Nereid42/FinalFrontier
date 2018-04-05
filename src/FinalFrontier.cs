@@ -50,6 +50,13 @@ namespace Nereid
             //
             // log installed plugins
             Log.Info("FAR installed: " + farAdapter.IsInstalled());
+            //
+            // masterTextureLimit should not be 1
+            if (QualitySettings.masterTextureLimit!=0)
+            {
+               Log.Warning("changing masterTextureLimit to 0");
+               QualitySettings.masterTextureLimit = 0;
+            }
 
             DontDestroyOnLoad(this);
          }

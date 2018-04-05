@@ -43,7 +43,7 @@ namespace Nereid
          public const String OLD_NODE_ROOT_NAME = "FinalFrontierHallOfFameRoot";
 
          public static readonly String ROOT_PATH = Utils.GetRootPath();
-         public static readonly String GAMEDATA_PATH = ROOT_PATH + "/GameData";
+         public static readonly String GAMEDATA_PATH = ROOT_PATH + System.IO.Path.DirectorySeparatorChar + "GameData";
 
          public const String RESOURCE_NAME_LIQUID_FUEL = "LiquidFuel";
 

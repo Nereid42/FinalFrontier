@@ -115,8 +115,8 @@ namespace Nereid
             {
                config.UseFARCalculations = GUILayout.Toggle(config.UseFARCalculations, "Use FAR calculations", FFStyles.STYLE_TOGGLE);
             }
-            // Convert Games
-            config.convertGames = GUILayout.Toggle(config.convertGames, "Convert save games", FFStyles.STYLE_TOGGLE);
+            // direct texture load
+            config.alwaysUseDirectTextureLoad = GUILayout.Toggle(config.alwaysUseDirectTextureLoad, "Allways use direct texture load (restart required)", FFStyles.STYLE_TOGGLE);
             // Log Ribbon Aawrds
             config.logRibbonAwards = GUILayout.Toggle(config.logRibbonAwards, "Log ribbon awards", FFStyles.STYLE_TOGGLE);
 

@@ -25,7 +25,7 @@ namespace Nereid
          public bool removalOfRibbonsEnabled { get; set; }
          public bool missonSummaryPopup { get; set; }
          public bool useStockToolbar { get; set; }
-         public bool convertGames { get; set; }
+         public bool alwaysUseDirectTextureLoad { get; set; }
          public bool logRibbonAwards { get; set; }
          public KeyCode hotkey { get; set; } // for use with LEFT-ALT
 
@@ -60,7 +60,7 @@ namespace Nereid
             removalOfRibbonsEnabled = false;
             missonSummaryPopup = true;
             useStockToolbar = !ToolbarManager.ToolbarAvailable;
-            convertGames = true;
+            alwaysUseDirectTextureLoad = true;
             logRibbonAwards = false;
             hotkey = Utils.GetKeyCode('F');
 
@@ -436,8 +436,8 @@ namespace Nereid
                   // reserved
                   writer.Write((Int16)0);
                   //
-                  // convert games
-                  writer.Write(convertGames);
+                  // reserved
+                  writer.Write(false);
                   //
                   // log ribbon awards
                   writer.Write(logRibbonAwards);
@@ -447,6 +447,9 @@ namespace Nereid
                   //
                   // ribbon states (enabled/disabled)
                   writeRibbonStates(writer);
+                  //
+                  // direct texture load
+                  writer.Write(alwaysUseDirectTextureLoad);
                }
             }
             catch
@@ -516,8 +519,8 @@ namespace Nereid
                      // reserved
                      reader.ReadInt16();
                      //
-                     // convert games
-                     convertGames = reader.ReadBoolean();
+                     // reserved
+                     reader.ReadBoolean();
                      //
                      // log ribbon awards
                      logRibbonAwards = reader.ReadBoolean();
@@ -527,6 +530,10 @@ namespace Nereid
                      //
                      // ribbon states (enabled/disabled)
                      readRibbonStates(reader);
+                     //
+                     // direct Texture load
+                     alwaysUseDirectTextureLoad = reader.ReadBoolean();
+
                   }
                }
                else
