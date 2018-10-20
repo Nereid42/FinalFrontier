@@ -2,7 +2,7 @@
 using UnityEngine;
 using FinalFrontierAdapter;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace Nereid
 {
@@ -672,6 +672,7 @@ namespace Nereid
          protected override void OnOpen()
          {
             Log.Info("hall of fame browser opened");
+
             base.OnOpen();
             HallOfFame.Instance().Refresh();
             if (toolbarButton != null)
