@@ -587,68 +587,68 @@ namespace Nereid
          {
             Log.Info("creating custom ribbons");
             // custom ribbons provided by nothke
-            CreateCustomRibbon(0, "Diamond", "Diamond", "The highest honor awarded for exceptional courage, unselfishness and valor");
-            CreateCustomRibbon(1, "InterSidera", "Inter Sidera", "\"Among the Stars\" - A commemorative ribbon for fallen kerbonauts");
-            CreateCustomRibbon(2, "Kerbalkind", "Kerbalkind", "Honorary retirement award for service to Kerbalkind");
+            CreateCustomRibbon(0, "Diamond");
+            CreateCustomRibbon(1, "InterSidera");
+            CreateCustomRibbon(2, "Kerbalkind");
             // --------------- 3: not working
-            CreateCustomRibbon(4, "Station", "Station", "custom station ribbon");
-            CreateCustomRibbon(5, "Spaceplane", "Spaceplane", "custom spaceplane ribbon");
-            CreateCustomRibbon(6, "CertifiedBadass", "Certified Badass", "Awarded for ludicrous, near-impossible and brave endeavor");
+            CreateCustomRibbon(4, "Station");
+            CreateCustomRibbon(5, "Spaceplane");
+            CreateCustomRibbon(6, "CertifiedBadass");
             // custom ribbons provided by SmarterThanMe
-            CreateCustomRibbon(21, "STM01", "Test Pilot", "Awarded for courage in flying in experimental craft");
-            CreateCustomRibbon(22, "STM02", "Expeditionary Command", "Awarded for being in command of a significant expedition, station or base");
-            CreateCustomRibbon(23, "STM03", "Mission Command", "Awarded for being in command of a small scale mission");
-            CreateCustomRibbon(24, "STM04", "Chief Scientist", "Awarded for being a Lead Scientist on a significant expedition, or a mission with a major scientific task", this.ServiceScientist);
-            CreateCustomRibbon(25, "STM05", "Chief Engineering", "Awarded for being the Lead Engineer on a significant expedition or mission with a major engineering task", this.ServiceEngineer);
-            CreateCustomRibbon(26, "STM06", "Space Search & Rescue", "Awarded for being involved in a search and rescue mission in space");
-            CreateCustomRibbon(27, "STM07", "Wings", "Awarded for piloting a plane in atmosphere");
-            CreateCustomRibbon(28, "STM08", "Space Wings", "Awarded for piloting a spaceplane in and out of atmosphere");
-            CreateCustomRibbon(29, "STM09", "Chief Operations", "Awarded for being the lead officer in charge of operations on a significant expedition or mission with a major piloting task or series of tasks", this.ServiceOperations);
-            CreateCustomRibbon(30, "STM10", "Arrow", ""); 
-            CreateCustomRibbon(31, "STM11", "Qualified Scientist", "Awarded for having the necessary skills and knowledge, and completing the space mission training program");
-            CreateCustomRibbon(32, "STM12", "Qualified Operations", "Awarded for having the necessary skills and knowledge, and completing the space mission training program");
-            CreateCustomRibbon(33, "STM13", "Qualified Engineering", "Awarded for having the necessary skills and knowledge, and completing the space mission training program");
-            CreateCustomRibbon(34, "STM14", "Specialist Scientist", "Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program", 31);
-            CreateCustomRibbon(35, "STM15", "Specialist Operations", "Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program", 32);
-            CreateCustomRibbon(36, "STM16", "Specialist Engineering", "Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program", 33);
-            CreateCustomRibbon(37, "STM17", "Senior Scientist", "Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program", 34);
-            CreateCustomRibbon(38, "STM18", "Senior Operations", "Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program", 35);
-            CreateCustomRibbon(39, "STM19", "Senior Engineering", "Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program", 36);
-            CreateCustomRibbon(40, "STM20", "STM20", "no description");
-            CreateCustomRibbon(41, "STM21", "STM21", "no description");
-            CreateCustomRibbon(42, "STM22", "Repair In Danger", "Awarded for courage demonstrated in engaging in repair activities in dangerous circumstances");
-            CreateCustomRibbon(43, "STM23", "Rover Specialist", "Awarded for having developed skills and expertise as a driver of a land vehicle");
-            CreateCustomRibbon(44, "STM24", "EVA Specialist", "Awarded for having developed skills and expertise in conducting and overseeing EVA activities");
-            CreateCustomRibbon(45, "STM25", "Apprentice Chef", "no description");
-            CreateCustomRibbon(46, "STM26", "Chef de Partie ", "no description", 45);
-            CreateCustomRibbon(47, "STM27", "Sous Chef", "no description", 46);
-            CreateCustomRibbon(48, "STM28", "Chef de Cuisine", "no description", 47);    
+            CreateCustomRibbon(21, "STM01");
+            CreateCustomRibbon(22, "STM02");
+            CreateCustomRibbon(23, "STM03");
+            CreateCustomRibbon(24, "STM04", this.ServiceScientist);
+            CreateCustomRibbon(25, "STM05", this.ServiceEngineer);
+            CreateCustomRibbon(26, "STM06");
+            CreateCustomRibbon(27, "STM07");
+            CreateCustomRibbon(28, "STM08");
+            CreateCustomRibbon(29, "STM09", this.ServiceOperations);
+            CreateCustomRibbon(30, "STM10"); 
+            CreateCustomRibbon(31, "STM11");
+            CreateCustomRibbon(32, "STM12");
+            CreateCustomRibbon(33, "STM13");
+            CreateCustomRibbon(34, "STM14", 31);
+            CreateCustomRibbon(35, "STM15", 32);
+            CreateCustomRibbon(36, "STM16", 33);
+            CreateCustomRibbon(37, "STM17", 34);
+            CreateCustomRibbon(38, "STM18", 35);
+            CreateCustomRibbon(39, "STM19", 36);
+            CreateCustomRibbon(40, "STM20");
+            CreateCustomRibbon(41, "STM21");
+            CreateCustomRibbon(42, "STM22");
+            CreateCustomRibbon(43, "STM23");
+            CreateCustomRibbon(44, "STM24");
+            CreateCustomRibbon(45, "STM25");
+            CreateCustomRibbon(46, "STM26", 45);
+            CreateCustomRibbon(47, "STM27", 46);
+            CreateCustomRibbon(48, "STM28", 47);    
 
             // custom ribbons provided by helldiver
-            CreateCustomRibbon(70, "Helldiver01", "Bronze Heli Pilot", "no description");
-            CreateCustomRibbon(71, "Helldiver02", "Silver Heli Pilot", "no description", 70);
-            CreateCustomRibbon(72, "Helldiver03", "Bronze S25 Mission Specialist", "no description", 71);
-            CreateCustomRibbon(73, "Helldiver04", "Silver S25 Mission Specialist", "no description", 72);
-            CreateCustomRibbon(74, "Helldiver05", "Bronze KSO Mission Specialist", "no description");
-            CreateCustomRibbon(75, "Helldiver06", "Silver KSO Mission Specialist", "no description", 74);
-            CreateCustomRibbon(76, "Helldiver07", "Bronze Shuttle Pilot", "no description");
-            CreateCustomRibbon(77, "Helldiver08", "Silver Shuttle Pilot", "no description", 76);
+            CreateCustomRibbon(70, "Helldiver01");
+            CreateCustomRibbon(71, "Helldiver02", 70);
+            CreateCustomRibbon(72, "Helldiver03", 71);
+            CreateCustomRibbon(73, "Helldiver04", 72);
+            CreateCustomRibbon(74, "Helldiver05");
+            CreateCustomRibbon(75, "Helldiver06", 74);
+            CreateCustomRibbon(76, "Helldiver07");
+            CreateCustomRibbon(77, "Helldiver08", 76);
             // custom ribbons provided by Wyrmshadow
-            CreateCustomRibbon(80, "Nation01", "United Kerbdom", "");
-            CreateCustomRibbon(81, "Nation02", "Kovjet Coprorative", "");
-            CreateCustomRibbon(82, "Nation03", "Republic of Kinesa", "");
-            CreateCustomRibbon(83, "Nation04", "The Neutral Nation", "");
-            CreateCustomRibbon(84, "Nation05", "KSA", "");
-            CreateCustomRibbon(85, "Nation06", "Kryades", "");
-            CreateCustomRibbon(86, "Nation07", "KSA United", "");
-            CreateCustomRibbon(87, "Nation08", "Kerman Empire", "");
-            CreateCustomRibbon(88, "Nation09", "Kanada", "");
-            CreateCustomRibbon(89, "Nation10", "Kitaly", "");
-            CreateCustomRibbon(90, "Nation11", "Mexika", "");
-            CreateCustomRibbon(91, "Nation12", "Brasilika", "");
-            CreateCustomRibbon(92, "Nation13", "Kapan", "");
-            CreateCustomRibbon(93, "Nation14", "Koland", "");
-            CreateCustomRibbon(94, "Nation15", "United Kerbalkind", "");
+            CreateCustomRibbon(80, "Nation01");
+            CreateCustomRibbon(81, "Nation02");
+            CreateCustomRibbon(82, "Nation03");
+            CreateCustomRibbon(83, "Nation04");
+            CreateCustomRibbon(84, "Nation05");
+            CreateCustomRibbon(85, "Nation06");
+            CreateCustomRibbon(86, "Nation07");
+            CreateCustomRibbon(87, "Nation08");
+            CreateCustomRibbon(88, "Nation09");
+            CreateCustomRibbon(89, "Nation10");
+            CreateCustomRibbon(90, "Nation11");
+            CreateCustomRibbon(91, "Nation12");
+            CreateCustomRibbon(92, "Nation13");
+            CreateCustomRibbon(93, "Nation14");
+            CreateCustomRibbon(94, "Nation15");
 
             // generic custom ribbons
             int CUSTOM_BASE_INDEX = 100;
@@ -670,21 +670,24 @@ namespace Nereid
             Log.Info("custom ribbons created (" + customRibbons.Count + " custom ribbons)");
          }
 
-         public Ribbon CreateCustomRibbon(int index, String filename, String name, String text, Ribbon supersede = null)
+         public Ribbon CreateCustomRibbon(int index, String filename, Ribbon supersede = null)
          {
-            Log.Detail("creating custom ribbon " + name + " (#" + index + ")");
+            Log.Detail("creating custom ribbon index " + index);
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
-            achievement.SetName(name);
-            achievement.SetDescription(text);
+
+            String translatedName = FinalFrontier.translation.Get("RIBBON_NAME_"+achievement.GetCode());
+            achievement.SetName(translatedName);
+            String translatedText = FinalFrontier.translation.Get("RIBBON_DESC_" + achievement.GetCode());
+            achievement.SetDescription(translatedText);
             AddCustomRibbon(index, ribbon);
             return ribbon;
          }
 
 
-         public Ribbon CreateCustomRibbon(int index, String filename, String name, String text, int supersedeNr )
+         public Ribbon CreateCustomRibbon(int index, String filename, int supersedeNr )
          {
-            Log.Detail("creating custom ribbon " + name + " (#" + index + ")");
+            Log.Detail("creating custom ribbon " + index);
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
             Ribbon supersede;
             try
@@ -696,8 +699,10 @@ namespace Nereid
                supersede = null;
             }
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
-            achievement.SetName(name);
-            achievement.SetDescription(text);
+            String translatedName = FinalFrontier.translation.Get("RIBBON_NAME_" + achievement.GetCode());
+            achievement.SetName(translatedName);
+            String translatedText = FinalFrontier.translation.Get("RIBBON_DESC_" + achievement.GetCode());
+            achievement.SetDescription(translatedText);
             AddCustomRibbon(index, ribbon);
             return ribbon;
          }
@@ -759,7 +764,7 @@ namespace Nereid
             SetRibbonStates();
             //
             Log.Detail("ribbon pool is ready");
-            foreach(Callback callback in OnRibbonPoolReady)
+            foreach (Callback callback in OnRibbonPoolReady)
             {
                callback();
             }

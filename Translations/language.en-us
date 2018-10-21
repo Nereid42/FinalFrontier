@@ -1,0 +1,155 @@
+TEXT_RIBBON > Ribbon
+RIBBON_NAME_X0 > Diamond Ribbon
+RIBBON_DESC_X0 > The highest honor awarded for exceptional courage, unselfishness and valor
+RIBBON_NAME_X1 > Inter Sidera Ribbon
+RIBBON_DESC_X1 > "Among the Stars" - A commemorative ribbon for fallen kerbonauts
+RIBBON_NAME_X2 > Kerbalkind Ribbon
+RIBBON_DESC_X2 > Honorary retirement award for service to Kerbalkind
+RIBBON_NAME_X4 > Station Ribbon
+RIBBON_DESC_X4 > custom station ribbon
+RIBBON_NAME_X5 > Spaceplane Ribbon
+RIBBON_DESC_X5 > custom spaceplane ribbon
+RIBBON_NAME_X6 > Certified Badass Ribbon
+RIBBON_DESC_X6 > Awarded for ludicrous, near-impossible and brave endeavor
+RIBBON_NAME_X21 > Test Pilot Ribbon
+RIBBON_DESC_X21 > Awarded for courage in flying in experimental craft
+RIBBON_NAME_X22 > Expeditionary Command Ribbon
+RIBBON_DESC_X22 > Awarded for being in command of a significant expedition, station or base
+RIBBON_NAME_X23 > Mission Command Ribbon
+RIBBON_DESC_X23 > Awarded for being in command of a small scale mission
+RIBBON_NAME_X24 > Chief Scientist Ribbon
+RIBBON_DESC_X24 > Awarded for being a Lead Scientist on a significant expedition, or a mission with a major scientific task
+RIBBON_NAME_X25 > Chief Engineering Ribbon
+RIBBON_DESC_X25 > Awarded for being the Lead Engineer on a significant expedition or mission with a major engineering task
+RIBBON_NAME_X26 > Space Search & Rescue Ribbon
+RIBBON_DESC_X26 > Awarded for being involved in a search and rescue mission in space
+RIBBON_NAME_X27 > Wings Ribbon
+RIBBON_DESC_X27 > Awarded for piloting a plane in atmosphere
+RIBBON_NAME_X28 > Space Wings Ribbon
+RIBBON_DESC_X28 > Awarded for piloting a spaceplane in and out of atmosphere
+RIBBON_NAME_X29 > Chief Operations Ribbon
+RIBBON_DESC_X29 > Awarded for being the lead officer in charge of operations on a significant expedition or mission with a major piloting task or series of tasks
+RIBBON_NAME_X30 > Arrow Ribbon
+RIBBON_DESC_X30 > 
+RIBBON_NAME_X31 > Qualified Scientist Ribbon
+RIBBON_DESC_X31 > Awarded for having the necessary skills and knowledge, and completing the space mission training program
+RIBBON_NAME_X32 > Qualified Operations Ribbon
+RIBBON_DESC_X32 > Awarded for having the necessary skills and knowledge, and completing the space mission training program
+RIBBON_NAME_X33 > Qualified Engineering Ribbon
+RIBBON_DESC_X33 > Awarded for having the necessary skills and knowledge, and completing the space mission training program
+RIBBON_NAME_X34 > Specialist Scientist Ribbon
+RIBBON_DESC_X34 > Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X35 > Specialist Operations Ribbon
+RIBBON_DESC_X35 > Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X36 > Specialist Engineering Ribbon
+RIBBON_DESC_X36 > Awarded for developing and demonstrating specialist aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X37 > Senior Scientist Ribbon
+RIBBON_DESC_X37 > Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X38 > Senior Operations Ribbon
+RIBBON_DESC_X38 > Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X39 > Senior Engineering Ribbon
+RIBBON_DESC_X39 > Awarded for leadership, significant experience and outstanding technical aptitude in field activities for the Kerbal Space Program
+RIBBON_NAME_X40 > STM20 Ribbon
+RIBBON_DESC_X40 > no description
+RIBBON_NAME_X41 > STM21 Ribbon
+RIBBON_DESC_X41 > no description
+RIBBON_NAME_X42 > Repair In Danger Ribbon
+RIBBON_DESC_X42 > Awarded for courage demonstrated in engaging in repair activities in dangerous circumstances
+RIBBON_NAME_X43 > Rover Specialist Ribbon
+RIBBON_DESC_X43 > Awarded for having developed skills and expertise as a driver of a land vehicle
+RIBBON_NAME_X44 > EVA Specialist Ribbon
+RIBBON_DESC_X44 > Awarded for having developed skills and expertise in conducting and overseeing EVA activities
+RIBBON_NAME_X45 > Apprentice Chef Ribbon
+RIBBON_DESC_X45 > no description
+RIBBON_NAME_X46 > Chef de Partie  Ribbon
+RIBBON_DESC_X46 > no description
+RIBBON_NAME_X47 > Sous Chef Ribbon
+RIBBON_DESC_X47 > no description
+RIBBON_NAME_X48 > Chef de Cuisine Ribbon
+RIBBON_DESC_X48 > no description
+RIBBON_NAME_X70 > Bronze Heli Pilot Ribbon
+RIBBON_DESC_X70 > no description
+RIBBON_NAME_X71 > Silver Heli Pilot Ribbon
+RIBBON_DESC_X71 > no description
+RIBBON_NAME_X72 > Bronze S25 Mission Specialist Ribbon
+RIBBON_DESC_X72 > no description
+RIBBON_NAME_X73 > Silver S25 Mission Specialist Ribbon
+RIBBON_DESC_X73 > no description
+RIBBON_NAME_X74 > Bronze KSO Mission Specialist Ribbon
+RIBBON_DESC_X74 > no description
+RIBBON_NAME_X75 > Silver KSO Mission Specialist Ribbon
+RIBBON_DESC_X75 > no description
+RIBBON_NAME_X76 > Bronze Shuttle Pilot Ribbon
+RIBBON_DESC_X76 > no description
+RIBBON_NAME_X77 > Silver Shuttle Pilot Ribbon
+RIBBON_DESC_X77 > no description
+RIBBON_NAME_X80 > United Kerbdom Ribbon
+RIBBON_DESC_X80 > 
+RIBBON_NAME_X81 > Kovjet Coprorative Ribbon
+RIBBON_DESC_X81 > 
+RIBBON_NAME_X82 > Republic of Kinesa Ribbon
+RIBBON_DESC_X82 > 
+RIBBON_NAME_X83 > The Neutral Nation Ribbon
+RIBBON_DESC_X83 > 
+RIBBON_NAME_X84 > KSA Ribbon
+RIBBON_DESC_X84 > 
+RIBBON_NAME_X85 > Kryades Ribbon
+RIBBON_DESC_X85 > 
+RIBBON_NAME_X86 > KSA United Ribbon
+RIBBON_DESC_X86 > 
+RIBBON_NAME_X87 > Kerman Empire Ribbon
+RIBBON_DESC_X87 > 
+RIBBON_NAME_X88 > Kanada Ribbon
+RIBBON_DESC_X88 > 
+RIBBON_NAME_X89 > Kitaly Ribbon
+RIBBON_DESC_X89 > 
+RIBBON_NAME_X90 > Mexika Ribbon
+RIBBON_DESC_X90 > 
+RIBBON_NAME_X91 > Brasilika Ribbon
+RIBBON_DESC_X91 > 
+RIBBON_NAME_X92 > Kapan Ribbon
+RIBBON_DESC_X92 > 
+RIBBON_NAME_X93 > Koland Ribbon
+RIBBON_DESC_X93 > 
+RIBBON_NAME_X94 > United Kerbalkind Ribbon
+RIBBON_DESC_X94 > 
+RIBBON_NAME_X100 > 01 Custom Ribbon
+RIBBON_DESC_X100 > 01 Custom
+RIBBON_NAME_X101 > 02 Custom Ribbon
+RIBBON_DESC_X101 > 02 Custom
+RIBBON_NAME_X102 > 03 Custom Ribbon
+RIBBON_DESC_X102 > 03 Custom
+RIBBON_NAME_X103 > 04 Custom Ribbon
+RIBBON_DESC_X103 > 04 Custom
+RIBBON_NAME_X104 > 05 Custom Ribbon
+RIBBON_DESC_X104 > 05 Custom
+RIBBON_NAME_X105 > 06 Custom Ribbon
+RIBBON_DESC_X105 > 06 Custom
+RIBBON_NAME_X106 > 07 Custom Ribbon
+RIBBON_DESC_X106 > 07 Custom
+RIBBON_NAME_X107 > 08 Custom Ribbon
+RIBBON_DESC_X107 > 08 Custom
+RIBBON_NAME_X108 > 09 Custom Ribbon
+RIBBON_DESC_X108 > 09 Custom
+RIBBON_NAME_X109 > 10 Custom Ribbon
+RIBBON_DESC_X109 > 10 Custom
+RIBBON_NAME_X110 > 11 Custom Ribbon
+RIBBON_DESC_X110 > 11 Custom
+RIBBON_NAME_X111 > 12 Custom Ribbon
+RIBBON_DESC_X111 > 12 Custom
+RIBBON_NAME_X112 > 13 Custom Ribbon
+RIBBON_DESC_X112 > 13 Custom
+RIBBON_NAME_X113 > 14 Custom Ribbon
+RIBBON_DESC_X113 > 14 Custom
+RIBBON_NAME_X114 > 15 Custom Ribbon
+RIBBON_DESC_X114 > 15 Custom
+RIBBON_NAME_X115 > 16 Custom Ribbon
+RIBBON_DESC_X115 > 16 Custom
+RIBBON_NAME_X116 > 17 Custom Ribbon
+RIBBON_DESC_X116 > 17 Custom
+RIBBON_NAME_X117 > 18 Custom Ribbon
+RIBBON_DESC_X117 > 18 Custom
+RIBBON_NAME_X118 > 19 Custom Ribbon
+RIBBON_DESC_X118 > 19 Custom
+RIBBON_NAME_X119 > 20 Custom Ribbon
+RIBBON_DESC_X119 > 20 Custom

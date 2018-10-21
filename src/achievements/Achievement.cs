@@ -167,7 +167,6 @@ namespace Nereid
             if (first && !right.first) return -1;
             return 0;
          }
-
       }
 
       abstract class NumericAchievement : Achievement

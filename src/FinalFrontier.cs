@@ -20,6 +20,8 @@ namespace Nereid
 
          public static readonly FARAdapter farAdapter = new FARAdapter();
 
+         public static readonly Translation translation = new Translation(GameSettings.LANGUAGE);
+
          private volatile IButton toolbarButton;
          private volatile HallOfFameBrowser browser;
 
