@@ -620,6 +620,7 @@ namespace Nereid
          public void CreateFromLogbook(List<LogbookEntry> book)
          {
             Log.Detail("creating hall of fame from logbook");
+
             Clear();
 
             lock (this)
@@ -658,11 +659,15 @@ namespace Nereid
                      if (action != null)
                      {
                         action.DoAction(log.UniversalTime, entry, log.Data);
-                        addLogbookEntry(log, entry);
+                        // science actions get summarised at the end of the loading procedure
+                        if( ! ( FinalFrontier.configuration.squeezeSciencePoints && action is ScienceAction ) )
+                        {
+                           addLogbookEntry(log, entry);
+                        }
                      }
                      else
                      {
-                        // those codes have change
+                        // those codes have changed
                         switch (log.Code)
                         {
                            case "CO": log.Code = "CO:Sun"; break;
@@ -704,6 +709,21 @@ namespace Nereid
 
                } // end for
             }
+
+            if(FinalFrontier.configuration.squeezeSciencePoints)
+            {
+               foreach (HallOfFameEntry entry in entries)
+               {
+                  String name = entry.GetName();
+                  Log.Info("summarizing science points for " + name);
+                  String data = entry.Research.ToString();
+                  double time = HighLogic.CurrentGame.UniversalTime;
+
+                  LogbookEntry log = new LogbookEntry(time, Action.CODE_SCIENCE, name, data);
+                  addLogbookEntry(log, entry);
+               }
+            }
+
             Log.Detail("new hall of fame created");
          }
 
