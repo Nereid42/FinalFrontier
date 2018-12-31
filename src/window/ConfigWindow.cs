@@ -115,6 +115,8 @@ namespace Nereid
             {
                config.UseFARCalculations = GUILayout.Toggle(config.UseFARCalculations, "Use FAR calculations", FFStyles.STYLE_TOGGLE);
             }
+            // squeeze science points (just a single logbook entry per kerbal)
+            config.squeezeSciencePoints = GUILayout.Toggle(config.squeezeSciencePoints, "Squeeze science points", FFStyles.STYLE_TOGGLE);
             // direct texture load
             config.alwaysUseDirectTextureLoad = GUILayout.Toggle(config.alwaysUseDirectTextureLoad, "Allways use direct texture load (restart required)", FFStyles.STYLE_TOGGLE);
             // Log Ribbon Aawrds

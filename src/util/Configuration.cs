@@ -28,6 +28,7 @@ namespace Nereid
          public bool alwaysUseDirectTextureLoad { get; set; }
          public bool logRibbonAwards { get; set; }
          public KeyCode hotkey { get; set; } // for use with LEFT-ALT
+         public bool squeezeSciencePoints { get; set; }
 
          private readonly Pair<int, int> ORIGIN = new Pair<int, int>(0, 0);
          private Dictionary<int, Pair<int, int>> windowPositions = new Dictionary<int, Pair<int, int>>();
@@ -63,6 +64,7 @@ namespace Nereid
             alwaysUseDirectTextureLoad = true;
             logRibbonAwards = false;
             hotkey = Utils.GetKeyCode('F');
+            squeezeSciencePoints = true;
 
             // 
             // Default filter/sorts
@@ -450,6 +452,9 @@ namespace Nereid
                   //
                   // direct texture load
                   writer.Write(alwaysUseDirectTextureLoad);
+                  //
+                  // summarize science points
+                  writer.Write(squeezeSciencePoints);
                }
             }
             catch
@@ -533,7 +538,9 @@ namespace Nereid
                      //
                      // direct Texture load
                      alwaysUseDirectTextureLoad = reader.ReadBoolean();
-
+                     //
+                     // summarize science points
+                     squeezeSciencePoints = reader.ReadBoolean();
                   }
                }
                else

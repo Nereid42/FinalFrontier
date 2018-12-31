@@ -82,6 +82,7 @@ namespace Nereid
                   String code = childNode.GetValue(Constants.CONFIGNODE_KEY_CODE);
                   String name = childNode.GetValue(Constants.CONFIGNODE_KEY_NAME);
                   String data = childNode.GetValue(Constants.CONFIGNODE_KEY_DATA);
+
                   try
                   {
                      double time = Double.Parse(sTime);
