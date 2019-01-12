@@ -451,6 +451,12 @@ namespace Nereid
 
             Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime + ", game status: " + game.Status + ", scene " + HighLogic.LoadedScene);
 
+            if (HighLogic.LoadedScene == GameScenes.EDITOR)
+            {
+               Log.Info("reverting ribbons");
+               HallOfFame.Instance().ReloadFromLogbook();
+            }
+
             // we have to detect a closed orbit again...
             this.orbitClosed = false;
 
