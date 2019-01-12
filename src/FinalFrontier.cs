@@ -20,7 +20,8 @@ namespace Nereid
 
          public static readonly FARAdapter farAdapter = new FARAdapter();
 
-         public static readonly Translation translation = new Translation(GameSettings.LANGUAGE);
+         public static readonly Translator translator = Translator.CreateTranslator(KSP.Localization.Localizer.CurrentLanguage);
+
 
          private volatile IButton toolbarButton;
          private volatile HallOfFameBrowser browser;

@@ -367,7 +367,7 @@ namespace Nereid
 
          private void OnGameSceneLoadRequested(GameScenes scene)
          {
-            Log.Info("EventObserver:: OnGameSceneLoadRequested: "+scene+" current="+HighLogic.LoadedScene);
+            Log.Info("EventObserver:: OnGameSceneLoadRequested: "+scene+" current="+HighLogic.LoadedScene+" at "+Planetarium.GetUniversalTime());
             this.previousVesselState = null;
          }
 
@@ -431,7 +431,7 @@ namespace Nereid
 
          private void OnGameStateCreated(Game game)
          {
-            Log.Detail("OnGameStateCreated ");
+            Log.Detail("OnGameStateCreated");
             //
             // do not load a game while in MAIN-MENU or SETTINGS
             // TODO: check if STILL NECESSARY????
@@ -450,6 +450,12 @@ namespace Nereid
             }
 
             Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime + ", game status: " + game.Status + ", scene " + HighLogic.LoadedScene);
+
+            if(HighLogic.LoadedScene== GameScenes.EDITOR)
+            {
+               Log.Info("reverting ribbons");
+               HallOfFame.Instance().ReloadFromLogbook();
+            }
 
             // we have to detect a closed orbit again...
             this.orbitClosed = false;

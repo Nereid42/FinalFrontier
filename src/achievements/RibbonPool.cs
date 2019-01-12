@@ -580,6 +580,10 @@ namespace Nereid
             // just for debugging
             //Persistence.WriteSupersedeChain(this);
 
+            // to write names and descriptions
+            // TODO: REMOVE
+            Persistence.WriteRibbonPoolText(this);
+
             Log.Info("ribbon pool created");
          }
 
@@ -676,9 +680,9 @@ namespace Nereid
             CustomAchievement achievement = new CustomAchievement(index, -1000 + index);
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
 
-            String translatedName = FinalFrontier.translation.Get("RIBBON_NAME_"+achievement.GetCode());
+            String translatedName = FinalFrontier.translator.Get("RN_"+achievement.GetCode());
             achievement.SetName(translatedName);
-            String translatedText = FinalFrontier.translation.Get("RIBBON_DESC_" + achievement.GetCode());
+            String translatedText = FinalFrontier.translator.Get("RD_" + achievement.GetCode());
             achievement.SetDescription(translatedText);
             AddCustomRibbon(index, ribbon);
             return ribbon;
@@ -699,9 +703,9 @@ namespace Nereid
                supersede = null;
             }
             Ribbon ribbon = new Ribbon(_RP+filename, achievement, supersede);
-            String translatedName = FinalFrontier.translation.Get("RIBBON_NAME_" + achievement.GetCode());
+            String translatedName = FinalFrontier.translator.Get("RIBBON_NAME_" + achievement.GetCode());
             achievement.SetName(translatedName);
-            String translatedText = FinalFrontier.translation.Get("RIBBON_DESC_" + achievement.GetCode());
+            String translatedText = FinalFrontier.translator.Get("RIBBON_DESC_" + achievement.GetCode());
             achievement.SetDescription(translatedText);
             AddCustomRibbon(index, ribbon);
             return ribbon;

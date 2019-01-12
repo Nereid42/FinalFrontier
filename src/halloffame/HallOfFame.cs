@@ -520,6 +520,14 @@ namespace Nereid
             Sort();
          }
 
+         public void ReloadFromLogbook()
+         {
+            // create copy of logbook
+            List<LogbookEntry> copy = new List<LogbookEntry>(logbook);
+            // reload
+            CreateFromLogbook(copy);
+         }
+
          public void Refresh()
          {
             Log.Detail("refreshing hall of fame");
@@ -623,6 +631,8 @@ namespace Nereid
 
             Clear();
 
+            double time = HighLogic.CurrentGame.UniversalTime;
+
             lock (this)
             {
                if (book.Count == 0)
@@ -638,6 +648,13 @@ namespace Nereid
                foreach (LogbookEntry log in book)
                {
                   if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("processing logbook entry " + log.UniversalTime + ": " + log.Code + " " + log.Name);
+
+                  if(log.UniversalTime > time)
+                  {
+                     Log.Detail("logbook entry skipped, because of time constraint: "+ log.UniversalTime +" > " + time);
+                     continue;
+                  }
+
                   try
                   {
                      // this is a custom ribbon entry
@@ -717,7 +734,6 @@ namespace Nereid
                   String name = entry.GetName();
                   Log.Info("summarizing science points for " + name);
                   String data = entry.Research.ToString();
-                  double time = HighLogic.CurrentGame.UniversalTime;
 
                   LogbookEntry log = new LogbookEntry(time, Action.CODE_SCIENCE, name, data);
                   addLogbookEntry(log, entry);

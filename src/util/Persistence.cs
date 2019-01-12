@@ -142,6 +142,43 @@ namespace Nereid
                file.Close();
             }
          }
+
+         public static void WriteRibbonPoolText(Pool<Ribbon> ribbons)
+         {
+            StreamWriter file = File.CreateText(ROOT_PATH + "/GameData/Nereid/FinalFrontier/ribbons.txt");
+            List<Ribbon> sorted = new List<Ribbon>(ribbons);
+            sorted.Sort(delegate (Ribbon left, Ribbon right)
+            {
+               return left.GetCode().CompareTo(right.GetCode());
+            });
+            Log.Test("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            try
+            {
+               HashSet<String> written = new HashSet<string>();
+               foreach (Ribbon ribbon in sorted)
+               {
+                  String code = ribbon.GetCode().PadRight(20);
+                  String name = ribbon.GetName();
+                  Log.Test("creating localisation for ribbon "+code+" : "+name);
+                  string description = ribbon.GetDescription();
+                  int p = code.IndexOf(':');
+                  String id = p>0?code.Substring(0, p):code;
+
+                  if(!written.Contains(id))
+                  {
+                     written.Add(id);
+                     file.WriteLine("RIBBON_NAME_" + id + " > " + name);
+                     file.WriteLine("RIBBON_DESC_" + id + " > " + description);
+                  }
+
+               }
+            }
+            finally
+            {
+               file.Close();
+            }
+
+         }
       }
    }
 }

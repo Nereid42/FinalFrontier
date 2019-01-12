@@ -154,15 +154,16 @@ RD_X118 > 19 Custom
 RN_X119 > 20 Custom Ribbon
 RD_X119 > 20 Custom
 #
-RN_DANGEROUS_EVA_0  > Dangerous EVA
-RD_DANGEROUS_EVA_0  > Awarded for executing EVA while not in a stable orbit
-RN_SPLASHDOWN_0     > Splashdown
-RD_SPLASHDOWN_0     > Awarded for a splashdown of a vessel in water
-RN_FAST_ORBIT_0     > Fast Orbit
-RD_FAST_ORBIT_0     > Awarded for less than $ seconds into orbit
-RN_MISSION_TIME_0     > Mission Time
-RD_MISSION_TIME_0     > Awarded for more than $ days spent in missions
-RN_ENDURACNE_0     > Endurance
-RD_ENDURACNE_0     > Awarded for more than $ days spent in a single mission and returning safely
-RN_EVA_ENDURACNE_0     > EVA Endurance
-RD_EVA_ENDURACNE_0     > Awarded for continuously spending $ in EVA
+RN_DANGEROUS_EVA_0  > Gefählicher EVA
+RD_DANGEROUS_EVA_0  > Verliehen nach Ausführung eines EVA außerhalb eines satbilen Orbits
+RN_SPLASHDOWN_0   > Wasserung
+RD_SPLASHDOWN_0   > Verliehen für die Wasserung eines Fahrzeugs
+RN_FAST_ORBIT_0  > Schneller Orbit
+RD_FAST_ORBIT_0  > Verliehen für das Erreichen eines Orbits in weniger als $ Sekunden
+RN_MISSION_TIME_0     > Missionszeit
+RD_MISSION_TIME_0     > Verliehen für mehr als $ Tage Missionszeit 
+RN_ENDURACNE_0     > Ausdauer
+RD_ENDURACNE_0     > Verliehen für mehr als $ Tage in einer einzelnen Mission nach sicherer Rückkehr
+RN_EVA_ENDURACNE_0     > EVA Ausdauer
+RD_EVA_ENDURACNE_0     > Verliehen für mehr als $ Tage in EVA
+

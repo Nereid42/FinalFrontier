@@ -75,11 +75,12 @@
     <Compile Include="src\halloffame\LogBookEntry.cs" />
     <Compile Include="src\inspecteurs\StateInspector.cs" />
     <Compile Include="src\inspecteurs\VesselObserver.cs" />
-    <Compile Include="src\translation\Translation.cs" />
+    <Compile Include="src\translation\TranslationdKeys.cs" />
     <Compile Include="src\util\Adapter.cs" />
     <Compile Include="src\util\CelestialBodyInfo.cs" />
     <Compile Include="src\util\CelestialBodyMapper.cs" />
     <Compile Include="src\translation\Translator.cs" />
+    <Compile Include="src\util\Permutation.cs" />
     <Compile Include="src\util\Configuration.cs" />
     <Compile Include="src\util\Constants.cs" />
     <Compile Include="src\util\Extensions.cs" />

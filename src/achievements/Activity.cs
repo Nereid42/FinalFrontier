@@ -12,12 +12,14 @@ namespace Nereid
          private static ActivityPool ACTIVITY_POOL = ActivityPool.Instance();
 
          private readonly String code;
+         protected readonly String translationId;
          private String name;
 
-         public Activity(String code, String name)
+         public Activity(String code, String translationId)
          {
             this.code = code;
-            this.name = name;
+            this.translationId = translationId;
+            this.name = FinalFrontier.translator.Get("RN_"+ translationId);
             ACTIVITY_POOL.RegisterActivity(this);
          }
 

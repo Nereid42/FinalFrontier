@@ -92,7 +92,7 @@ namespace Nereid
 
          public String GetName()
          {
-            return achievement.GetName() + " "+FinalFrontier.translation.TEXT_RIBBON;
+            return achievement.GetName() + " "+FinalFrontier.translator.Get(TranslationdKeys.TEXT_RIBBON);
          }
 
          public override String ToString()

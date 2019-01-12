@@ -12,8 +12,8 @@ namespace Nereid
          private bool first;
          public int prestige { get; private set; }
 
-         protected Achievement(String code, String name, int prestige, bool first)
-            : base(code, (first ? "First " : "") + name)
+         protected Achievement(String code, String nameTranslationId, int prestige, bool first)
+            : base(code, nameTranslationId + (first ? "_1" : "_0"))
          {
             this.first = first;
             this.prestige = prestige;
@@ -136,7 +136,15 @@ namespace Nereid
          protected virtual bool CheckKerbalRosterStatus(ProtoCrewMember kerbal, ProtoCrewMember.RosterStatus oldState, ProtoCrewMember.RosterStatus newState) { return false; }
 
          // description of the achievement
-         public abstract String GetDescription();
+         protected virtual String GetDescriptionParam()
+         {
+            return null;
+         }
+
+         public virtual String GetDescription()
+         {
+            return FinalFrontier.translator.Get("RD_"+translationId, GetDescriptionParam());
+         }
 
          public virtual void ChangeEntryOnAward(HallOfFameEntry entry)
          {
@@ -172,10 +180,15 @@ namespace Nereid
       abstract class NumericAchievement : Achievement
       {
          protected int value;
-         public NumericAchievement(String code, String name, int value, int prestige, bool first)
-            : base(code+value, name, prestige, first)
+         public NumericAchievement(String code, String nameTranslationId, int value, int prestige, bool first)
+            : base(code+value, nameTranslationId, prestige, first)
          {
             this.value = value;
+         }
+
+         protected override String GetDescriptionParam()
+         {
+            return value.ToString();
          }
 
       }
@@ -183,7 +196,7 @@ namespace Nereid
       class DangerousEvaAchievement : Achievement
       {
          public DangerousEvaAchievement(int prestige)
-            : base("DE", "Dangerous EVA", prestige, false)
+            : base("DE", "DANGEROUS_EVA", prestige, false)
          {
          }
 
@@ -211,16 +224,12 @@ namespace Nereid
             return true;
          }
 
-         public override String GetDescription()
-         {
-            return "Awarded for executing EVA while not in a stable orbit";
-         }
       }
 
       class SplashdownAchievement : Achievement
       {
          public SplashdownAchievement(int prestige)
-            : base("W", "Splashdown", prestige, false)
+            : base("W", "SPLASHDOWN", prestige, false)
          {
          }
 
@@ -245,7 +254,7 @@ namespace Nereid
       class FastOrbitAchievement : NumericAchievement
       {
          public FastOrbitAchievement(int secondsToOrbit, int prestige)
-            : base("FO:", "Fast Orbit", secondsToOrbit, prestige, false)
+            : base("FO:", "FAST_ORBIT", secondsToOrbit, prestige, false)
          {
          }
 
@@ -269,16 +278,16 @@ namespace Nereid
             return true;
          }         
 
-         public override String GetDescription()
+         /*public override String GetDescription()
          {
             return "Awarded for less than " + value + " seconds into orbit";
-         }
+         }*/
       }
 
       class MissionTimeAchievement : NumericAchievement
       {
          public MissionTimeAchievement(int durationInSeconds, int prestige)
-            : base("MT:", "Mission Time", durationInSeconds, prestige, false)
+            : base("MT:", "MISSION_TIME", durationInSeconds, prestige, false)
          {
          }
 
@@ -287,16 +296,16 @@ namespace Nereid
             return entry.TotalMissionTime > value;
          }
 
-         public override String GetDescription()
+         protected override String GetDescriptionParam()
          {
-            return "Awarded for more than " + Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled()?" kerbin":"")+" days spent in missions";
+            return Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
          }
       }
 
       class SingleMissionTimeAchievement : NumericAchievement
       {
          public SingleMissionTimeAchievement(int durationInSeconds, int prestige)
-            : base("ME:", "Endurance", durationInSeconds, prestige, false)
+            : base("ME:", "ENDURANCE", durationInSeconds, prestige, false)
          {
          }
 
@@ -313,17 +322,16 @@ namespace Nereid
             // check the mission time...
             return vessel.missionTime > value;
          }
-
-         public override String GetDescription()
+         protected override String GetDescriptionParam()
          {
-            return "Awarded for more than " + Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "") + " days spent in a single mission and returnig safely";
+            return Utils.GameTimeInDays(value) + (GameUtils.IsKerbinTimeEnabled() ? " kerbin" : "");
          }
       }
 
       class EvaTimeAchievement : NumericAchievement
       {
          public EvaTimeAchievement(int durationInSeconds, int prestige)
-            : base("EM:", "EVA Endurance", durationInSeconds, prestige, false)
+            : base("EM:", "EVA_ENDURANCEe", durationInSeconds, prestige, false)
          {
          }
 
@@ -335,9 +343,9 @@ namespace Nereid
             return entry.LastEvaDuration >= value;
          }
 
-         public override String GetDescription()
+         protected override String GetDescriptionParam()
          {
-            return "Awarded for continuously spending " + Utils.GameTimeAsString(value) + " in EVA";
+            return Utils.GameTimeAsString(value);
          }
       }
 

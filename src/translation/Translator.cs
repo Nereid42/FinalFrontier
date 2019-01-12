@@ -17,7 +17,7 @@ namespace Nereid
 
          Dictionary<String, String> data = new Dictionary<String, String>();
 
-         public Translator(String language)
+         private Translator(String language)
          {
             this.language = language;
          }
@@ -34,13 +34,27 @@ namespace Nereid
             }
          }
 
-         public void Load()
+         public String Get(String id, params String[] replacers)
+         {
+            String translation = Get(id);
+            if (replacers == null || replacers.Length == 0) return translation;
+            String[] sections = translation.Split('$');
+            StringBuilder sb = new StringBuilder(sections[0]);
+            for(int i=0; i<sections.Length-1; i++)
+            {
+               sb.Append(replacers[i]);
+               sb.Append(sections[i+1]);
+            }
+            return sb.ToString();
+         }
+
+            public void Load()
          {
             Log.Info("loading translator for language '" + language + "'");
 
             if (Load(language)) return;
             if (Load(language.Substring(0,2))) return;
-            Log.Warning("no translation file found; using default transaltion");
+            Log.Warning("no translation file found; using default translation");
             Load("en-us");
          }
 
@@ -89,6 +103,7 @@ namespace Nereid
 
          public static Translator CreateTranslator(string language)
          {
+            Log.Info("creating Translator for " + language);
             Translator translator = new Translator(language);
             translator.Load();
             return translator;
