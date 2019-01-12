@@ -451,7 +451,7 @@ namespace Nereid
 
             Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime + ", game status: " + game.Status + ", scene " + HighLogic.LoadedScene);
 
-            if(HighLogic.LoadedScene== GameScenes.EDITOR)
+            if (HighLogic.LoadedScene == GameScenes.EDITOR)
             {
                Log.Info("reverting ribbons");
                HallOfFame.Instance().ReloadFromLogbook();
