@@ -648,14 +648,15 @@ namespace Nereid
                foreach (LogbookEntry log in book)
                {
                   if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("processing logbook entry " + log.UniversalTime + ": " + log.Code + " " + log.Name);
+
+                  if (log.UniversalTime > time)
+                  {
+                     Log.Detail("logbook entry skipped, because of time constraint: " + log.UniversalTime + " > " + time);
+                     continue;
+                  }
+
                   try
                   {
-                     if (log.UniversalTime > time)
-                     {
-                        Log.Detail("logbook entry skipped, because of time constraint: " + log.UniversalTime + " > " + time);
-                        continue;
-                     }
-
                      // this is a custom ribbon entry
                      if (log.Code.StartsWith(DataChange.DATACHANGE_CUSTOMRIBBON.GetCode()))
                      {
