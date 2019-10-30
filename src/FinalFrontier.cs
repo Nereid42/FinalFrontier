@@ -16,19 +16,22 @@ namespace Nereid
 
          public static readonly String RESOURCE_PATH =  "Nereid/FinalFrontier/Resource/";
 
-         public static readonly Configuration configuration = new Configuration();
+         // Must initialize in Awake()
+         private static Configuration _configuration = null;
+         public static Configuration configuration { get { return _configuration; } }
 
-         public static readonly FARAdapter farAdapter = new FARAdapter();
+         // Must initialize in Awake()
+         private static FARAdapter _farAdapter = null;
+         public static FARAdapter farAdapter {  get {  return _farAdapter; } }
 
          private volatile IButton toolbarButton;
          private volatile HallOfFameBrowser browser;
 
          private volatile ApplicationLauncherButton stockToolbarButton = null;
 
-         // just to make sure that all pool instances exists
-         private ActivityPool activities = ActivityPool.Instance();
-         private RibbonPool ribbons = RibbonPool.Instance();
-         private ActionPool actions = ActionPool.Instance();
+         private ActivityPool activities = null;
+         private RibbonPool ribbons = null;
+         private ActionPool actions = null;
 
          private volatile bool destroyed = false;
 
@@ -41,15 +44,18 @@ namespace Nereid
          public void Awake()
          {
             Log.Info("awakening Final Frontier");
-            configuration.Load();
-            Log.SetLevel(configuration.GetLogLevel());
-            Log.Info("log level is " + configuration.GetLogLevel());
+            _configuration = new Configuration();
+            _configuration.Load();
+            Log.SetLevel(_configuration.GetLogLevel());
+            Log.Info("log level is " + _configuration.GetLogLevel());
+
             //
             // plugin adapters
-            farAdapter.Plugin();
+            _farAdapter = new FARAdapter();
+            _farAdapter.Plugin();
             //
             // log installed plugins
-            Log.Info("FAR installed: " + farAdapter.IsInstalled());
+            Log.Info("FAR installed: " + _farAdapter.IsInstalled());
             //
             // masterTextureLimit should not be 1
             if (QualitySettings.masterTextureLimit!=0)
@@ -57,6 +63,11 @@ namespace Nereid
                Log.Warning("changing masterTextureLimit to 0");
                QualitySettings.masterTextureLimit = 0;
             }
+
+            // make sure that all pool instances exists
+            activities = ActivityPool.Instance();
+            ribbons = RibbonPool.Instance();
+            actions = ActionPool.Instance();
 
             DontDestroyOnLoad(this);
          }
