@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Copy (or merge) this file to "FinalFrontier.csproj.user, and edit the following
+       lines to suit your development environment.
+       See "Contributing.md" for more details.
+  -->
+  <PropertyGroup>
+    <!-- KSPDIR specifies the directory where your development install of KSP
+         is. The following line provides an override to the default in the
+         project file.
+    -->
+    <KSPDIR>$(SolutionDir)..\..\KSP_Dev</KSPDIR>
+  </PropertyGroup>
+  <!-- The following section exports the variable as an Environment Variable
+        so it can be used in Post-build scripts and commands. 
+  -->
+  <ItemGroup>
+    <BuildMacro Include="KSPDIR">
+      <Value>$(KSPDIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+  <!-- The following section sets up custom run commands so you can start
+       KSP directly from Visual Studio by pressing F5
+  -->
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(KSPDIR)\KSP_x64.exe</StartProgram>
+    <StartWorkingDirectory>$(KSPDIR)</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>
