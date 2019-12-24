@@ -80,7 +80,7 @@ namespace Nereid
          protected void UseLeftMouseButtonEvent()
          {
             Event e = Event.current;
-            if(e !=null && e.type != EventType.Used) 
+            if(e !=null && e.type != EventType.used) 
             {
                if ((e.type == EventType.MouseDown || e.type == EventType.MouseUp) && e.button == 0)
                {
