@@ -564,6 +564,8 @@ namespace Nereid
                         return entry.ContractsCompleted + " contracts completed";
                      case HallOfFameSorter.STATS_SORTING.SCIENCE:
                         return entry.Research.ToString("0.0") + " science points";
+                     case HallOfFameSorter.STATS_SORTING.RIBBONS:
+                        return entry.GetRibbons().Count.ToString("0") + " ribbons";
                   }
                case HallOfFameSorter.SORT_MODE.SKILL:
                   ProtoCrewMember kerbal = entry.GetKerbal();
