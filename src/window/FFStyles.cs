@@ -195,7 +195,7 @@ namespace Nereid
             STYLE_RIBBON_DESCRIPTION.padding = new RectOffset(0, 0, 0, 0);
             STYLE_RIBBON_DESCRIPTION.margin = new RectOffset(3, 3, 3, 3);
             STYLE_RIBBON_DESCRIPTION.fontSize = 12;
-            STYLE_RIBBON_AREA.fixedWidth = 430;
+            STYLE_RIBBON_AREA.fixedWidth = 505;
             STYLE_RIBBON_AREA.fixedHeight = 42;
             STYLE_RIBBON_AREA.padding = new RectOffset(0, 0, 0, 0);
             STYLE_RIBBON_AREA.clipping = TextClipping.Clip;

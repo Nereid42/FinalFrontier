@@ -103,8 +103,8 @@ namespace Nereid
             GUILayout.EndHorizontal();
             // KERBIN TIME
             GameUtils.SetKerbinTimeEnabled( GUILayout.Toggle(GameUtils.IsKerbinTimeEnabled(), "Use kerbin time", FFStyles.STYLE_TOGGLE) );
-            // MISSION SUMMARY POPUP WINDOW (not working in KSP 1.2)
-            //config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
+            // MISSION SUMMARY POPUP WINDOW 
+            config.SetMissionSummaryEnabled(GUILayout.Toggle(config.IsMissionSummaryEnabled(), "Show summary when vessel is recovered", FFStyles.STYLE_TOGGLE));
             // Stock Toolbar
             if(ToolbarManager.ToolbarAvailable)
             {
@@ -115,8 +115,10 @@ namespace Nereid
             {
                config.UseFARCalculations = GUILayout.Toggle(config.UseFARCalculations, "Use FAR calculations", FFStyles.STYLE_TOGGLE);
             }
-            // Convert Games
-            config.convertGames = GUILayout.Toggle(config.convertGames, "Convert save games", FFStyles.STYLE_TOGGLE);
+            // squeeze science points (just a single logbook entry per kerbal)
+            config.squeezeSciencePoints = GUILayout.Toggle(config.squeezeSciencePoints, "Squeeze science points", FFStyles.STYLE_TOGGLE);
+            // direct texture load
+            config.alwaysUseDirectTextureLoad = GUILayout.Toggle(config.alwaysUseDirectTextureLoad, "Allways use direct texture load (restart required)", FFStyles.STYLE_TOGGLE);
             // Log Ribbon Aawrds
             config.logRibbonAwards = GUILayout.Toggle(config.logRibbonAwards, "Log ribbon awards", FFStyles.STYLE_TOGGLE);
 

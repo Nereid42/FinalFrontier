@@ -83,7 +83,7 @@ namespace Nereid
 
          private Ribbon AddRibbon(Ribbon ribbon)
          {
-            if(ribbon.IsEnabled())
+            if(ribbon.enabled)
             {
                Add(ribbon);
             }
@@ -96,7 +96,7 @@ namespace Nereid
 
          private void AddCustomRibbon(int index, Ribbon ribbon)
          {
-            if (ribbon.IsEnabled())
+            if (ribbon.enabled)
             {
                customRibbons.Add(ribbon);
                customMap.Add(index, ribbon);
@@ -124,7 +124,7 @@ namespace Nereid
                String BODY_RIBBON_PATH = mapper.GetRibbonPath(body, _RP)+bodyName;
                Log.Info("ribbon path for " + bodyName + " is " + BODY_RIBBON_PATH);
 
-               Log.Detail("creating ribbons for " + bodyName + ", base prestige is " + basePrestige + "type is "+body.RevealType());
+               Log.Detail("creating ribbons for " + bodyName + ", base prestige is " + basePrestige + ", type is "+body.RevealType());
 
                Achievement soi = new SphereOfInfluenceAchievement(body, basePrestige);
                Ribbon soiRibbon = new Ribbon(BODY_RIBBON_PATH + "/SphereOfInfluence", soi);
@@ -170,7 +170,7 @@ namespace Nereid
                         AddRibbon(landingRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Landing", landing, first ? landingRibbon : soiRibbon));
                         AddRibbon(evagroundRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "EvaGround", evaground, first ? evagroundRibbon : landingRibbon));
                         AddRibbon(flagRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "PlantFlag", flag, first ? flagRibbon : evagroundRibbon));
-                        AddRibbon(roverRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Rover", rover, first ? roverRibbon : evagroundRibbon));
+                        AddRibbon(roverRibbon = new Ribbon(BODY_RIBBON_PATH + prefix + "Rover", rover, roverRibbon ));
                      }
                   }
                   // some achievements are impossible without atmosphere
@@ -551,6 +551,15 @@ namespace Nereid
             // Achievement missionAbort = new MissionAbortedAchievement(55);
             // AddRibbon(new Ribbon(_RP+"MissionAborted", missionAbort));
 
+            // Low Gravity Landing
+            Ribbon lowgravlanding10 = new Ribbon(_RP + "LowGravityLanding10", new LowGravityLandingAchievement(10, 570));
+            Ribbon lowgravlanding5 = new Ribbon(_RP + "LowGravityLanding5", new LowGravityLandingAchievement(5, 571), lowgravlanding10);
+            Ribbon lowgravlanding1 = new Ribbon(_RP + "LowGravityLanding1", new LowGravityLandingAchievement(1, 572), lowgravlanding5);
+            AddRibbon(lowgravlanding10);
+            AddRibbon(lowgravlanding5);
+            AddRibbon(lowgravlanding1);
+
+
             // special ribbons for direct award
             //
             // Grand Tour
@@ -728,6 +737,17 @@ namespace Nereid
             }
          }
 
+         private void SetRibbonStates()
+         {
+            Configuration config = FinalFrontier.configuration;
+
+            foreach(Ribbon ribbon in this)
+            {
+               String code = ribbon.GetCode();
+               ribbon.enabled = config.GetRibbonState(code);
+            }
+         }
+
          private void OnGameStateCreated(Game game)
          {
             // we won't load ribbons twice
@@ -735,6 +755,8 @@ namespace Nereid
             // create ribbons
             CreateRibbons();
             CreateCustomRibbons();
+            // set state of ribbons from configuration
+            SetRibbonStates();
             //
             Log.Detail("ribbon pool is ready");
             foreach(Callback callback in OnRibbonPoolReady)

@@ -21,7 +21,7 @@ namespace Nereid
          // the logbook entries of this kerbal
          private List<LogbookEntry> logbook = new List<LogbookEntry>();
          // the logbook as text
-         private StringBuilder logtext = new StringBuilder("");
+         //private StringBuilder logtext = new StringBuilder("");
 
          public int MissionsFlown { get; set; }
          public int Dockings { get; set; }
@@ -49,6 +49,8 @@ namespace Nereid
          // Jool tour fullfilled?
          public bool joolTour = false;
 
+         // Buffer for Actions
+         // TODO
 
          public HallOfFameEntry(String name)
          {
@@ -103,8 +105,8 @@ namespace Nereid
          public void AddLogRef(LogbookEntry lbentry)
          {
             logbook.Add(lbentry);
-            if(logtext.Length>0) logtext.Append("\n");
-            logtext.Append(lbentry.ToString());
+            //if(logtext.Length>0) logtext.Append("\n");
+            //logtext.Append(lbentry.ToString());
          }
 
          /**
@@ -117,9 +119,18 @@ namespace Nereid
 
          /**
           * Returns logbook in textform
+          * starting at position index
           * */
-         public String GetLogText()
+         public String GetLogText(int index, int cnt)
          {
+            StringBuilder logtext = new StringBuilder("");
+
+            for(int i=index; i<index+cnt && i < logbook.Count; i++)
+            {
+               LogbookEntry lbentry = logbook[i];
+               if (logtext.Length > 0) logtext.Append("\n");
+               logtext.Append(lbentry.ToString());
+            }
             return logtext.ToString();
          }
 
@@ -163,6 +174,11 @@ namespace Nereid
             {
                Log.Error("can't change hall of fame entry to different kerbal (from="+name+",to="+kerbal.name+")");
             }
+         }
+
+         public int GetNumberOfEntries()
+         {
+            return logbook.Count;
          }
 
          /**

@@ -358,8 +358,17 @@ namespace Nereid
 
          public void Record(ProtoCrewMember kerbal, Ribbon ribbon)
          {
+            // no ribbons for tourists
             if (!CheckKerbalType(kerbal)) return;
+            // ribbon disabled?
+            if (!ribbon.enabled)
+            {
+               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("ribbon " + ribbon.GetName()+" is disabled and not recorded");
+               return;
+            }
+
             if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("Record ribbon " + ribbon.GetName());
+
             HallOfFameEntry entry = GetEntry(kerbal);
             // entry==null should never happen, but to analyze a bug in conjunction with other mods, we do a check
             if(entry==null)
@@ -511,6 +520,14 @@ namespace Nereid
             Sort();
          }
 
+         public void ReloadFromLogbook()
+         {
+            // create copy of logbook
+            List<LogbookEntry> copy = new List<LogbookEntry>(logbook);
+            // reload
+            CreateFromLogbook(copy);
+         }
+
          public void Refresh()
          {
             Log.Detail("refreshing hall of fame");
@@ -611,7 +628,10 @@ namespace Nereid
          public void CreateFromLogbook(List<LogbookEntry> book)
          {
             Log.Detail("creating hall of fame from logbook");
+
             Clear();
+
+            double time = HighLogic.CurrentGame.UniversalTime;
 
             lock (this)
             {
@@ -628,6 +648,13 @@ namespace Nereid
                foreach (LogbookEntry log in book)
                {
                   if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("processing logbook entry " + log.UniversalTime + ": " + log.Code + " " + log.Name);
+
+                  if (log.UniversalTime > time)
+                  {
+                     Log.Detail("logbook entry skipped, because of time constraint: " + log.UniversalTime + " > " + time);
+                     continue;
+                  }
+
                   try
                   {
                      // this is a custom ribbon entry
@@ -649,11 +676,15 @@ namespace Nereid
                      if (action != null)
                      {
                         action.DoAction(log.UniversalTime, entry, log.Data);
-                        addLogbookEntry(log, entry);
+                        // science actions get summarised at the end of the loading procedure
+                        if( ! ( FinalFrontier.configuration.squeezeSciencePoints && action is ScienceAction ) )
+                        {
+                           addLogbookEntry(log, entry);
+                        }
                      }
                      else
                      {
-                        // those codes have change
+                        // those codes have changed
                         switch (log.Code)
                         {
                            case "CO": log.Code = "CO:Sun"; break;
@@ -695,6 +726,20 @@ namespace Nereid
 
                } // end for
             }
+
+            if(FinalFrontier.configuration.squeezeSciencePoints)
+            {
+               foreach (HallOfFameEntry entry in entries)
+               {
+                  String name = entry.GetName();
+                  Log.Info("summarizing science points for " + name);
+                  String data = entry.Research.ToString();
+
+                  LogbookEntry log = new LogbookEntry(time, Action.CODE_SCIENCE, name, data);
+                  addLogbookEntry(log, entry);
+               }
+            }
+
             Log.Detail("new hall of fame created");
          }
 

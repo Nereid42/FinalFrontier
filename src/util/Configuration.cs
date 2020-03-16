@@ -25,15 +25,19 @@ namespace Nereid
          public bool removalOfRibbonsEnabled { get; set; }
          public bool missonSummaryPopup { get; set; }
          public bool useStockToolbar { get; set; }
-         public bool convertGames { get; set; }
+         public bool alwaysUseDirectTextureLoad { get; set; }
          public bool logRibbonAwards { get; set; }
          public KeyCode hotkey { get; set; } // for use with LEFT-ALT
+         public bool squeezeSciencePoints { get; set; }
 
          private readonly Pair<int, int> ORIGIN = new Pair<int, int>(0, 0);
          private Dictionary<int, Pair<int, int>> windowPositions = new Dictionary<int, Pair<int, int>>();
 
          private Dictionary<GameScenes, HallOfFameBrowser.HallOfFameFilter> hallOfFameFilter = new Dictionary<GameScenes, HallOfFameBrowser.HallOfFameFilter>();
          private Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter> hallOfFameSorter = new Dictionary<GameScenes, HallOfFameBrowser.HallOfFameSorter>();
+
+         // ribbon states
+         private Dictionary<String, bool> ribbonStates = new Dictionary<String, bool>();
 
          // configurable window titles
          private String hallOfFameWindowTitle = "Final Frontier Hall of Fame";
@@ -57,9 +61,10 @@ namespace Nereid
             removalOfRibbonsEnabled = false;
             missonSummaryPopup = true;
             useStockToolbar = !ToolbarManager.ToolbarAvailable;
-            convertGames = true;
+            alwaysUseDirectTextureLoad = true;
             logRibbonAwards = false;
             hotkey = Utils.GetKeyCode('F');
+            squeezeSciencePoints = true;
 
             // 
             // Default filter/sorts
@@ -116,6 +121,38 @@ namespace Nereid
             if (sorter != null) return sorter;
             hallOfFameSorter[scene] = new HallOfFameBrowser.HallOfFameSorter(scene);
             return hallOfFameSorter[scene];
+         }
+
+         public bool GetRibbonState(String code)
+         {
+            try
+            {
+               return ribbonStates[code];
+            }
+            catch
+            {
+               return autoExpandEnabled;
+            }
+         }
+
+         public void SetRibbonState(String code, bool enabled)
+         {
+            ribbonStates[code] = enabled;
+            Ribbon ribbon = RibbonPool.Instance().GetRibbonForCode(code);
+            if(ribbon != null)
+            {
+               ribbon.enabled = enabled;
+            }
+         }
+
+         public void EnableAllRibbons()
+         {
+            // clear all states (Default is enabled)
+            ribbonStates.Clear();
+            foreach(Ribbon ribbon in RibbonPool.Instance())
+            {
+               ribbon.enabled = true;
+            }
          }
 
          public void ResetWindowPositions()
@@ -322,6 +359,35 @@ namespace Nereid
             }
          }
 
+         private void writeRibbonStates(BinaryWriter writer)
+         {
+
+            Log.Detail("writing ribbon states (" + ribbonStates.Count + " ribbons)");
+
+            writer.Write((Int16)ribbonStates.Count);
+            foreach(String code in ribbonStates.Keys)
+            {
+               bool enabled = ribbonStates[code];
+               if (Log.IsLogable(Log.LEVEL.DETAIL)) Log.Detail("writing ribbon states: ribbon '" + code + "' is " + (enabled ? "enabled" : "disabled"));
+               writer.Write(code);
+               writer.Write(enabled);
+            }
+         }
+
+         private void readRibbonStates(BinaryReader reader)
+         {
+            int cnt = reader.ReadInt16();
+
+            Log.Detail("reading ribbon states ("+cnt+" ribbons)");
+
+            for (int i=0; i<cnt; i++)
+            {
+               String code = reader.ReadString();
+               bool enabled = reader.ReadBoolean();
+               ribbonStates[code] = enabled;
+            }
+         }
+
          public void Save()
          {
             String filename = CONFIG_BASE_FOLDER + FILE_NAME;
@@ -372,14 +438,23 @@ namespace Nereid
                   // reserved
                   writer.Write((Int16)0);
                   //
-                  // convert games
-                  writer.Write(convertGames);
+                  // reserved
+                  writer.Write(false);
                   //
                   // log ribbon awards
                   writer.Write(logRibbonAwards);
                   //
                   // hotkey
                   writer.Write((UInt16)hotkey);
+                  //
+                  // ribbon states (enabled/disabled)
+                  writeRibbonStates(writer);
+                  //
+                  // direct texture load
+                  writer.Write(alwaysUseDirectTextureLoad);
+                  //
+                  // summarize science points
+                  writer.Write(squeezeSciencePoints);
                }
             }
             catch
@@ -399,6 +474,7 @@ namespace Nereid
                   using (BinaryReader reader = new BinaryReader(File.OpenRead(filename)))
                   {
                      logLevel = (Log.LEVEL) reader.ReadInt16();
+                     Log.SetLevel(logLevel);
                      Log.Info("log level loaded: "+logLevel);
                      customRibbonAtSpaceCenterEnabled = reader.ReadBoolean();
                      // File Version
@@ -448,14 +524,23 @@ namespace Nereid
                      // reserved
                      reader.ReadInt16();
                      //
-                     // convert games
-                     convertGames = reader.ReadBoolean();
+                     // reserved
+                     reader.ReadBoolean();
                      //
                      // log ribbon awards
                      logRibbonAwards = reader.ReadBoolean();
                      //
                      // hotkey
                      hotkey = (KeyCode)reader.ReadInt16();
+                     //
+                     // ribbon states (enabled/disabled)
+                     readRibbonStates(reader);
+                     //
+                     // direct Texture load
+                     alwaysUseDirectTextureLoad = reader.ReadBoolean();
+                     //
+                     // summarize science points
+                     squeezeSciencePoints = reader.ReadBoolean();
                   }
                }
                else

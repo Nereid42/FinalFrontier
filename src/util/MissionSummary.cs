@@ -10,6 +10,7 @@ namespace Nereid
       public class MissionSummary : IEnumerable<MissionSummary.Event>
       {
          private readonly List<Event> summaries = new List<Event>();
+         private bool missionContainsCrewData = false;
 
          public class Event
          {
@@ -36,7 +37,13 @@ namespace Nereid
          public void Clear()
          {
             summaries.Clear();
+            missionContainsCrewData = false;
             Log.Info("mission summary cleared");
+         }
+
+         public bool MissionContainsCrewData()
+         {
+            return missionContainsCrewData;
          }
 
 
@@ -46,12 +53,6 @@ namespace Nereid
             Log.Info("adding mission summary for vessel " + vessel);
             foreach (ProtoCrewMember kerbal in vessel.GetVesselCrew())
             {
-               // DEBUG
-               Log.Test("ADD MISSION SUMMRAY ");
-               HallOfFameEntry hoe = HallOfFame.Instance().GetEntry(kerbal);
-               Log.Test(hoe.ToString());
-
-
                Log.Info("adding mission summary for kerbal " + kerbal.name + ", crew=" + kerbal.IsCrew());
                if (kerbal.IsCrew())
                {
@@ -62,6 +63,7 @@ namespace Nereid
                   {
                      summary.newRibbons.Add(ribbon);
                   }
+                  missionContainsCrewData = true;
                }
             }
          }

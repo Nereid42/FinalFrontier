@@ -10,6 +10,8 @@ namespace Nereid
    {
       public abstract class Action : Activity
       {
+         public const String CODE_SCIENCE = "S+";
+
          public Action(String code, String name)
             : base (code, name)
          {
@@ -273,7 +275,7 @@ namespace Nereid
       public class ScienceAction : Action
       {
          public ScienceAction()
-            : base("S+", "Science")
+            : base(Action.CODE_SCIENCE, "Science")
          {
          }
 

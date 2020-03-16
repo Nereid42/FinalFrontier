@@ -14,7 +14,7 @@ namespace Nereid
          private static readonly int RIBBON_DISPLAY_HEIGHT = RIBBON_LINES * Ribbon.HEIGHT;
          private static readonly int RIBBON_DISPLAY_SKIP = 2;
          private static readonly int RIBBON_DISPLAY_WIDTH = RIBBONS_PER_LINE * (RIBBON_DISPLAY_SKIP + Ribbon.WIDTH) + 20;
-         private static readonly int RIBBON_LOGBOOK_HEIGHT = 100;
+         private static readonly int RIBBON_LOGBOOK_HEIGHT = 120;
          private static readonly int WIDTH = 500;
          private static readonly GUIStyle STYLE_TEXT_LABEL = new GUIStyle(HighLogic.Skin.button);
          private static readonly GUIStyle STYLE_VALUE_LABEL = new GUIStyle(HighLogic.Skin.button);
@@ -32,6 +32,12 @@ namespace Nereid
          private bool showOwnedRibbons = false;
          HashSet<Ribbon> revocation = new HashSet<Ribbon>();
 
+         // maximal number of logbook entries
+         private const int MAX_LOGBOOK_ENTRIES = 50;
+         // position of logbook
+         private int positionLogbookEntries = 0;
+         // current logbook
+         private String currentLogbook = "";
 
          // revocation dialogue
          private bool revocatioOfSupersededRibbons = true;
@@ -153,8 +159,22 @@ namespace Nereid
             // logbook
             GUILayout.Label("Logbook", FFStyles.STYLE_TITLE_LABEL);
             scrollPosLogbook = GUILayout.BeginScrollView(scrollPosLogbook, FFStyles.STYLE_SCROLLVIEW, GUILayout.Width(RIBBON_DISPLAY_WIDTH), GUILayout.Height(RIBBON_LOGBOOK_HEIGHT));
-            GUILayout.Box(entry.GetLogText(), STYLE_LOGBOOK_BOX);
+            GUILayout.Box(currentLogbook, STYLE_LOGBOOK_BOX);
             GUILayout.EndScrollView();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            int logentries = entry.GetNumberOfEntries();
+            GUI.enabled = (positionLogbookEntries > 0);
+            if (GUILayout.Button(" << ", FFStyles.STYLE_NARROW_BUTTON))  { positionLogbookEntries = 0; currentLogbook = entry.GetLogText(positionLogbookEntries, MAX_LOGBOOK_ENTRIES); }
+            if (GUILayout.Button(" -50 ", FFStyles.STYLE_NARROW_BUTTON)) { positionLogbookEntries -= MAX_LOGBOOK_ENTRIES; currentLogbook = entry.GetLogText(positionLogbookEntries, MAX_LOGBOOK_ENTRIES); }
+            GUI.enabled = (positionLogbookEntries < logentries - MAX_LOGBOOK_ENTRIES);
+            if (GUILayout.Button(" +50 ", FFStyles.STYLE_NARROW_BUTTON)) { positionLogbookEntries += MAX_LOGBOOK_ENTRIES; currentLogbook = entry.GetLogText(positionLogbookEntries, MAX_LOGBOOK_ENTRIES); }
+            if (GUILayout.Button(" >> ", FFStyles.STYLE_NARROW_BUTTON))  { positionLogbookEntries = logentries - MAX_LOGBOOK_ENTRIES; currentLogbook = entry.GetLogText(positionLogbookEntries, MAX_LOGBOOK_ENTRIES); }
+            GUI.enabled = true;
+            positionLogbookEntries = Math.Max(0, positionLogbookEntries);
+            positionLogbookEntries = Math.Min(logentries, positionLogbookEntries);
+            GUILayout.EndHorizontal();
             GUILayout.EndVertical();
             //
             DragWindow();
@@ -384,8 +404,6 @@ namespace Nereid
                GUILayout.EndHorizontal();
             }
             GUILayout.EndScrollView(); 
-            //GUILayout.FlexibleSpace();
-            // OK/CANCEL
             GUILayout.BeginHorizontal();
             // 
             revocatioOfSupersededRibbons = GUILayout.Toggle(revocatioOfSupersededRibbons, "superseded ribbons",  FFStyles.STYLE_TOGGLE);
@@ -523,6 +541,8 @@ namespace Nereid
          public void SetEntry(HallOfFameEntry entry)
          {
             this.entry = entry;
+            positionLogbookEntries = Math.Max(0,entry.GetNumberOfEntries() - MAX_LOGBOOK_ENTRIES);
+            currentLogbook = entry.GetLogText(positionLogbookEntries, MAX_LOGBOOK_ENTRIES);
             if (entry != null)
             {
                this.vessel = entry.GetKerbal().GetVessel();

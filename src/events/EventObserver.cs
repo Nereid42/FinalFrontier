@@ -88,8 +88,7 @@ namespace Nereid
             //
          }
 
-
-         private void OnFlyBy(Vessel vessel,CelestialBody body)
+         private void OnFlyBy(Vessel vessel, CelestialBody body)
          {
             // for later usage
          }
@@ -104,7 +103,7 @@ namespace Nereid
          private void onGUIRecoveryDialogDespawn(KSP.UI.Screens.MissionRecoveryDialog dialog)
          {
             // Mission Summary
-            if(FinalFrontier.configuration.IsMissionSummaryEnabled())
+            if (FinalFrontier.configuration.IsMissionSummaryEnabled() && missionSummary.MissionContainsCrewData())
             {
                Log.Info("showing mission summary window");
                MissionSummaryWindow summary = new MissionSummaryWindow();
@@ -150,6 +149,14 @@ namespace Nereid
          {
             Log.Detail("EventObserver::OnScienceReceived: " + science + ", flag=" + flag);
             if (vessel == null) return;
+
+            // no science, no record
+            if (science <= 0)
+            {
+               if (Log.IsLogable(Log.LEVEL.TRACE)) Log.Trace("science ignored");
+               return;
+            }
+
             HallOfFame halloffame = HallOfFame.Instance();
             //
             halloffame.BeginArwardOfRibbons();
@@ -253,6 +260,7 @@ namespace Nereid
             // ok, now check the record
             CheckAchievementsForProgress(node);
          }
+
 
          private void OnVesselWasModified(Vessel vessel)
          {
@@ -412,7 +420,6 @@ namespace Nereid
                // record crew member only
                if (member.IsCrew())
                {
-                  Log.Test("OnCrewOnEva " + member.name + " is EVA: " + crew.isEVA+", situation: "+crew.situation);
                   recorder.RecordEva(member, vessel);
                }
             }
@@ -443,6 +450,12 @@ namespace Nereid
             }
 
             Log.Info("EventObserver:: OnGameStateCreated " + game.UniversalTime + ", game status: " + game.Status + ", scene " + HighLogic.LoadedScene);
+
+            if (HighLogic.LoadedScene == GameScenes.EDITOR)
+            {
+               Log.Info("reverting ribbons");
+               HallOfFame.Instance().ReloadFromLogbook();
+            }
 
             // we have to detect a closed orbit again...
             this.orbitClosed = false;

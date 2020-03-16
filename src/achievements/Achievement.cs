@@ -710,6 +710,7 @@ namespace Nereid
             if (current.IsSplashed) return false;
             // no main celestial body? we have to be deep in space then
             if (current.MainBody == null) return true;
+            // just in case of no atmosphere
             if (current.atmDensity > NO_ATM) return false;
             if (current.altitude < current.MainBody.MaxAtmosphereAltitude()) return false;
             if (!current.MainBody.Equals(body)) return false;
@@ -1663,7 +1664,7 @@ namespace Nereid
       {
          private const double POLAR_LATITUDE = 66;
 
-         String hemisphere;
+         private String hemisphere;
 
          public PolarLandingAchievement(String hemisphere, int prestige, bool first)
             : base("P" + hemisphere.Substring(0, 1).ToUpper() + (first ? "1" : ""), hemisphere + " Polar Lander", prestige, first)
@@ -1702,6 +1703,46 @@ namespace Nereid
             return "Awarded for "+ FirstKerbalText().Envelope() + "landing in the "+hemisphere.ToLower()+" polar region of " + GameUtils.GetHomeworld().name;
          }
       }
+
+      class LowGravityLandingAchievement : Achievement
+      {
+         CelestialBody homeworld;
+         private double gravity;
+         private double percent;
+
+         public LowGravityLandingAchievement(double percentOfKerbinGravity, int prestige)
+            : base("G:"+ percentOfKerbinGravity.ToString("0"), "Low Gravity Landing "+ percentOfKerbinGravity.ToString("0")+"%", prestige, false)
+         {
+            homeworld = GameUtils.GetHomeworld();
+            gravity = homeworld.GeeASL * percentOfKerbinGravity / 100.0;
+            percent = percentOfKerbinGravity;
+         }
+
+         protected override bool CheckVesselState(VesselState previous, VesselState current)
+         {
+            if (previous == null) return false;
+            if (current == null) return false;
+            // no EVA
+            if (current.IsEVA) return false;
+            // check vessel
+            if (current.Origin == null) return false;
+            // landed?
+            if (current.Situation != Vessel.Situations.LANDED) return false;
+            // situation has to change from non-landed to landed (prelaunch wont count)
+            if (previous.IsLandedOrSplashed || previous.IsPrelaunch) return false;
+            // 
+            if (current.MainBody == null) return false;
+            // check gravity
+            if (current.MainBody.GeeASL > gravity) return false;
+            return true;
+         }
+
+         public override String GetDescription()
+         {
+            return "Awarded for landing in a gravity field of less than " + percent.ToString("0") + " percent of "+homeworld.name;
+         }
+      }
+
 
    }
 }

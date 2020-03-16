@@ -60,7 +60,7 @@ namespace Nereid
             }
          }
 
-         // for Debbung only; calls should be removed for release
+         // for debuging only; calls should be removed for release
          public static void Test(String msg)
          {
             if (IsLogable(LEVEL.INFO))
