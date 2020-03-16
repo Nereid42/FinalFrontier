@@ -193,7 +193,7 @@ namespace Nereid
 
          public static int BasePrestige(this CelestialBody body)
          {
-            switch (body.GetName())
+            switch (body.GetName()) // Leave this as the unlocalized name, this is for the internal identifier of the planet
             {
                case "Kerbin": return 1000;
                case "Mun": return 1200;
@@ -212,7 +212,7 @@ namespace Nereid
                case "Laythe": return 7000;
                case "Eeloo": return 8000;
                case "Sun": return 9000;
-               default: Log.Warning("no base prestige for celestial body " + body.GetName());
+               default: Log.Warning("no base prestige for celestial body " + body.GetName()); // Likewise here
                   return 99000;
             }
          }

@@ -522,7 +522,7 @@ namespace Nereid
                }
                else if(vessel!=null)
                {
-                  location = vessel.mainBody.GetName();
+                  location = vessel.mainBody.GetDisplayName();
                }
                else
                {

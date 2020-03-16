@@ -502,14 +502,14 @@ namespace Nereid
             {
                return "Awarded for being the first kerbal in space";
             }
-				return "Awarded for leaving " + GameUtils.GetHomeworld().name + "'s atmosphere";
+				return "Awarded for leaving " + GameUtils.GetHomeworld().displayName + "'s atmosphere";
          }
       }
 
       class EnteringAtmosphereAchievement : CelestialBodyAchievement
       {
          public EnteringAtmosphereAchievement(CelestialBody body,int prestige, bool first = false)
-            : base("A", body.GetName()+" Atmosphere", body, prestige, first)
+            : base("A", body.GetDisplayName()+" Atmosphere", body, prestige, first)
          {
          }
 
@@ -530,7 +530,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "entering the atmosphere of " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "entering the atmosphere of " + body.GetDisplayName();
          }
 
       }
@@ -541,7 +541,7 @@ namespace Nereid
          protected CelestialBody body;
 
          public CelestialBodyAchievement(String code, String name, CelestialBody body, int prestige, bool first = false)
-            : base(code+(first?"1:":":") + body.GetName(), name, prestige, first)
+            : base(code+(first?"1:":":") + body.GetName(), name, prestige, first) // Do not localize this GetName call, it's an internal identifier
          {
             this.body = body;
          }
@@ -619,7 +619,7 @@ namespace Nereid
       {
 
          public SphereOfInfluenceAchievement(CelestialBody body, int prestige)
-            : base("I", body.GetName() + " Sphere of Influence", body, prestige, false)
+            : base("I", body.GetDisplayName() + " Sphere of Influence", body, prestige, false)
          {
          }
 
@@ -633,14 +633,14 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for entering the sphere of influence of " + body.GetName();
+            return "Awarded for entering the sphere of influence of " + body.GetDisplayName();
          }
       }
 
       class LandingAchievement : CelestialBodyAchievement
       {
          public LandingAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("L", "Landing on " + body.GetName(), body, prestige, first)
+            : base("L", "Landing on " + body.GetDisplayName(), body, prestige, first)
          {
          }
 
@@ -662,7 +662,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "landing on " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "landing on " + body.GetDisplayName();
          }
       }
 
@@ -670,7 +670,7 @@ namespace Nereid
       class PlantFlagAchievement : CelestialBodyAchievement
       {
          public PlantFlagAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("F", "Flag on " + body.GetName(), body, prestige, first)
+            : base("F", "Flag on " + body.GetDisplayName(), body, prestige, first)
          {
          }
 
@@ -685,7 +685,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "planting a flag on " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "planting a flag on " + body.GetDisplayName();
          }
       }
 
@@ -694,7 +694,7 @@ namespace Nereid
          private static readonly double NO_ATM = 0.0000001;
 
          public EvaAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("V", body.GetName() + " EVA", body, prestige, first)
+            : base("V", body.GetDisplayName() + " EVA", body, prestige, first)
          {
          }
 
@@ -719,7 +719,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in zero atmosphere around " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in zero atmosphere around " + body.GetDisplayName();
          }
       }
 
@@ -759,7 +759,7 @@ namespace Nereid
          private static readonly double NO_ATM = 0.0000001;
 
          public EvaOrbitAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("E", body.GetName() + " Orbital EVA", body, prestige, first)
+            : base("E", body.GetDisplayName() + " Orbital EVA", body, prestige, first)
          {
          }
 
@@ -776,7 +776,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in a stable orbit around " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "on EVA in a stable orbit around " + body.GetDisplayName();
          }
       }
 
@@ -784,7 +784,7 @@ namespace Nereid
       class EvaGroundAchievement : CelestialBodyAchievement
       {
          public EvaGroundAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("G", body.GetName()+" Surface EVA", body, prestige, first)
+            : base("G", body.GetDisplayName()+" Surface EVA", body, prestige, first)
          {
          }
 
@@ -804,7 +804,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "taking footsteps on " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "taking footsteps on " + body.GetDisplayName();
          }
       }
 
@@ -826,7 +826,7 @@ namespace Nereid
       class OrbitAchievement : OrbitalAchievement
       {
          public OrbitAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("O", body.GetName()+" Orbit", body, prestige, first)
+            : base("O", body.GetDisplayName()+" Orbit", body, prestige, first)
          {
          }
 
@@ -839,7 +839,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting around " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting around " + body.GetDisplayName();
          }
       }
 
@@ -847,7 +847,7 @@ namespace Nereid
       {
 
          public RoverAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("R", body.GetName() + " Rover Drive", body, prestige, first)
+            : base("R", body.GetDisplayName() + " Rover Drive", body, prestige, first)
          {
          }
 
@@ -862,7 +862,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "moving a vehicle on surface of " + body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "moving a vehicle on surface of " + body.GetDisplayName();
          }
       }
 
@@ -889,7 +889,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting " + base.body.GetName() + " half between periapse of " + innermost.GetName() + " and " + base.body.GetName();
+            return "Awarded for" + FirstKerbalText().Envelope() + "orbiting " + base.body.GetDisplayName() + " half between periapse of " + innermost.GetDisplayName() + " and " + base.body.GetDisplayName();
          }
       }
 
@@ -897,7 +897,7 @@ namespace Nereid
       class DockingAchievement : OrbitalAchievement
       {
          public DockingAchievement(CelestialBody body, int prestige, bool first = false)
-            : base("DO", body.GetName()+" Docking", body, prestige, first)
+            : base("DO", body.GetDisplayName()+" Docking", body, prestige, first)
          {
          }
 
@@ -911,7 +911,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for" + FirstKerbalText().Envelope() + "docking in " + body.GetName()+" orbit";
+            return "Awarded for" + FirstKerbalText().Envelope() + "docking in " + body.GetDisplayName()+" orbit";
          }
       }
 
@@ -1047,7 +1047,7 @@ namespace Nereid
       {
 
          public DeepAtmosphereArchievement(CelestialBody body, int prestige)
-            : base("DA",body.GetName() + " Deep Atmosphere",body, prestige, false)
+            : base("DA",body.GetDisplayName() + " Deep Atmosphere",body, prestige, false)
          {
          }
 
@@ -1060,7 +1060,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for entering the deeper atmosphere of " + body.GetName();
+            return "Awarded for entering the deeper atmosphere of " + body.GetDisplayName();
          }
       }
 
@@ -1137,7 +1137,7 @@ namespace Nereid
          public override String GetDescription()
          {
             if (outermostBodyInSystem == null) return "no outermost planet found in system (ribbon not used)";
-            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyond the sphere of influence of " + outermostBodyInSystem.name;
+            return "Awarded for" + FirstKerbalText().Envelope() + "in space beyond the sphere of influence of " + outermostBodyInSystem.displayName;
          }
       }
 
@@ -1355,7 +1355,7 @@ namespace Nereid
 
          public override String GetDescription()
          {
-            return "Awarded for any EVA in " + GameUtils.GetHomeworld().name + "'s waters";
+            return "Awarded for any EVA in " + GameUtils.GetHomeworld().displayName + "'s waters";
          }
       }
 

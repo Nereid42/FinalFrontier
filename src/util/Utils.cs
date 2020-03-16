@@ -70,7 +70,7 @@ namespace Nereid
          {
             foreach (CelestialBody body in PSystemManager.Instance.localBodies)
             {
-               if (body.GetName().Equals(name)) return body;
+               if (body.GetName().Equals(name)) return body; // Do not localize this GetName call, it's supposed to be the internal representation.
             }
             return null;
          }
