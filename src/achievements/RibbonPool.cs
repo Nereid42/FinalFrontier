@@ -118,7 +118,7 @@ namespace Nereid
             //
             foreach (CelestialBody body in PSystemManager.Instance.localBodies)
             {
-               string bodyName = body.GetName();
+               string bodyName = body.GetName(); // Leave this unlocalized, this is an internal identifier (otherwise we'd have to localize all of the ribbon folders)
                int basePrestige = mapper.GetBasePrestige(body);
 
                String BODY_RIBBON_PATH = mapper.GetRibbonPath(body, _RP)+bodyName;
